@@ -1,0 +1,17 @@
+{
+  "lastsemic":false,
+  "asi":false,
+  "boss": false,
+  "curly": false,
+  "eqeqeq": false,
+  "eqnull": false,
+  "immed": false,
+  "latedef": false,
+  "newcap": false,
+  "noarg": false,
+  "sub": false,
+  "undef": false,
+  "unused": false,
+  "node": false,
+  "-W117": false
+}

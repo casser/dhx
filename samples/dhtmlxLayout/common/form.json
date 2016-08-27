@@ -1,0 +1,22 @@
+[
+	{type: "settings", position: "label-left", labelWidth: 130, inputWidth: 200, offsetLeft: 10},
+	{type: "input", name:'login', label: "Login", value: "adminus", offsetTop: 10},
+	{type: "password",name:'password', label: "Password", value: "123"},
+	{type: "combo", label: "Format", name: "format", options:[
+		{text: "AAC", value: "AAC"},
+		{text: "AC3", value: "AC3", selected: true},
+		{text: "MP3", value: "MP3"},
+		{text: "FLAC", value: "FLAC"}
+	]},
+	{type: "fieldset", label: "Ask a simple question", inputWidth: 250, list:[
+		{type: "label", label: "Please select your favorite band:"},
+		{type: "radio", name: "band", value: 1, label: "Cradle Of Filth"},
+		{type: "radio", name: "band", value: 2, label: "Children Of Bodom"},
+		{type: "button", name:"gago", value: "Yes"}
+	]},
+	{type: "checkbox", label: "Remember me", checked: true},
+	{type: "calendar", dateFormat: "%Y-%m-%d %H:%i", name: "start_date", label: "Start Date", value:"2011-06-20 14:38", enableTime: true, calendarPosition: "bottom"},
+	{type: "colorpicker", name: "Color", label: "Color:", value: "#2a87eb", enableCustomColors: "1", customColors: "#ff9f29,#a3ff2b,#57cdff,#fb26ff,#9f96ff"},
+	{type: "button",name:"mago", value: "Proceed"}
+
+]
