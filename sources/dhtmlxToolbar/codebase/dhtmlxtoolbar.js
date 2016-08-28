@@ -323,7 +323,6 @@ dhtmlXToolbarObject.prototype._fixSpacer = function() {
 		window.setTimeout(function(){k.style.borderLeft="0px solid #a4bed4";k=null;},1);
 	}
 }
-
 dhtmlXToolbarObject.prototype.getType = function(itemId) {
 	var parentId = this.getParentId(itemId);
 	if (parentId != null) {
@@ -336,7 +335,6 @@ dhtmlXToolbarObject.prototype.getType = function(itemId) {
 		return this.objPull[this.idPrefix+itemId]["type"];
 	}
 }
-
 dhtmlXToolbarObject.prototype.getTypeExt = function(itemId) {
 	var type = this.getType(itemId);
 	if (type == "buttonSelectButton" || type == "buttonSelectSeparator") {
@@ -354,7 +352,6 @@ dhtmlXToolbarObject.prototype.getParentId = function(listId) {
 	for (var a in this.objPull) if (this.objPull[a]._listOptions) for (var b in this.objPull[a]._listOptions) if (b == listId) parentId = String(a).replace(this.idPrefix,"");
 	return parentId;
 }
-/* adding items */
 dhtmlXToolbarObject.prototype._addItem = function(itemData, pos) {
 	if (typeof(itemData.text) == "string") {
 		itemData.text = window.dhx4.trim(itemData.text);
@@ -363,11 +360,9 @@ dhtmlXToolbarObject.prototype._addItem = function(itemData, pos) {
 	this._addItemToStorage(itemData, pos);
 	if (this.conf.skin == "dhx_terrace") this._improveTerraceSkin();
 }
-
 dhtmlXToolbarObject.prototype.addButton = function(id, pos, text, imgEnabled, imgDisabled) {
 	this._addItem({id:id, type:"button", text:text, img:imgEnabled, imgdis:imgDisabled}, pos);
 }
-
 dhtmlXToolbarObject.prototype.addText = function(id, pos, text) {
 	this._addItem({id:id,type:"text",text:text}, pos);
 }
@@ -2641,85 +2636,74 @@ dhtmlXToolbarObject.prototype._improveTerraceButtonSelect = function(id, state) 
 	item = null;
 };
 
-if (typeof(window.dhtmlXCellObject) != "undefined") {
-	
-	dhtmlXCellObject.prototype._createNode_toolbar = function(obj, type, htmlString, append, node) {
-		
-		if (typeof(node) != "undefined") {
-			obj = node;
-		} else {
-			obj = document.createElement("DIV");
-			obj.className = "dhx_cell_toolbar_"+(this.conf.borders?"def":"no_borders");
-			obj.appendChild(document.createElement("DIV"));
-			obj.firstChild.className = "dhx_toolbar_base_18_dhx_skyblue";
-		}
-		
-		this.cell.insertBefore(obj, this.cell.childNodes[this.conf.idx.cont]); // before cont only
-		
-		this.conf.ofs_nodes.t.toolbar = true;
-		this._updateIdx();
-		// adjust cont will performed after toolbar init
-		
-		return obj;
-		
-	}
-	
-	dhtmlXCellObject.prototype.attachToolbar = function(conf) {
-		
-		if (!(this.dataNodes.ribbon == null && this.dataNodes.toolbar == null)) return;
-		
-		this.callEvent("_onBeforeContentAttach", ["toolbar"]);
-		
-		if (typeof(conf) == "undefined") {
-			conf = {};
-		} else if (typeof(conf) == "string") {
-			conf = {skin:conf};
-		}
-		if (typeof(conf.skin) == "undefined") conf.skin = this.conf.skin;
-		conf.parent = this._attachObject("toolbar").firstChild;
-		
-		this.dataNodes.toolbar = new dhtmlXToolbarObject(conf);
-		this._adjustCont(this._idd);
-		
-		this.dataNodes.toolbar._masterCell = this;
-		this.dataNodes.toolbar.attachEvent("_onIconSizeChange", function(){
-			this._masterCell._adjustCont();
-		});
-		
-		conf.parent = null;
-		conf = null;
-		
-		this.callEvent("_onContentAttach", []);
-		
-		return this.dataNodes.toolbar;
-		
-	};
-	
-	dhtmlXCellObject.prototype.detachToolbar = function() {
-		
-		if (!this.dataNodes.toolbar) return;
-		this.dataNodes.toolbar._masterCell = null; // link to this
-		this.dataNodes.toolbar.unload();
-		this.dataNodes.toolbar = null;
-		delete this.dataNodes.toolbar;
-		
-		this._detachObject("toolbar");
-		
-	};
-	
-	dhtmlXCellObject.prototype.showToolbar = function() {
-		this._mtbShowHide("toolbar", "");
-	};
-	
-	dhtmlXCellObject.prototype.hideToolbar = function() {
-		this._mtbShowHide("toolbar", "none");
-	};
-	
+dhtmlXCellObject.prototype._createNode_toolbar = function(obj, type, htmlString, append, node) {
 
-	
-	dhtmlXCellObject.prototype.getAttachedToolbar = function() {
-		return this.dataNodes.toolbar;
-	};
-	
+	if (typeof(node) != "undefined") {
+		obj = node;
+	} else {
+		obj = document.createElement("DIV");
+		obj.className = "dhx_cell_toolbar_"+(this.conf.borders?"def":"no_borders");
+		obj.appendChild(document.createElement("DIV"));
+		obj.firstChild.className = "dhx_toolbar_base_18_dhx_skyblue";
+	}
+
+	this.cell.insertBefore(obj, this.cell.childNodes[this.conf.idx.cont]); // before cont only
+
+	this.conf.ofs_nodes.t.toolbar = true;
+	this._updateIdx();
+	// adjust cont will performed after toolbar init
+
+	return obj;
+
 }
+dhtmlXCellObject.prototype.attachToolbar = function(conf) {
+
+	if (!(this.dataNodes.ribbon == null && this.dataNodes.toolbar == null)) return;
+
+	this.callEvent("_onBeforeContentAttach", ["toolbar"]);
+
+	if (typeof(conf) == "undefined") {
+		conf = {};
+	} else if (typeof(conf) == "string") {
+		conf = {skin:conf};
+	}
+	if (typeof(conf.skin) == "undefined") conf.skin = this.conf.skin;
+	conf.parent = this._attachObject("toolbar").firstChild;
+
+	this.dataNodes.toolbar = new dhtmlXToolbarObject(conf);
+	this._adjustCont(this._idd);
+
+	this.dataNodes.toolbar._masterCell = this;
+	this.dataNodes.toolbar.attachEvent("_onIconSizeChange", function(){
+		this._masterCell._adjustCont();
+	});
+
+	conf.parent = null;
+	conf = null;
+
+	this.callEvent("_onContentAttach", []);
+
+	return this.dataNodes.toolbar;
+
+};
+dhtmlXCellObject.prototype.detachToolbar = function() {
+
+	if (!this.dataNodes.toolbar) return;
+	this.dataNodes.toolbar._masterCell = null; // link to this
+	this.dataNodes.toolbar.unload();
+	this.dataNodes.toolbar = null;
+	delete this.dataNodes.toolbar;
+
+	this._detachObject("toolbar");
+
+};
+dhtmlXCellObject.prototype.showToolbar = function() {
+	this._mtbShowHide("toolbar", "");
+};
+dhtmlXCellObject.prototype.hideToolbar = function() {
+	this._mtbShowHide("toolbar", "none");
+};
+dhtmlXCellObject.prototype.getAttachedToolbar = function() {
+	return this.dataNodes.toolbar;
+};
 

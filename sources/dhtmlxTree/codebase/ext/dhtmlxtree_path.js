@@ -72,9 +72,9 @@ dhtmlXTreeObject.prototype._clearPath=function(obj){
 }
 dhtmlXTreeObject.prototype._renderPath=function(obj){
 	var c=this._idpull[obj.path[obj.path.length-1].from].span.parentNode.parentNode;
-	var top=(_isIE?9:8)+this._halfHeight;	
+	var top=(dhx4.isIE?9:8)+this._halfHeight;
 	
-	var left=(_isIE?27:27);
+	var left=(dhx4.isIE?27:27);
 	while(c.offsetParent!=this.allTree){
 		top+=c.offsetTop;
 		left+=c.offsetLeft;
@@ -87,7 +87,7 @@ dhtmlXTreeObject.prototype._renderPath=function(obj){
 		var d=document.createElement("div");
 		if (!this._idpull[t.to].tr.offsetHeight) return;
 		var pos=this._idpull[t.to].tr.offsetTop;
-		d.style.cssText='position:absolute; z-index:1; width:'+(_isIE?10:8)+'px; height:'+(pos-9)+'px; left:'+left+'px; top:'+top+'px;'+t.style;
+		d.style.cssText='position:absolute; z-index:1; width:'+(dhx4.isIE?10:8)+'px; height:'+(pos-9)+'px; left:'+left+'px; top:'+top+'px;'+t.style;
 		top+=pos;
 		left+=18;
 		this.allTree.appendChild(d);

@@ -81,7 +81,7 @@ dhtmlXGridObject.prototype._add_filler=function(pos,len,fil,rsflag){
  	if (fil && fil.nextSibling) 
  		fil.parentNode.insertBefore(row,fil.nextSibling);
  	else
- 		if (_isKHTML)
+ 		if (dhx4.isKHTML)
  			this.obj.appendChild(row);
  		else
  			this.obj.rows[0].parentNode.appendChild(row);

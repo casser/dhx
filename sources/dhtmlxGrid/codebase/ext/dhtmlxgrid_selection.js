@@ -100,7 +100,7 @@ dhtmlXGridObject.prototype._OnSelectionStart = function(event, obj)
 	
 	    //this._ShowSelection();
 	    this.obj.onmousedown = null;
-		this.obj[_isIE?"onmouseleave":"onmouseout"] = function(e){ if (self._blsTimer) window.clearTimeout(self._blsTimer); };	    
+		this.obj[dhx4.isIE?"onmouseleave":"onmouseout"] = function(e){ if (self._blsTimer) window.clearTimeout(self._blsTimer); };
 		this.obj.onmmold=this.obj.onmousemove;
 		this._init_pos=[x,y];
 	    this._selectionObj.onmousemove = this.obj.onmousemove = function(e) {e = e||event; if (e.preventDefault) e.preventDefault(); else e.returnValue = false;  self._OnSelectionMove(e);}
@@ -319,7 +319,7 @@ dhtmlXGridObject.prototype._CreateSelection = function(x, y)
 		this._selectionObj = div;
 		this._selectionObj.onmousedown = function(e){
 			e=e||event;
-			if (e.button==2 || (_isMacOS&&e.ctrlKey))
+			if (e.button==2 || (dhx4.isMacOS&&e.ctrlKey))
 				return this.parentNode.grid.callEvent("onBlockRightClick", ["BLOCK",e]);
 		}
 		this._selectionObj.oncontextmenu=function(e){(e||event).cancelBubble=true;return false;}

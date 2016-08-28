@@ -2028,72 +2028,63 @@ dhtmlXMenuObject.prototype._improveTerraceButton = function(id, state) {
 	}
 };
 
-if (typeof(window.dhtmlXCellObject) != "undefined") {
-	
-	dhtmlXCellObject.prototype._createNode_menu = function(obj, type, htmlString, append, node) {
-		
-		if (typeof(node) != "undefined") {
-			obj = node;
-		} else {
-			obj = document.createElement("DIV");
-			obj.className = "dhx_cell_menu_"+(this.conf.borders?"def":"no_borders");
-			obj.appendChild(document.createElement("DIV"));
-		}
-		
-		this.cell.insertBefore(obj, this.cell.childNodes[this.conf.idx.toolbar||this.conf.idx.cont]); // before toolbar or before cont, 0=hdr
-		
-		this.conf.ofs_nodes.t.menu = true;
-		this._updateIdx();
-		// adjust cont will performed after toolbar init
-		
-		return obj;
-		
-	};
-	
-	dhtmlXCellObject.prototype.attachMenu = function(conf) {
-		
-		if (this.dataNodes.menu) return; // return this.dataNodes.menu?
-		
-		this.callEvent("_onBeforeContentAttach", ["menu"]);
-		
-		if (typeof(conf) == "undefined") conf = {};
-		if (typeof(conf.skin) == "undefined") conf.skin = this.conf.skin;
-		conf.parent = this._attachObject("menu").firstChild;
-		
-		this.dataNodes.menu = new dhtmlXMenuObject(conf);
-		this._adjustCont(this._idd);
-		
-		conf.parent = null;
-		conf = null;
-		
-		this.callEvent("_onContentAttach", []);
-		
-		return this.dataNodes.menu;
-		
-	};
-	
-	dhtmlXCellObject.prototype.detachMenu = function() {
-		
-		if (!this.dataNodes.menu) return;
-		this.dataNodes.menu.unload();
-		this.dataNodes.menu = null;
-		delete this.dataNodes.menu;
-		
-		this._detachObject("menu");
-		
-	};
-	
-	dhtmlXCellObject.prototype.showMenu = function() {
-		this._mtbShowHide("menu", "");
-	};
-	
-	dhtmlXCellObject.prototype.hideMenu = function() {
-		this._mtbShowHide("menu", "none");
-	};
-	
-	dhtmlXCellObject.prototype.getAttachedMenu = function() {
-		return this.dataNodes.menu;
-	};
-	
-}
+dhtmlXCellObject.prototype._createNode_menu = function(obj, type, htmlString, append, node) {
+
+	if (typeof(node) != "undefined") {
+		obj = node;
+	} else {
+		obj = document.createElement("DIV");
+		obj.className = "dhx_cell_menu_"+(this.conf.borders?"def":"no_borders");
+		obj.appendChild(document.createElement("DIV"));
+	}
+
+	this.cell.insertBefore(obj, this.cell.childNodes[this.conf.idx.toolbar||this.conf.idx.cont]); // before toolbar or before cont, 0=hdr
+
+	this.conf.ofs_nodes.t.menu = true;
+	this._updateIdx();
+	// adjust cont will performed after toolbar init
+
+	return obj;
+
+};
+dhtmlXCellObject.prototype.attachMenu = function(conf) {
+
+	if (this.dataNodes.menu) return; // return this.dataNodes.menu?
+
+	this.callEvent("_onBeforeContentAttach", ["menu"]);
+
+	if (typeof(conf) == "undefined") conf = {};
+	if (typeof(conf.skin) == "undefined") conf.skin = this.conf.skin;
+	conf.parent = this._attachObject("menu").firstChild;
+
+	this.dataNodes.menu = new dhtmlXMenuObject(conf);
+	this._adjustCont(this._idd);
+
+	conf.parent = null;
+	conf = null;
+
+	this.callEvent("_onContentAttach", []);
+
+	return this.dataNodes.menu;
+
+};
+dhtmlXCellObject.prototype.detachMenu = function() {
+
+	if (!this.dataNodes.menu) return;
+	this.dataNodes.menu.unload();
+	this.dataNodes.menu = null;
+	delete this.dataNodes.menu;
+
+	this._detachObject("menu");
+
+};
+dhtmlXCellObject.prototype.showMenu = function() {
+	this._mtbShowHide("menu", "");
+};
+dhtmlXCellObject.prototype.hideMenu = function() {
+	this._mtbShowHide("menu", "none");
+};
+dhtmlXCellObject.prototype.getAttachedMenu = function() {
+	return this.dataNodes.menu;
+};
 

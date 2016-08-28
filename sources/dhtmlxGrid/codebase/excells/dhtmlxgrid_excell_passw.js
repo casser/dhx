@@ -18,7 +18,7 @@ function eXcell_passw(cell){
 					this.cell.atag="INPUT";
 					this.val = this.getValue();
 					this.obj = document.createElement(this.cell.atag);
-					this.obj.style.height = (this.cell.offsetHeight-(_isIE?6:4))+"px";
+					this.obj.style.height = (this.cell.offsetHeight-(dhx4.isIE?6:4))+"px";
                     this.obj.className="dhx_combo_edit";
 					this.obj.type = "password";
 				   	this.obj.wrap = "soft";
@@ -27,7 +27,7 @@ function eXcell_passw(cell){
 					this.obj.onmousedown = function(e){(e||event).cancelBubble = true}
 					this.obj.value = this.cell._rval||"";
 					this.cell.appendChild(this.obj);
-				  	if (_isFF) {
+				  	if (dhx4.isFF) {
 						this.obj.style.overflow="visible";
 						if ((this.grid.multiLine)&&(this.obj.offsetHeight>=18)&&(this.obj.offsetHeight<40)){
 							this.obj.style.height="36px";

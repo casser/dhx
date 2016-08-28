@@ -15,10 +15,10 @@
 		}
 	</style>
 	<script>
-		var myForm, formData;
-		var dhxLayout;
+		var myForm, dhxLayout;
 		function doOnLoad() {
-			formData = [
+			dhxLayout = new dhtmlXLayoutObject("layoutObj", "2U");
+			myForm = dhxLayout.cells("a").attachForm([
 				{type: "settings", position: "label-left", labelWidth: 100, inputWidth: 120},
 				{type: "block", inputWidth: "auto", offsetTop: 12, list: [
 					{type: "input", label: "Login", value: "p_rossi"},
@@ -26,9 +26,7 @@
 					{type: "checkbox", label: "Remember me", checked: true},
 					{type: "button", value: "Proceed", offsetLeft: 70, offsetTop: 14}
 				]}
-			];
-			dhxLayout = new dhtmlXLayoutObject("layoutObj", "2U");
-			myForm = dhxLayout.cells("a").attachForm(formData);
+			]);
 			
 		}
 	</script>

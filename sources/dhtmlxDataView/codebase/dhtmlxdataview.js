@@ -1311,7 +1311,7 @@ dhtmlx.RenderStack={
 		this._dataobj.style.height = t+"px";
 		// FF has strange issue with height caculation 
 		// it incorrectly detects scroll height when only small part of item is invisible
-		if (dhtmlx._isFF){ 
+		if (dhx4.isFF){
 			var t2 = this._dataobj.scrollHeight;
 			if (t2!=t)
 				this._dataobj.style.height = t2+"px";
@@ -1563,7 +1563,7 @@ dhtmlx.VirtualRenderStack={
 				this.data.feed.call(this,from,to-from);
 			}
 		}
-		if (dhtmlx._isIE){
+		if (dhx4.isIE){
 				var viewport2 = this._getVisibleRange();
 				if (viewport2._from != viewport._from)
 					this._render_visible_rows();

@@ -6,39 +6,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<link rel="stylesheet" type="text/css" href="../../../codebase/fonts/font_roboto/roboto.css"/>
 	<link rel="stylesheet" type="text/css" href="../../../codebase/dhtmlx.css"/>
-	<script src="../../../sources/dhtmlxCommon/codebase/dhtmlxcommon.js"></script>
-	<!--script src="../../../sources/dhtmlxCommon/codebase/dhtmlxcore.js"></script-->
-	<script src="../../../sources/dhtmlxCommon/codebase/dhtmlxcontainer.js"></script>
-	<script src="../../../sources/dhtmlxLayout/codebase/dhtmlxlayout.js"></script>
-	<script src="../../../sources/dhtmlxGrid/codebase/dhtmlxgrid.js"></script>
-	<script src="../../../sources/dhtmlxTree/codebase/dhtmlxtree.js"></script>
-	<script src="../../../sources/dhtmlxTabbar/codebase/dhtmlxtabbar.js"></script>
-	<script src="../../../sources/dhtmlxEditor/codebase/dhtmlxeditor.js"></script>
-	<script src="../../../sources/dhtmlxToolbar/codebase/dhtmlxtoolbar.js"></script>
-	<script src="../../../sources/dhtmlxRibbon/codebase/dhtmlxribbon.js"></script>
-	<script src="../../../sources/dhtmlxMenu/codebase/dhtmlxmenu.js"></script>
-	<script src="../../../sources/dhtmlxPopup/codebase/dhtmlxpopup.js"></script>
-	<script src="../../../sources/dhtmlxList/codebase/dhtmlxlist.js"></script>
-	<script src="../../../sources/dhtmlxCalendar/codebase/dhtmlxcalendar.js"></script>
-	<script src="../../../sources/dhtmlxColorPicker/codebase/dhtmlxcolorpicker.js"></script>
-	<script src="../../../sources/dhtmlxCombo/codebase/dhtmlxcombo.js"></script>
-	<script src="../../../sources/dhtmlxForm/codebase/dhtmlxform.js"></script>
-	<script src="../../../sources/dhtmlxForm/codebase/ext/dhtmlxform_dyn.js"></script>
-	<script src="../../../sources/dhtmlxForm/codebase/ext/dhtmlxform_item_combo.js"></script>
-	<script src="../../../sources/dhtmlxForm/codebase/ext/dhtmlxform_item_calendar.js"></script>
-	<script src="../../../sources/dhtmlxForm/codebase/ext/dhtmlxform_item_colorpicker.js"></script>
-	<script src="../../../sources/dhtmlxForm/codebase/ext/dhtmlxform_item_container.js"></script>
-	<script src="../../../sources/dhtmlxForm/codebase/ext/dhtmlxform_item_editor.js"></script>
-	<script src="../../../sources/dhtmlxForm/codebase/ext/dhtmlxform_item_image.js"></script>
-	<script src="../../../sources/dhtmlxForm/codebase/ext/dhtmlxform_item_upload.js"></script>
-	<script src="../../../sources/dhtmlxDataView/codebase/dhtmlxdataview.js"></script>
-	<script src="../../../sources/dhtmlxAccordion/codebase/dhtmlxaccordion.js"></script>
-	<script src="../../../sources/dhtmlxChart/codebase/dhtmlxchart.js"></script>
-	<script src="../../../sources/dhtmlxWindows/codebase/dhtmlxwindows.js"></script>
-	<script src="../../../sources/dhtmlxWindows/codebase/ext/dhtmlxwindows_dnd.js"></script>
-	<script src="../../../sources/dhtmlxWindows/codebase/ext/dhtmlxwindows_menu.js"></script>
-	<script src="../../../sources/dhtmlxWindows/codebase/ext/dhtmlxwindows_resize.js"></script>
-
 	<style>
 		html, body {
 			width: 100%;
@@ -56,129 +23,187 @@
 			right:0px;
 		}
 	</style>
-	<script>
-		var myLayout, myGrid;
-		function doOnLoad() {
-			myLayout = new dhtmlXLayoutObject({
-				parent: document.body,
-				pattern: "3L",
-				cells: [{
-					id: "a", text: "grid"
-				},{
-					id: "b", text: "B"
-				},{
-					id: "c", text: "C"
-				}]
-			});
+</head>
+<body>
+<script>
+	var keys = Object.keys(window);
+	console.info("Hello",keys.length);
+</script>
 
-			sbObj = myLayout.cells("a").attachStatusBar({text:"Status bar text here"});
+<script src="../../../sources/dhtmlxCommon/codebase/dhtmlxcommon.js"></script>
+<script src="../../../sources/dhtmlxCommon/codebase/dhtmlxcore.js"></script>
+<script src="../../../sources/dhtmlxCommon/codebase/dhtmlxcontainer.js"></script>
+<script src="../../../sources/dhtmlxLayout/codebase/dhtmlxlayout.js"></script>
+<script src="../../../sources/dhtmlxGrid/codebase/dhtmlxgrid.js"></script>
+<script src="../../../sources/dhtmlxTree/codebase/dhtmlxtree.js"></script>
+<script src="../../../sources/dhtmlxTabbar/codebase/dhtmlxtabbar.js"></script>
+<script src="../../../sources/dhtmlxEditor/codebase/dhtmlxeditor.js"></script>
+<script src="../../../sources/dhtmlxToolbar/codebase/dhtmlxtoolbar.js"></script>
+<script src="../../../sources/dhtmlxRibbon/codebase/dhtmlxribbon.js"></script>
+<script src="../../../sources/dhtmlxMenu/codebase/dhtmlxmenu.js"></script>
+<script src="../../../sources/dhtmlxPopup/codebase/dhtmlxpopup.js"></script>
+<script src="../../../sources/dhtmlxDataView/codebase/dhtmlxdataview.js"></script>
+<script src="../../../sources/dhtmlxList/codebase/dhtmlxlist.js"></script>
+<script src="../../../sources/dhtmlxCalendar/codebase/dhtmlxcalendar.js"></script>
+<script src="../../../sources/dhtmlxColorPicker/codebase/dhtmlxcolorpicker.js"></script>
+<script src="../../../sources/dhtmlxCombo/codebase/dhtmlxcombo.js"></script>
+<script src="../../../sources/dhtmlxForm/codebase/dhtmlxform.js"></script>
+<script src="../../../sources/dhtmlxForm/codebase/ext/dhtmlxform_backup.js"></script>
+<script src="../../../sources/dhtmlxForm/codebase/ext/dhtmlxform_dyn.js"></script>
+<script src="../../../sources/dhtmlxForm/codebase/ext/dhtmlxform_item_combo.js"></script>
+<script src="../../../sources/dhtmlxForm/codebase/ext/dhtmlxform_item_btn2state.js"></script>
+<script src="../../../sources/dhtmlxForm/codebase/ext/dhtmlxform_item_calendar.js"></script>
+<script src="../../../sources/dhtmlxForm/codebase/ext/dhtmlxform_item_colorpicker.js"></script>
+<script src="../../../sources/dhtmlxForm/codebase/ext/dhtmlxform_item_container.js"></script>
+<script src="../../../sources/dhtmlxForm/codebase/ext/dhtmlxform_item_editor.js"></script>
+<script src="../../../sources/dhtmlxForm/codebase/ext/dhtmlxform_item_image.js"></script>
+<script src="../../../sources/dhtmlxForm/codebase/ext/dhtmlxform_item_upload.js"></script>
+<script src="../../../sources/dhtmlxAccordion/codebase/dhtmlxaccordion.js"></script>
+<script src="../../../sources/dhtmlxChart/codebase/dhtmlxchart.js"></script>
+<script src="../../../sources/dhtmlxWindows/codebase/dhtmlxwindows.js"></script>
+<script src="../../../sources/dhtmlxWindows/codebase/ext/dhtmlxwindows_dnd.js"></script>
+<script src="../../../sources/dhtmlxWindows/codebase/ext/dhtmlxwindows_menu.js"></script>
+<script src="../../../sources/dhtmlxWindows/codebase/ext/dhtmlxwindows_resize.js"></script>
+<script>
+	var keys = Object.keys(window).filter(function (k) {
+		return keys.indexOf(k)<0;
+	});
+	console.info("Added",keys.length);
+	//console.info(keys);
+</script>
 
+<script>
+	var myLayout, myGrid;
+	function doOnLoad() {
+		myLayout = new dhtmlXLayoutObject({
+			parent: document.body,
+			pattern: "3L",
+			cells: [{
+				id: "a", text: "grid"
+			},{
+				id: "b", text: "B"
+			},{
+				id: "c", text: "C"
+			}]
+		});
 
+		sbObj = myLayout.cells("a").attachStatusBar({text:"Status bar text here"});
 
-			myToolbar = myLayout.cells("a").attachToolbar({
-				icons_path: "../../dhtmlxToolbar/common/imgs/",
-				xml: "../../dhtmlxToolbar/common/dhxtoolbar_button.xml"
-			});
-			myRibbon = myLayout.cells("b").attachRibbon({
-				icons_path: "../../dhtmlxRibbon/common/",
-				json: "../../dhtmlxRibbon/common/data_attached.json"
-			});
+		myToolbar = myLayout.cells("a").attachToolbar({
+			icons_path: "../../dhtmlxToolbar/common/imgs/",
+			xml: "../../dhtmlxToolbar/common/dhxtoolbar_button.xml"
+		});
+		myRibbon = myLayout.cells("b").attachRibbon({
+			icons_path: "../../dhtmlxRibbon/common/",
+			json: "../../dhtmlxRibbon/common/data_attached.json"
+		});
 
-			myTree = myLayout.cells("b").attachTree();
-			myTree.setImagePath("../../../skins/web/imgs/dhxtree_web/");
-			myTree.load("../common/tree.xml");
+		myTree = myLayout.cells("b").attachTree();
+		myTree.setImagePath("../../../skins/web/imgs/dhxtree_web/");
+		myTree.load("../common/tree.xml");
+		myTree.enableDragAndDrop(true);
 
-			myMenu = myLayout.cells("a").attachMenu({
-				icons_path: "../../dhtmlxMenu/common/imgs/",
-				xml: "../../dhtmlxMenu/common/dhxmenu.xml"
-			});
+		myMenu = myLayout.cells("a").attachMenu({
+			icons_path: "../../dhtmlxMenu/common/imgs/",
+			xml: "../../dhtmlxMenu/common/dhxmenu.xml"
+		});
 
-			myTabbar = myLayout.cells("a").attachTabbar({
-				tabs: [
-					{ id: "a1", text: "Tab 1", active: true },
-					{ id: "a2", text: "Tab 2" },
-					{ id: "a3", text: "Tab 3" },
-					{ id: "a4", text: "Tab 4" },
-					{ id: "a5", text: "Tab 5" }
-				]
-			});
-			myAcc = myTabbar.cells("a3").attachAccordion({
-				icons_path: "../../dhtmlxAccordion/common/icons/",
-				items: [
-					{ id: "a1", text: "Main Page", icon: "flag_red.png" },
-					{ id: "a2", text: "Navigation", icon: "flag_green.png" },
-					{ id: "a3", text: "Feedback", icon: "flag_blue.png" }
-				]
-			});
-			myEditor = myTabbar.cells("a2").attachEditor({
-				content: "<b>Lorem ipsum </b>dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud <u>exercitation ullamco laboris nisi ut aliquip ex ea commodo </u>consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. <i>Excepteur sint occaecat cupidatat non proident</i>, sunt in culpa qui officia deserunt mollit anim id est laborum."
-			});
-			myGrid = myTabbar.tabs("a1").attachGrid();
-			myGrid.setImagePath("../../../codebase/imgs/")
-			myGrid.load("../common/grid.xml");
+		myTabbar = myLayout.cells("a").attachTabbar({
+			tabs: [
+				{ id: "a1", text: "Tab 1", active: true },
+				{ id: "a2", text: "Tab 2" },
+				{ id: "a3", text: "Tab 3" },
+				{ id: "a4", text: "Tab 4" },
+				{ id: "a5", text: "Tab 5" }
+			]
+		});
+		myAcc = myTabbar.cells("a3").attachAccordion({
+			icons_path: "../../dhtmlxAccordion/common/icons/",
+			items: [
+				{ id: "a1", text: "Main Page", icon: "flag_red.png" },
+				{ id: "a2", text: "Navigation", icon: "flag_green.png" },
+				{ id: "a3", text: "Feedback", icon: "flag_blue.png" }
+			]
+		});
+		myEditor = myTabbar.cells("a2").attachEditor({
+			content: "<b>Lorem ipsum </b>dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud <u>exercitation ullamco laboris nisi ut aliquip ex ea commodo </u>consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. <i>Excepteur sint occaecat cupidatat non proident</i>, sunt in culpa qui officia deserunt mollit anim id est laborum."
+		});
+		myGrid = myTabbar.tabs("a1").attachGrid();
+		myGrid.setImagePath("../../../codebase/imgs/")
+		myGrid.load("../common/grid.xml");
 
-			myDataView = myTabbar.cells("a4").attachDataView({
-				type: {
-					template: "<span class='dv_name'>#name#</span><br/>#address#<br/>#city#, #state#",
-					padding: 5,
-					height: 70,
-					width: 165
-				},
-				drag: true,
-				select: true
+		myDataView = myTabbar.cells("a4").attachDataView({
+			type: {
+				template: "<span class='dv_name'>#name#</span><br/>#address#<br/>#city#, #state#",
+				padding: 5,
+				height: 70,
+				width: 165
+			},
+			drag: true,
+			select: true
 
-			});
-			myChart = myTabbar.cells("a5").attachChart({
-				view: "pie",
-				value: "#sales#",
-				color: "#color#",
-				pieInnerText: "#sales#",
-				legend: {
-					width: 75,
-					align: "right",
-					valign: "middle",
-					template: "#month#"
-				}
-			});
-			myChart.parse([
-				{sales: "20", month: "Jan", color: "#ee3639"},
-				{sales: "30", month: "Feb", color: "#ee9e36"},
-				{sales: "50", month: "Mar", color: "#eeea36"},
-				{sales: "40", month: "Apr", color: "#a9ee36"},
-				{sales: "70", month: "May", color: "#36d3ee"},
-				{sales: "80", month: "Jun", color: "#367fee"},
-				{sales: "60", month: "Jul", color: "#9b36ee"}
-			], "json");
-			myPop = new dhtmlXPopup({ form: myForm, id: ["login","password"]});
-			myPop.attachHTML("Please enter something<br>Second line<br>One more line here");
-
-			myForm.attachEvent("onFocus", function(id,value){
-				if (typeof(value) != "undefined") id=[id,value]; // for radiobutton
-				myPop.show(id);
-			});
-			myForm.attachEvent("onBlur", function(id,value){
-				myPop.hide();
-			});
-
-			myDataView.load("../common/dataview.xml");
-
-			var dhxWins, w1;
-			function doWindowOpen() {
-				dhxWins = new dhtmlXWindows();
-				w1 = dhxWins.createWindow("w1", 260, 45, 320, 240);
-				w2 = dhxWins.createWindow("w2", 360, 95, 320, 240);
-				w3 = dhxWins.createWindow("w3", 460, 145, 320, 240);
+		});
+		myChart = myTabbar.cells("a5").attachChart({
+			view: "pie",
+			value: "#sales#",
+			color: "#color#",
+			pieInnerText: "#sales#",
+			legend: {
+				width: 75,
+				align: "right",
+				valign: "middle",
+				template: "#month#"
 			}
-			function doWindowClose() {
-				if (dhxWins != null && dhxWins.unload != null) {
-					dhxWins.unload();
-					dhxWins = w1 = null;
-				}
+		});
+		myChart.parse([
+			{sales: "20", month: "Jan", color: "#ee3639"},
+			{sales: "30", month: "Feb", color: "#ee9e36"},
+			{sales: "50", month: "Mar", color: "#eeea36"},
+			{sales: "40", month: "Apr", color: "#a9ee36"},
+			{sales: "70", month: "May", color: "#36d3ee"},
+			{sales: "80", month: "Jun", color: "#367fee"},
+			{sales: "60", month: "Jul", color: "#9b36ee"}
+		], "json");
+		myForm = myLayout.cells("c").attachForm([
+			{type: "settings", position: "label-left", labelWidth: 100, inputWidth: 120},
+			{type: "block", inputWidth: "auto", offsetTop: 12, list: [
+				{type: "input", name:"login", label: "Login", value: "p_rossi"},
+				{type: "password", name:"password", label: "Password", value: "123"},
+				{type: "checkbox", label: "Remember me", checked: true},
+				{type: "button", value: "Proceed", offsetLeft: 70, offsetTop: 14}
+			]}
+		]);
+		myPop = new dhtmlXPopup({ form: myForm, id: ["login","password"]});
+		myPop.attachHTML("Please enter something<br>Second line<br>One more line here");
+
+
+		myForm.attachEvent("onFocus", function(id,value){
+			if (typeof(value) != "undefined") id=[id,value]; // for radiobutton
+			myPop.show(id);
+		});
+		myForm.attachEvent("onBlur", function(id,value){
+			myPop.hide();
+		});
+
+		myDataView.load("../common/dataview.xml");
+
+		var dhxWins, w1;
+		function doWindowOpen() {
+			dhxWins = new dhtmlXWindows();
+			w1 = dhxWins.createWindow("w1", 260, 45, 320, 240);
+			w2 = dhxWins.createWindow("w2", 360, 95, 320, 240);
+			w3 = dhxWins.createWindow("w3", 460, 145, 320, 240);
+		}
+		function doWindowClose() {
+			if (dhxWins != null && dhxWins.unload != null) {
+				dhxWins.unload();
+				dhxWins = w1 = null;
 			}
 		}
-	</script>
-</head>
-<body onload="doOnLoad();">
-	<div id="layoutObj"></div>
+		doWindowOpen();
+	}
+	doOnLoad();
+</script>
+
 </body>
 </html>

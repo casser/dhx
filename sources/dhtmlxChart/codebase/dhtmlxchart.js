@@ -1,18 +1,3 @@
-/*
-Product Name: dhtmlxSuite 
-Version: 5.0 
-Edition: Standard 
-License: content of this file is covered by GPL. Usage outside GPL terms is prohibited. To obtain Commercial or Enterprise license contact sales@dhtmlx.com
-Copyright UAB Dinamenta http://www.dhtmlx.com
-*/
-
-
-/* DHX DEPEND FROM FILE 'group.js'*/
-
-
-/*DHX:Depend datastore.js*/
-/*DHX:Depend dhtmlx.js*/
-
 dhtmlx.Group = {
 	_init:function(){
 		dhtmlx.assert(this.data,"DataStore required for grouping");
@@ -162,15 +147,6 @@ dhtmlx.Group = {
 		return config;
 	}
 };
-
-
-
-
-/* DHX DEPEND FROM FILE 'date.js'*/
-
-
-/*DHX:Depend dhtmlx.js*/
-
 dhtmlx.Date={
 	Locale: {
 		month_full:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
@@ -311,15 +287,6 @@ dhtmlx.Date={
    	return this.getISOWeek(ndate);
    }
 };
-
-
-
-
-
-
-/* DHX DEPEND FROM FILE 'math.js'*/
-
-
 dhtmlx.math = {};
 dhtmlx.math._toHex=["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"];
 dhtmlx.math.toHex = function(number, length){
@@ -424,16 +391,7 @@ dhtmlx.math.rgbToHsv = function(r, g, b){
    	}
    	return [h, s, v];
 }
-
-
-
-
-/* DHX DEPEND FROM FILE 'ext/chart/presets.js'*/
-
-
-/*chart presents*/
-if(!dhtmlx.presets)
-    dhtmlx.presets = {};
+dhtmlx.presets = {};
 dhtmlx.presets.chart = {
     "simple":{
         item:{
@@ -564,14 +522,6 @@ dhtmlx.presets.chart = {
         border:true
     }
 };
-
-
-
-/* DHX DEPEND FROM FILE 'map.js'*/
-
-
-/*DHX:Depend dhtmlx.js*/
-	
 dhtmlx.ui.Map = function(key){
 	this.name = "Map";
 	this._id = "map_"+dhtmlx.uid();
@@ -612,7 +562,7 @@ dhtmlx.ui.Map.prototype = {
 		var d = dhtmlx.html.create("DIV");
 		d.style.cssText="position:absolute; width:100%; height:100%; top:0px; left:0px;";
 		obj.appendChild(d);
-		var src = dhtmlx._isIE?"":"src='data:image/gif;base64,R0lGODlhEgASAIAAAP///////yH5BAUUAAEALAAAAAASABIAAAIPjI+py+0Po5y02ouz3pwXADs='";
+		var src = dhx4.isIE?"":"src='data:image/gif;base64,R0lGODlhEgASAIAAAP///////yH5BAUUAAEALAAAAAASABIAAAIPjI+py+0Po5y02ouz3pwXADs='";
 		d.innerHTML="<map id='"+this._id+"' name='"+this._id+"'>"+this._map.join("\n")+"</map><img "+src+" class='dhx_map_img' usemap='#"+this._id+"' onmousedown='return false;'>";
 		
 		obj._htmlmap = d; //for clearing routine
@@ -620,19 +570,7 @@ dhtmlx.ui.Map.prototype = {
 		this._map = [];
 	}
 };
-
-
-/* DHX DEPEND FROM FILE 'ext/chart/chart_base.js'*/
-
-
-/*DHX:Depend map.js*/
 dhtmlx.chart = {};
-
-
-/* DHX DEPEND FROM FILE 'ext/chart/chart_scatter.js'*/
-
-
-/*DHX:Depend ext/chart/chart_base.js*/
 dhtmlx.chart.scatter = {
 
 	/**
@@ -711,13 +649,6 @@ dhtmlx.chart.scatter = {
 		p["unit"+axis] = (p["relValue"+axis]?size/p["relValue"+axis]:10);
     }
 };
-
-
-
-/* DHX DEPEND FROM FILE 'ext/chart/chart_radar.js'*/
-
-
-/*DHX:Depend ext/chart/chart_base.js*/
 dhtmlx.chart.radar = {
 	pvt_render_radar:function(ctx,data,x,y,sIndex,map){
 		this._renderRadarChart(ctx,data,x,y,sIndex,map);
@@ -956,13 +887,6 @@ dhtmlx.chart.radar = {
 		 t.style.whiteSpace = "nowrap";
     }
 };
-
-
-
-/* DHX DEPEND FROM FILE 'ext/chart/chart_area.js'*/
-
-
-/*DHX:Depend ext/chart/chart_base.js*/
 dhtmlx.chart.area = {
 	/**
 	*   renders an area chart
@@ -1191,13 +1115,6 @@ dhtmlx.chart.stackedArea ={
 		}
 	}
 };
-
-
-
-/* DHX DEPEND FROM FILE 'ext/chart/chart_spline.js'*/
-
-
-/*DHX:Depend ext/chart/chart_base.js*/
 dhtmlx.chart.spline = {
 	/**
 	*   renders a spline chart
@@ -1305,12 +1222,6 @@ dhtmlx.chart.spline = {
 		return a[i] + (x - xi)*(b[i] + (x-xi)*(c[i]+(x-xi)*d[i])); 
 	}
 };
-
-
-/* DHX DEPEND FROM FILE 'ext/chart/chart_barh.js'*/
-
-
-/*DHX:Depend ext/chart/chart_base.js*/
 dhtmlx.chart.barH = {
 	/**
 	*   renders a bar chart
@@ -1656,15 +1567,6 @@ dhtmlx.chart.barH = {
 	    ctx.restore();
 	}
 };
-
-
-
-/* DHX DEPEND FROM FILE 'ext/chart/chart_stackedbarh.js'*/
-
-
-/*DHX:Depend ext/chart/chart_base.js*/
-/*DHX:Depend ext/chart/chart_barh.js*/
-
 dhtmlx.assert(dhtmlx.chart.barH);
 dhtmlx.chart.stackedBarH = {
 /**
@@ -1804,12 +1706,6 @@ dhtmlx.chart.stackedBarH = {
 		}
 	}
 };
-
-
-/* DHX DEPEND FROM FILE 'ext/chart/chart_stackedbar.js'*/
-
-
-/*DHX:Depend ext/chart/chart_base.js*/
 dhtmlx.chart.stackedBar = {
 	/**
 	*   renders a bar chart
@@ -2000,13 +1896,6 @@ dhtmlx.chart.stackedBar = {
 		return [x5,y3];
 	}
 };
-
-
-
-/* DHX DEPEND FROM FILE 'ext/chart/chart_line.js'*/
-
-
-/*DHX:Depend ext/chart/chart_base.js*/
 dhtmlx.chart.line = {
 
 	/**
@@ -2278,13 +2167,6 @@ dhtmlx.chart.line = {
 		return params;
 	}
 };
-
-
-
-/* DHX DEPEND FROM FILE 'ext/chart/chart_bar.js'*/
-
-
-/*DHX:Depend ext/chart/chart_base.js*/
 dhtmlx.chart.bar = {
 	/**
 	*   renders a bar chart
@@ -2500,7 +2382,6 @@ dhtmlx.chart.bar = {
 	},
 	_drawBarGradient:function(ctx,x0,y0,barWidth,minValue,radius,unit,value,color,inner_gradient){
 		ctx.save();
-		//y0 -= (dhtmlx._isIE?0:0.5);
 		var p = this._correctBarParams(ctx,x0,y0,value,unit,barWidth,minValue);
 		var gradParam = this._setBarGradient(ctx,p.x0,p.y0,p.x0+barWidth,p.y0-unit*p.value+2,inner_gradient,color,"y");
 		var borderOffset = this._settings.border?1:0;
@@ -2559,13 +2440,6 @@ dhtmlx.chart.bar = {
 		return [x5,y3];
 	}
 };
-
-
-/* DHX DEPEND FROM FILE 'ext/chart/chart_pie.js'*/
-
-
-/*DHX:Depend ext/chart/chart_base.js*/
-/*DHX:Depend ext/chart/chart_base.js*/
 dhtmlx.chart.pie = {
 	pvt_render_pie:function(ctx,data,x,y,sIndex,map){
 		this._renderPie(ctx,data,x,y,1,map,sIndex);
@@ -3052,7 +2926,6 @@ dhtmlx.chart.pie = {
 		t.style.whiteSpace = "nowrap";
 	}
 };
-
 dhtmlx.chart.pie3D = {
 	pvt_render_pie3D:function(ctx,data,x,y,sIndex,map){
 		this._renderPie(ctx,data,x,y,this._settings.cant,map);
@@ -3075,20 +2948,6 @@ dhtmlx.chart.donut = {
 		ctx.fill();
 	}
 };
-
-
-
-/* DHX DEPEND FROM FILE 'compatibility_grid.js'*/
-
-
-/*
-	Compatibility hack for loading data from the grid.
-	Provides new type of datasource - dhtmlxgrid
-	
-*/
-
-/*DHX:Depend load.js*/
-
 dhtmlx.DataDriver.dhtmlxgrid={
 	_grid_getter:"_get_cell_value",
 	toObject:function(data){
@@ -3112,14 +2971,6 @@ dhtmlx.DataDriver.dhtmlxgrid={
 		};
 	}
 };
-
-
-/* DHX DEPEND FROM FILE 'canvas.js'*/
-
-
-/*DHX:Depend thirdparty/excanvas*/
-/*DHX:Depend dhtmlx.js*/
-
 dhtmlx.ui.Canvas = function(container,name,style) {
 	this._canvas_labels = [];
 	this._canvas_name =  name;
@@ -3137,7 +2988,7 @@ dhtmlx.ui.Canvas.prototype = {
 		this._obj.appendChild(this._canvas);
 		//use excanvas in IE
 		if (!this._canvas.getContext){
-			if (dhtmlx._isIE){
+			if (dhx4.isIE){
 				dhtmlx.require("thirdparty/excanvas/excanvas.js");	//sync loading
 				G_vmlCanvasManager.init_(document);
 				G_vmlCanvasManager.initElement(this._canvas);
@@ -3267,42 +3118,7 @@ dhtmlx.ui.Canvas.prototype = {
 		return res;
 	}
 };
-
-/* DHX INITIAL FILE 'C:\http\legacy/dhtmlxCore/sources//chart.js'*/
-
-
-/*DHX:Depend chart.css*/
-/*DHX:Depend canvas.js*/
-/*DHX:Depend load.js*/
-
-/*DHX:Depend compatibility_grid.js*/
-/*DHX:Depend compatibility_layout.js*/
-
-/*DHX:Depend config.js*/
-/*DHX:Depend destructor.js*/
-/*DHX:Depend mouse.js*/
-/*DHX:Depend key.js*/
-/*DHX:Depend group.js*/
-/*DHX:Depend autotooltip.js*/
-
-/*DHX:Depend ext/chart/chart_base.js*/
-/*DHX:Depend ext/chart/chart_pie.js*/		//+pie3d
-/*DHX:Depend ext/chart/chart_bar.js*/	
-/*DHX:Depend ext/chart/chart_line.js*/
-/*DHX:Depend ext/chart/chart_barh.js*/	
-/*DHX:Depend ext/chart/chart_stackedbar.js*/	
-/*DHX:Depend ext/chart/chart_stackedbarh.js*/
-/*DHX:Depend ext/chart/chart_spline.js*/	
-/*DHX:Depend ext/chart/chart_area.js*/	 	//+stackedArea
-/*DHX:Depend ext/chart/chart_radar.js*/	 	
-/*DHX:Depend ext/chart/chart_scatter.js*/
-/*DHX:Depend ext/chart/presets.js*/
-/*DHX:Depend math.js*/
-/*DHX:Depend destructor.js*/
-/*DHX:Depend dhtmlx.js*/
-/*DHX:Depend date.js*/
-
-dhtmlXChart = function(container){
+function dhtmlXChart(container){
 	this.name = "Chart";	
 	
 	if (dhtmlx.assert_enabled()) this._assert();
@@ -3820,7 +3636,7 @@ dhtmlXChart.prototype={
 		return lineX;
 	},
 	_setYAxisTitle:function(point0,point1){
-        var className = "dhx_axis_title_y"+(dhtmlx._isIE&&dhtmlx._isIE !=9?" dhx_ie_filter":"");
+        var className = "dhx_axis_title_y"+(dhx4.isIE&&dhx4.isIE !=9?" dhx_ie_filter":"");
 		var text=this.canvases["y"].renderTextAt("middle",false,0,parseInt((point1.y-point0.y)/2+point0.y,10),this._settings.yAxis.title,className);
         if (text)
 			text.style.left = (dhtmlx.env.transform?(text.offsetHeight-text.offsetWidth)/2:0)+"px";
@@ -4392,35 +4208,29 @@ dhtmlXChart.prototype={
 		map.addRect(id,[points[0].x-bounds.x,points[0].y-bounds.y,points[1].x-bounds.x,points[1].y-bounds.y],sIndex);
 	}
 };
-
 dhtmlx.compat("layout");
+dhtmlXCellObject.prototype.attachChart = function(conf) {
 
-if (typeof(window.dhtmlXCellObject) != "undefined") {
-	
-	dhtmlXCellObject.prototype.attachChart = function(conf) {
-		
-		this.callEvent("_onBeforeContentAttach",["chart"]);
-		
-		var obj = document.createElement("DIV");
-		obj.id = "dhxChartObj_"+window.dhx4.newId();
-		obj.style.width = "100%";
-		obj.style.height = "100%";
-		document.body.appendChild(obj);
-		this._attachObject(obj);
-		
-		conf.container = obj.id;
-		
-		this.dataType = "chart";
-		this.dataObj = new dhtmlXChart(conf);
-		
-		if (!this.dataObj.setSizes) {
-			this.dataObj.setSizes = function() {
-				if (this.resize) this.resize(); else this.render();
-			};
-		}
-		
-		return this.dataObj;
-	};
-	
-}
+	this.callEvent("_onBeforeContentAttach",["chart"]);
+
+	var obj = document.createElement("DIV");
+	obj.id = "dhxChartObj_"+window.dhx4.newId();
+	obj.style.width = "100%";
+	obj.style.height = "100%";
+	document.body.appendChild(obj);
+	this._attachObject(obj);
+
+	conf.container = obj.id;
+
+	this.dataType = "chart";
+	this.dataObj = new dhtmlXChart(conf);
+
+	if (!this.dataObj.setSizes) {
+		this.dataObj.setSizes = function() {
+			if (this.resize) this.resize(); else this.render();
+		};
+	}
+
+	return this.dataObj;
+};
 

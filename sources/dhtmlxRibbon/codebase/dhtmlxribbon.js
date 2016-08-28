@@ -2480,77 +2480,69 @@ dhtmlXRibbon.prototype.getCombo = function(id) {
 	i.buttonSelect = i._extends(i.buttonSelect, i.buttonTwoState);
 	i.buttonSegment = i._extends(i.buttonSegment, i.buttonTwoState);
 })();
-if (typeof(window.dhtmlXCellObject) != "undefined") {
-	
-	dhtmlXCellObject.prototype._createNode_ribbon = function(obj, type, htmlString, append, node) {
-		
-		if (typeof(node) != "undefined") {
-			obj = node;
-		} else {
-			obj = document.createElement("DIV");
-			obj.className = "dhx_cell_ribbon_"+(this.conf.borders?"def":"no_borders");
-			obj.appendChild(document.createElement("DIV"));
-		}
-		
-		this.cell.insertBefore(obj, this.cell.childNodes[this.conf.idx.cont]); // before cont only
-		this.conf.ofs_nodes.t.ribbon = true;
-		this._updateIdx();
-		this._adjustCont(this._idd);
-		
-		return obj;
-	};
-	
-	dhtmlXCellObject.prototype.attachRibbon = function(conf) {
-		
-		if (!(this.dataNodes.ribbon == null && this.dataNodes.toolbar == null)) return;
-		
-		this.callEvent("_onBeforeContentAttach", ["ribbon"]);
-		
-		if (typeof(conf) == "undefined") conf = {};
-		if (typeof(conf.skin) == "undefined") conf.skin = this.conf.skin;
-		
-		conf.parent = this._attachObject("ribbon").firstChild;
-		
-		this.dataNodes.ribbon = new dhtmlXRibbon(conf);
-		
-		var t = this;
-		this.dataNodes.ribbon.attachEvent("_onHeightChanged", function(){
-				t._adjustCont(t._idd);
-		});
-		
-		this._adjustCont();
-		
-		conf.parent = null;
-		conf = null;
-		
-		this.callEvent("_onContentAttach", []);
-		
-		return this.dataNodes.ribbon;
-		
-	};
-	
-	dhtmlXCellObject.prototype.detachRibbon = function() {
-		
-		if (!this.dataNodes.ribbon) return;
-		this.dataNodes.ribbon.unload();
-		this.dataNodes.ribbon = null;
-		delete this.dataNodes.ribbon;
-		
-		this._detachObject("ribbon");
-		
-	};
-	
-	dhtmlXCellObject.prototype.showRibbon = function() {
-		this._mtbShowHide("ribbon", "");
-	};
-	
-	dhtmlXCellObject.prototype.hideRibbon = function() {
-		this._mtbShowHide("ribbon", "none");
-	};
-	
-	dhtmlXCellObject.prototype.getAttachedRibbon = function() {
-		return this.dataNodes.ribbon;
-	};
-	
-}
+
+dhtmlXCellObject.prototype._createNode_ribbon = function(obj, type, htmlString, append, node) {
+
+	if (typeof(node) != "undefined") {
+		obj = node;
+	} else {
+		obj = document.createElement("DIV");
+		obj.className = "dhx_cell_ribbon_"+(this.conf.borders?"def":"no_borders");
+		obj.appendChild(document.createElement("DIV"));
+	}
+
+	this.cell.insertBefore(obj, this.cell.childNodes[this.conf.idx.cont]); // before cont only
+	this.conf.ofs_nodes.t.ribbon = true;
+	this._updateIdx();
+	this._adjustCont(this._idd);
+
+	return obj;
+};
+dhtmlXCellObject.prototype.attachRibbon = function(conf) {
+
+	if (!(this.dataNodes.ribbon == null && this.dataNodes.toolbar == null)) return;
+
+	this.callEvent("_onBeforeContentAttach", ["ribbon"]);
+
+	if (typeof(conf) == "undefined") conf = {};
+	if (typeof(conf.skin) == "undefined") conf.skin = this.conf.skin;
+
+	conf.parent = this._attachObject("ribbon").firstChild;
+
+	this.dataNodes.ribbon = new dhtmlXRibbon(conf);
+
+	var t = this;
+	this.dataNodes.ribbon.attachEvent("_onHeightChanged", function(){
+		t._adjustCont(t._idd);
+	});
+
+	this._adjustCont();
+
+	conf.parent = null;
+	conf = null;
+
+	this.callEvent("_onContentAttach", []);
+
+	return this.dataNodes.ribbon;
+
+};
+dhtmlXCellObject.prototype.detachRibbon = function() {
+
+	if (!this.dataNodes.ribbon) return;
+	this.dataNodes.ribbon.unload();
+	this.dataNodes.ribbon = null;
+	delete this.dataNodes.ribbon;
+
+	this._detachObject("ribbon");
+
+};
+dhtmlXCellObject.prototype.showRibbon = function() {
+	this._mtbShowHide("ribbon", "");
+};
+dhtmlXCellObject.prototype.hideRibbon = function() {
+	this._mtbShowHide("ribbon", "none");
+};
+dhtmlXCellObject.prototype.getAttachedRibbon = function() {
+	return this.dataNodes.ribbon;
+};
 

@@ -359,7 +359,7 @@ this.deleteChildItems=function(id){
    		this.htmlNode.htmlNode.childNodes[0].childNodes[0].childNodes[0].className="hiddenRow";
    		
    		this.allTree.insertBefore(this.htmlNode.htmlNode,this.selectionBar);
-		if(_isFF){
+		if(dhx4.isFF){
 			this.allTree.childNodes[0].width="100%";
 			this.allTree.childNodes[0].style.overflow="hidden";
 		}

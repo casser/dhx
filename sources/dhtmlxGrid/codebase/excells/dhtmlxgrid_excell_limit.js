@@ -13,10 +13,10 @@ function eXcell_limit(cell){
 		this.grid = this.cell.parentNode.grid;
 	}
 	this.edit = function(){
-					this.cell.atag=((!this.grid.multiLine)&&(_isKHTML||_isMacOS||_isFF))?"INPUT":"TEXTAREA";
+					this.cell.atag=((!this.grid.multiLine)&&(dhx4.isKHTML||dhx4.isMacOS||dhx4.isFF))?"INPUT":"TEXTAREA";
 					this.val = this.getValue();
 					this.obj = document.createElement(this.cell.atag);
-					this.obj.style.height = (this.cell.offsetHeight-(_isIE?6:4))+"px";
+					this.obj.style.height = (this.cell.offsetHeight-(dhx4.isIE?6:4))+"px";
                     this.obj.className="dhx_combo_edit";
 				   	this.obj.wrap = "soft";
 					this.obj.style.textAlign = this.cell.align;
@@ -25,7 +25,7 @@ function eXcell_limit(cell){
 					this.obj.value = this.val
 					this.cell.innerHTML = "";
 					this.cell.appendChild(this.obj);
-				  	if (_isFF) {
+				  	if (dhx4.isFF) {
 						this.obj.style.overflow="visible";
 						if ((this.grid.multiLine)&&(this.obj.offsetHeight>=18)&&(this.obj.offsetHeight<40)){
 							this.obj.style.height="36px";

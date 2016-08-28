@@ -157,7 +157,7 @@ eXcell_dhxCalendarA.prototype.edit = function() {
 	this.grid._grid_calendarA.setDate(this.val);
 	this.grid._grid_calendarA.draw=t;
 	
-	this.cell.atag=((!this.grid.multiLine)&&(_isKHTML||_isMacOS||_isFF))?"INPUT":"TEXTAREA";
+	this.cell.atag=((!this.grid.multiLine)&&(dhx4.isKHTML||dhx4.isMacOS||dhx4.isFF))?"INPUT":"TEXTAREA";
 	
 	this.obj = document.createElement(this.cell.atag);
 	this.obj.style.height = (this.cell.offsetHeight-4)+"px";

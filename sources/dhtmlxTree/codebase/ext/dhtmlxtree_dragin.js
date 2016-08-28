@@ -69,7 +69,7 @@ function dhx_dragSomethingInTree(){
 
         var image=(source.img.getAttribute("image")||"");
 		var id=source.img.id||"new";
-		var text=(source.img.getAttribute("text")||(_isIE?source.img.innerText:source.img.textContent));
+		var text=(source.img.getAttribute("text")||(dhx4.isIE?source.img.innerText:source.img.textContent));
         tree[bitem?"insertNewNext":"insertNewItem"](bitem?bitem.id:item.id,id,text,"",image,image,image);
      }
 }

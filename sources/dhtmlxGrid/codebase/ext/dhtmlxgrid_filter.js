@@ -187,7 +187,7 @@ dhtmlXGridObject.prototype.makeFilter=function(id,column,preserve){
 		id.onchange=function(){
 			self.filterByAll();
 		}
-		if(_isIE)
+		if(dhx4.isIE)
 			id.style.marginTop="1px";
 			
 		this.attachEvent("onEditCell",function(stage,a,ind){ 

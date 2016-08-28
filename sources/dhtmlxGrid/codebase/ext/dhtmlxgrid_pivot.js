@@ -51,7 +51,7 @@ dhtmlXGridObject.prototype.makePivot=function(cont,details){
     else{
 		this._column_list=[];
 		for (var i=0; i<this.hdr.rows[1].cells.length; i++)
-   			this._column_list.push(this.hdr.rows[1].cells[i][_isIE?"innerText":"textContent"])
+   			this._column_list.push(this.hdr.rows[1].cells[i][dhx4.isIE?"innerText":"textContent"])
    	}
    		
    	var that = this;
@@ -133,7 +133,7 @@ dhtmlXGridObject.prototype._fetchPivotData=function(){
 }
 
 dhtmlXGridObject.prototype._renderPivot=function(){ 
-	if (_isIE) this._pgridSelect[2].removeNode(true)
+	if (dhx4.isIE) this._pgridSelect[2].removeNode(true)
 	if (this._pgrid)  
 		this._pgrid.destructor();
 	

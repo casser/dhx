@@ -19,7 +19,7 @@ function eXcell_context(cell){
     }
 	
 	this.getValue = function(){
-		return _isIE?this.cell.innerText:this.cell.textContent;
+		return dhx4.isIE?this.cell.innerText:this.cell.textContent;
 	}
 	this.setValue = function(val){
 		this.cell._val=val;

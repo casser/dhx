@@ -13,7 +13,7 @@ function eXcell_num(cell){
 	}catch(er){}
 	this.edit = function(){
 					this.val = this.getValue();
-					this.obj = document.createElement(_isKHTML?"INPUT":"TEXTAREA");
+					this.obj = document.createElement(dhx4.isKHTML?"INPUT":"TEXTAREA");
                     this.obj.className="dhx_combo_edit";
 					this.obj.style.height = (this.cell.offsetHeight-4)+"px";
 					this.obj.wrap = "soft";

@@ -88,7 +88,7 @@ dhtmlXGridObject.prototype.toPDF=function(url,mode,header,footer,rows,target){
 						if (frow.cells[k].getElementsByTagName("SELECT").length)
 							val="";
 						else
-							val = _isIE?frow.cells[k].innerText:frow.cells[k].textContent;
+							val = dhx4.isIE?frow.cells[k].innerText:frow.cells[k].textContent;
 							val=val.replace(/[ \n\r\t\xA0]+/," ");
 						break;
 					}
@@ -127,7 +127,7 @@ dhtmlXGridObject.prototype.toPDF=function(url,mode,header,footer,rows,target){
 				 	var val = "";
 				 	var span = "";
 					if (row.cells[k]._cellIndexS==j) {
-						val = _isIE?row.cells[k].innerText:row.cells[k].textContent;
+						val = dhx4.isIE?row.cells[k].innerText:row.cells[k].textContent;
 						val=val.replace(/[ \n\r\t\xA0]+/," ");
 						
 						if (row.cells[k].colSpan && row.cells[k].colSpan!=1)

@@ -34,7 +34,7 @@ function eXcell_wbut(cell){
 			this.obj.style.margin = "0px";
 			this.obj.style.padding = "0px";
 			this.obj.style.overflow = "hidden";
-			this.obj.style.fontSize = _isKHTML?"10px":"12px";
+			this.obj.style.fontSize = dhx4.isKHTML?"10px":"12px";
 			this.obj.style.fontFamily = "Arial";
 			this.obj.wrap = "soft";
 			this.obj.style.textAlign = this.cell.align;
@@ -48,7 +48,7 @@ function eXcell_wbut(cell){
 			this.obj.focus()
 		this.cell.appendChild(document.createTextNode(" ")); // Create space between text box and button
 		var	butElem = document.createElement('input');        // This is the button DOM code
-			if(_isIE){
+			if(dhx4.isIE){
 				butElem.style.height = (this.cell.offsetHeight-(this.grid.multiLine?5:4))+"px";
 				butElem.style.lineHeight = "5px";
 			}else{

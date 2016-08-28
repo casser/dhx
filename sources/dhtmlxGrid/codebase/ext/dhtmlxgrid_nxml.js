@@ -402,7 +402,7 @@ dhtmlXGridObject.prototype.getXLS = function(path){
       this.xslform=document.createElement("FORM");
       this.xslform.action=(path||"")+"xls.php";
       this.xslform.method="post";
-      this.xslform.target=(_isIE?"_blank":"");
+      this.xslform.target=(dhx4.isIE?"_blank":"");
       document.body.appendChild(this.xslform);
       var i1=document.createElement("INPUT");
       i1.type="hidden";
@@ -462,7 +462,7 @@ dhtmlXGridObject.prototype.printView = function(before,after){
       html += '</tr>';
 
 	  	for (var i=2; i<this.hdr.rows.length; i++){
-	  		if (_isIE){
+	  		if (dhx4.isIE){
 	  			html+="<tr style='background-color:lightgrey' class='header_row_"+i+"'>";
 	  			var cells=this.hdr.rows[i].childNodes;
 	  			for (var j=0; j < cells.length; j++) 
