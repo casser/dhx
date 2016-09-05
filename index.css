@@ -1,0 +1,123 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+}
+/* ftiles */
+.dhx_dataview_item.dhx_dataview_ftiles_item,
+.dhx_dataview_item.dhx_dataview_ftiles_item_selected {
+    position: relative;
+    font-size: 14px;
+    font-family: Roboto, Arial, Helvetica;
+    color: #404040;
+    overflow: hidden;
+    background-color: white;
+    cursor: pointer;
+    -moz-user-select: none;
+}
+
+div.ftiles_item {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    width: 210px;
+    height: 79px;
+    border-radius: 2px;
+    border: 1px solid #f1f1f1;
+    background-color: #f9f9f9;
+}
+.dhx_dataview_item.dhx_dataview_ftiles_item_selected .ftiles_item {
+    border-color: #d2d2d2;
+    background-color: #dcdcdc;
+}
+.dhx_dataview_item.dhx_dataview_ftiles_item .ftiles_item:hover {
+    border-color: #e2e2e2;
+    background-color: #ebebeb;
+}
+div.ftiles_item i.fa,div.ficons_item i.fa { /* icon */
+    position: absolute;
+    height: 32px;
+    width: 32px;
+    left: 12px;
+    top: 24px;
+    font-size: 32px;
+}
+div.ficons_item i.fa {
+    left: 50%;
+    margin-left: -16px;
+}
+
+div.ftiles_item div.dhx_item_text { /* filename */
+    position: absolute;
+    left: 57px;
+    top: 21px;
+    width: 145px;
+    height: 16px;
+    line-height: 15px;
+    font-size: 14px;
+    font-family: Roboto, Arial, Helvetica;
+    color: #404040;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -moz-user-select: none;
+}
+div.ftiles_item div.dhx_item_text.dhx_item_text_gray { /* size/info */
+    top: 44px;
+    color: #888;
+}
+
+/* ficons */
+.dhx_dataview_item.dhx_dataview_ficons_item,
+.dhx_dataview_item.dhx_dataview_ficons_item_selected {
+    position: relative;
+    font-size: 11px;
+    font-family: Tahoma;
+    overflow: hidden;
+    background-color: white;
+    cursor: pointer;
+    -moz-user-select: none;
+}
+
+div.ficons_item {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    width: 122px;
+    height: 100px;
+    border: 1px solid #f1f1f1;
+    background-color: #f9f9f9;
+}
+.dhx_dataview_item.dhx_dataview_ficons_item_selected .ficons_item {
+    border-color: #d2d2d2;
+    background-color: #dcdcdc;
+}
+.dhx_dataview_item.dhx_dataview_ficons_item .ficons_item:hover {
+    border-color: #e2e2e2;
+    background-color: #ebebeb;
+}
+.dhx_dataview_item .ficons_icon { /* icon */
+    position: absolute;
+    height: 32px;
+    width: 32px;
+    left: 45px;
+    top: 19px;
+}
+div.ficons_item div.dhx_item_text { /* filename */
+    position: absolute;
+    left: 6px;
+    top: 68px;
+    width: 112px;
+    height: 16px;
+    line-height: 15px;
+    font-size: 14px;
+    font-family: Roboto, Arial, Helvetica;
+    color: #404040;
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
+    -moz-user-select: none;
+}

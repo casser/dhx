@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<toolbar>
+    <item id="back" type="button" text="Back" img="fa fa-arrow-left" imgDis="fa fa-arrow-left"/>
+    <item id="fwd" type="button" img="fa fa-arrow-right" imgDis="fa fa-arrow-right"/>
+    <item id="levelup" type="button" img="fa fa-level-up" imgDis="fa fa-level-up"/>
+    <item id="search" type="button" text="Search" img="fa fa-search" imgDis="fa fa-search"/>
+    <item id="folders" type="button" text="Folders" img="fa fa-sitemap" imgDis="fa fa-sitemap"/>
+    <item id="view" type="buttonSelect" img="fa fa-desktop" imgDis="fa fa-desktop" openAll="true" renderSelect="false">
+        <item id="view_dlist" type="button" text="Details"/>
+        <item id="view_icons" text="Icons" type="button"/>
+        <item id="view_tiles" text="Tiles" type="button"/>
+    </item>
+</toolbar>
