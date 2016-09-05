@@ -1359,7 +1359,8 @@ dhtmlx.VirtualRenderStack = {
         };
     }
 };
-dhtmlXDataView = function (container) {
+
+function dhtmlXDataView(container) {
     //next data is only for debug purposes
     this.name = "DataView";	//name of component
     if (dhtmlx.assert_enabled()) this._assert();

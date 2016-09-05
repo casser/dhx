@@ -2,34 +2,43 @@ var globalActiveDHTMLGridObject;
 String.prototype._dhx_trim = function () {
     return this.replace(/&nbsp;/g, " ").replace(/(^[ \t]*)|([ \t]*$)/g, "");
 };
-function dhtmlxArray(ar) {
-    return dhtmlx.extend((ar || []), dhtmlxArray._master);
-}
-dhtmlxArray._master = {
-    _dhx_find: function (pattern) {
-        for (var i = 0; i < this.length; i++) {
-            if (pattern == this[i]) {
-                return i;
-            }
-        }
-        return -1;
-    },
-    _dhx_insertAt: function (ind, value) {
-        this[this.length] = null;
-        for (var i = this.length - 1; i >= ind; i--) {
-            this[i] = this[i - 1]
-        }
-        this[ind] = value
-    },
-    _dhx_removeAt: function (ind) {
-        this.splice(ind, 1)
-    },
-    _dhx_swapItems: function (ind1, ind2) {
-        var tmp = this[ind1];
-        this[ind1] = this[ind2];
-        this[ind2] = tmp;
+
+class dhtmlxArray {
+    static cast(ar){
+        return dhtmlx.extend((ar || []), this._master);
     }
-};
+    static get _master(){
+        return Object.defineProperty(this,'_master',{
+            value:{
+                _dhx_find: function (pattern) {
+                    for (var i = 0; i < this.length; i++) {
+                        if (pattern == this[i]) {
+                            return i;
+                        }
+                    }
+                    return -1;
+                },
+                _dhx_insertAt: function (ind, value) {
+                    this[this.length] = null;
+                    for (var i = this.length - 1; i >= ind; i--) {
+                        this[i] = this[i - 1]
+                    }
+                    this[ind] = value
+                },
+                _dhx_removeAt: function (ind) {
+                    this.splice(ind, 1)
+                },
+                _dhx_swapItems: function (ind1, ind2) {
+                    var tmp = this[ind1];
+                    this[ind1] = this[ind2];
+                    this[ind2] = tmp;
+                }
+            }
+        })._master
+    }
+}
+
+
 function dhtmlXGridObject(id) {
     if (dhtmlxEvent.initTouch) {
         dhtmlxEvent.initTouch();
@@ -68,14 +77,14 @@ function dhtmlXGridObject(id) {
     this.combos = new Array(0);
     this.defVal = new Array(0);
     this.rowsAr = {};
-    this.rowsBuffer = dhtmlxArray();
-    this.rowsCol = dhtmlxArray(); //array of rows by index
+    this.rowsBuffer = dhtmlxArray.cast();
+    this.rowsCol = dhtmlxArray.cast(); //array of rows by index
     this._data_cache = {};
     this._ecache = {};
     this._ud_enabled = true;
     this.xmlLoader = this.doLoadDetails;
     this._maskArr = [];
-    this.selectedRows = dhtmlxArray(); //selected rows array
+    this.selectedRows = dhtmlxArray.cast(); //selected rows array
     this.UserData = {};//hash of row related userdata (and for grid - "gridglobaluserdata")
     this._sizeFix = this._borderFix = 0;
     /*MAIN OBJECTS*/
@@ -135,7 +144,7 @@ function dhtmlXGridObject(id) {
     this.columnIds = [];
     this.columnColor = [];
     this._hrrar = [];
-    this.cellType = dhtmlxArray();
+    this.cellType = dhtmlxArray.cast();
     this.cellAlign = [];
     this.initCellWidth = [];
     this.fldSort = [];
@@ -1127,7 +1136,7 @@ function dhtmlXGridObject(id) {
         for (var i = 0; i < coll.length; i++) {
             this.render_row(i).className += " rowselected";
         }
-        this.selectedRows = dhtmlxArray([].concat(coll));
+        this.selectedRows = dhtmlxArray.cast([].concat(coll));
         if (this.selectedRows.length) {
             this.row = this.selectedRows[0];
             this.cell = this.row.cells[0];
@@ -1522,7 +1531,7 @@ function dhtmlXGridObject(id) {
             return;
         }
         var tmpAr = this.selectedRows;
-        this.selectedRows = dhtmlxArray();
+        this.selectedRows = dhtmlxArray.cast();
         for (var i = num - 1; i >= 0; i--) {
             var node = tmpAr[i];
             if (!this.deleteRow(node.idd, node)) {
@@ -2025,7 +2034,7 @@ function dhtmlXGridObject(id) {
             }
         }
         //..
-        this.selectedRows = dhtmlxArray();
+        this.selectedRows = dhtmlxArray.cast();
         this.row = null;
         if (this.cell != null) {
             this.cell.className = this.cell.className.replace(/cellselected/g, "");
@@ -2165,7 +2174,7 @@ function dhtmlXGridObject(id) {
                 this.ftr = null;
             }
             this._aHead = this.ftr = this.cellWidth = this._aFoot = null;
-            this.cellType = dhtmlxArray();
+            this.cellType = dhtmlxArray.cast();
             this._hrrar = [];
             this.columnIds = [];
             this.combos = [];
@@ -2176,12 +2185,12 @@ function dhtmlXGridObject(id) {
         //..
         this.row = null;
         this.cell = null;
-        this.rowsCol = dhtmlxArray();
+        this.rowsCol = dhtmlxArray.cast();
         this.rowsAr = {}; //array of rows by idd
         this._RaSeCol = [];
-        this.rowsBuffer = dhtmlxArray();
+        this.rowsBuffer = dhtmlxArray.cast();
         this.UserData = [];
-        this.selectedRows = dhtmlxArray();
+        this.selectedRows = dhtmlxArray.cast();
         if (this.pagingOn || this._srnd) {
             this.xmlFileUrl = "";
         }
@@ -2297,7 +2306,7 @@ function dhtmlXGridObject(id) {
             arLab = [].concat(hdrStr);
         }
         var arWdth = new Array(0);
-        var arTyp = new dhtmlxArray(0);
+        var arTyp = dhtmlxArray.cast(0);
         var arAlg = new Array(0);
         var arVAlg = new Array(0);
         var arSrt = new Array(0);
@@ -2361,7 +2370,7 @@ function dhtmlXGridObject(id) {
      *   @topic: 0,3,4
      */
     this.setColTypes = function (typeStr) {
-        this.cellType = dhtmlxArray(typeStr.split(this.delim));
+        this.cellType = dhtmlxArray.cast(typeStr.split(this.delim));
         this._strangeParams = [];
         for (var i = 0; i < this.cellType.length; i++) {
             if ((this.cellType[i].indexOf("[") != -1)) {
@@ -3032,20 +3041,9 @@ dhtmlXGridObject.prototype = {
     setRowAttribute: function (id, name, value) {
         this.getRowById(id)._attrs[name] = value;
     },
-    /**
-     *   @desc: detect is current grid is a treeGrid
-     *   @type: private
-     *   @topic: 2
-     */
     isTreeGrid: function () {
         return (this.cellType._dhx_find("tree") != -1);
     }, //#column_hidden:21092006{
-    /**
-     *   @desc: hide/show row (warning! - this command doesn't affect row indexes, only visual appearance)
-     *   @param: ind - column index
-     *   @param: state - true/false - hide/show row
-     *   @type:  public
-     */
     setRowHidden: function (id, state) {
         var f = dhx4.s2b(state);
         //var ind=this.getRowIndex(id);
@@ -3077,13 +3075,6 @@ dhtmlXGridObject.prototype = {
         this.callEvent("onRowHide", [id, state]);
         this.setSizes();
     }, //#__pro_feature:21092006{
-    /**
-     *   @desc: hide/show column
-     *   @param: ind - column index
-     *   @param: state - true/false - hide/show column
-     *   @type:  public
-     *   @edition: Professional
-     */
     setColumnHidden: function (ind, state) {
         if (!this.hdr.rows.length) {
             if (!this._ivizcol) {
@@ -3116,27 +3107,12 @@ dhtmlXGridObject.prototype = {
         this.setSortImgPos();
         this.callEvent("onColumnHidden", [ind, state])
     },
-    /**
-     *   @desc: get show/hidden status of column
-     *   @param: ind - column index
-     *   @type:  public
-     *   @edition: Professional
-     *   @returns:  if column hidden then true else false
-     */
     isColumnHidden: function (ind) {
         if ((this._hrrar) && (this._hrrar[ind])) {
             return true;
         }
         return false;
     },
-    /**
-     *   @desc: set list of visible/hidden columns
-     *   @param: list - list of true/false separated by comma
-     *   @type:  public
-     *    @newmethod: setColumnsVisibility
-     *   @edition: Professional
-     *   @topic:0
-     */
     setColumnsVisibility: function (list) {
         if (list) {
             this._ivizcol = list.split(this.delim);
@@ -3147,10 +3123,6 @@ dhtmlXGridObject.prototype = {
             }
         }
     },
-    /**
-     *   @desc: fix hidden state for column in all rows
-     *   @type: private
-     */
     _fixHiddenRowsAll: function (pb, ind, prop, state, index) {
         index = index || "_cellIndex";
         var z = pb.rows.length;
@@ -3168,13 +3140,6 @@ dhtmlXGridObject.prototype = {
             }
         }
     },
-    /**
-     *   @desc: hide column
-     *   @param: ind - column index
-     *   @param: state - hide/show
-     *   @edition: Professional
-     *   @type:  private
-     */
     _hideShowColumn: function (ind, state) {
         var hind = ind;
         if (this.hdr.rows[1] && (this.hdr.rows[1]._childIndexes) && (this.hdr.rows[1]._childIndexes[ind] != ind)) {
@@ -3251,23 +3216,11 @@ dhtmlXGridObject.prototype = {
     //#}
     //#__pro_feature:21092006{
     //#colspan:20092006{
-    /**
-     *   @desc: enable/disable colspan support
-     *   @param: mode - true/false
-     *   @type:  public
-     *   @edition: Professional
-     */
     enableColSpan: function (mode) {
         this._ecspn = dhx4.s2b(mode);
     }, //#}
     //#}
     //#hovering:060402008{
-    /**
-     *   @desc: enable/disable hovering row on mouse over
-     *   @param: mode - true/false
-     *   @param: cssClass - css class for hovering row
-     *   @type:  public
-     */
     enableRowsHover: function (mode, cssClass) {
         this._unsetRowHover(false, true);
         this._hvrCss = cssClass;
@@ -3294,23 +3247,11 @@ dhtmlXGridObject.prototype = {
             }
         }
     }, //#}
-    /**
-     *   @desc: enable/disable events which fire excell editing, mutual exclusive with enableLightMouseNavigation
-     *   @param: click - true/false - enable/disable editing by single click
-     *   @param: dblclick - true/false - enable/disable editing by double click
-     *   @param: f2Key - enable/disable editing by pressing F2 key
-     *   @type:  public
-     */
     enableEditEvents: function (click, dblclick, f2Key) {
         this._sclE = dhx4.s2b(click);
         this._dclE = dhx4.s2b(dblclick);
         this._f2kE = dhx4.s2b(f2Key);
     }, //#hovering:060402008{
-    /**
-     *   @desc: enable/disable light mouse navigation mode (row selection with mouse over, editing with single click), mutual exclusive with enableEditEvents
-     *   @param: mode - true/false
-     *   @type:  public
-     */
     enableLightMouseNavigation: function (mode) {
         if (dhx4.s2b(mode)) {
             if (!this._elmn) {
@@ -3342,10 +3283,6 @@ dhtmlXGridObject.prototype = {
             }
         }
     },
-    /**
-     *   @desc: remove hover state on row
-     *   @type:  private
-     */
     _unsetRowHover: function (e, c) {
         if (c) {
             that = this;
@@ -3359,10 +3296,6 @@ dhtmlXGridObject.prototype = {
             that._lahRw = null;
         }
     },
-    /**
-     *   @desc: set hover state on row
-     *   @type:  private
-     */
     _setRowHover: function (e) {
         var c = this.grid.getFirstParentOfType(e ? e.target : event.srcElement, 'TD');
         if (c && c.parentNode != this.grid._lahRw) {
@@ -3378,10 +3311,6 @@ dhtmlXGridObject.prototype = {
         }
         this._honmousemove(e);
     },
-    /**
-     *   @desc: onmousemove, used in light mouse navigaion mode
-     *   @type:  private
-     */
     _autoMoveSelect: function (e) {
         //this - grid.obj
         if (!this.grid.editor) {
@@ -3394,14 +3323,6 @@ dhtmlXGridObject.prototype = {
     }, //#}
     //#__pro_feature:21092006{
     //#distrb_parsing:21092006{
-    /**
-     *   @desc: enable/disable distributed parsing (rows paresed portion by portion with some timeout)
-     *   @param: mode - true/false
-     *   @param: count - count of nodes parsed by one step (the 10 by default)
-     *   @param: time - time between parsing counts in milli seconds (the 250 by default)
-     *   @type:  public
-     *   @edition: Professional
-     */
     enableDistributedParsing: function (mode, count, time) {
         if (dhx4.s2b(mode)) {
             this._ads_count = count || 10;
@@ -3411,11 +3332,6 @@ dhtmlXGridObject.prototype = {
         }
     }, //#}
     //#}
-    /**
-     *     @desc: destructor, removes grid and cleans used memory
-     *     @type: public
-     *     @topic: 0
-     */
     destructor: function () {
         this.editStop(true);
         //add links to current object
@@ -3439,7 +3355,7 @@ dhtmlXGridObject.prototype = {
                 this.rowsAr[i] = null;
             }
         }
-        this.rowsCol = new dhtmlxArray();
+        this.rowsCol = dhtmlxArray.cast();
         this.rowsAr = {};
         this.entBox.innerHTML = "";
         var dummy = function () {
@@ -3464,12 +3380,6 @@ dhtmlXGridObject.prototype = {
         //   self=null;
         return null;
     }, //#sorting:06042008{
-    /**
-     *     @desc: get sorting state of grid
-     *     @type: public
-     *     @returns: array, first element is index of sortef column, second - direction of sorting ("asc" or "des").
-     *     @topic: 0
-     */
     getSortingState: function () {
         var z = [];
         if (this.fldSorted) {
@@ -3478,14 +3388,6 @@ dhtmlXGridObject.prototype = {
         }
         return z;
     }, //#}
-    /**
-     *     @desc: enable autoheight of grid
-     *     @param: mode - true/false
-     *     @param: maxHeight - maximum height before scrolling appears (no limit by default)
-     *     @param: countFullHeight - control the usage of maxHeight parameter - when set to true all grid height included in max height calculation, if false then only data part (no header) of grid included in calcualation (false by default)
-     *     @type: public
-     *     @topic: 0
-     */
     enableAutoHeight: function (mode, maxHeight, countFullHeight) {
         this._ahgr = dhx4.s2b(mode);
         this._ahgrF = dhx4.s2b(countFullHeight);
@@ -3516,33 +3418,14 @@ dhtmlXGridObject.prototype = {
             }
         }
     }, //#}
-    /**
-     *     @desc: enable/disable hot keys in grid
-     *     @param: mode - true/false
-     *     @type: public
-     *     @topic: 0
-     */
     enableKeyboardSupport: function (mode) {
         this._htkebl = !dhx4.s2b(mode);
     }, //#context_menu:06042008{
-    /**
-     *     @desc: enable/disable context menu
-     *     @param: dhtmlxMenu object, if null - context menu will be disabled
-     *     @type: public
-     *     @topic: 0
-     */
     enableContextMenu: function (menu) {
         this._ctmndx = menu;
     }, //#}
-    /*backward compatibility*/
     setScrollbarWidthCorrection: function (width) {
     }, //#tooltips:06042008{
-    /**
-     *     @desc: enable/disable tooltips for specified colums
-     *     @param: list - list of true/false values, tooltips enabled for all columns by default
-     *     @type: public
-     *     @topic: 0
-     */
     enableTooltips: function (list) {
         this._enbTts = list.split(",");
         for (var i = 0; i < this._enbTts.length; i++) {
@@ -3550,25 +3433,12 @@ dhtmlXGridObject.prototype = {
         }
     }, //#}
     //#column_resize:06042008{
-    /**
-     *     @desc: enable/disable resizing for specified colums
-     *     @param: list - list of true/false values, resizing enabled for all columns by default
-     *     @type: public
-     *     @topic: 0
-     */
     enableResizing: function (list) {
         this._drsclmn = list.split(",");
         for (var i = 0; i < this._drsclmn.length; i++) {
             this._drsclmn[i] = dhx4.s2b(this._drsclmn[i]);
         }
     },
-    /**
-     *     @desc: set minimum column width ( works only for manual resizing )
-     *     @param: width - minimum column width, can be set for specified column, or as comma separated list for all columns
-     *     @param: ind - column index
-     *     @type: public
-     *     @topic: 0
-     */
     setColumnMinWidth: function (width, ind) {
         if (arguments.length == 2) {
             if (!this._drsclmW) {
@@ -3579,22 +3449,9 @@ dhtmlXGridObject.prototype = {
             this._drsclmW = width.split(",");
         }
     }, //#}
-    /**
-     *     @desc: enable/disable unique id for cells (id will be automaticaly created using the following template: "c_[RowId]_[colIndex]")
-     *     @param: mode - true/false - enable/disable
-     *     @type: public
-     *     @topic: 0
-     */
     enableCellIds: function (mode) {
         this._enbCid = dhx4.s2b(mode);
     }, //#locked_row:11052006{
-    /**
-     *     @desc: lock/unlock row for editing
-     *     @param: rowId - id of row
-     *     @param: mode - true/false - lock/unlock
-     *     @type: public
-     *     @topic: 0
-     */
     lockRow: function (rowId, mode) {
         var z = this.getRowById(rowId);
         if (z) {
@@ -3604,10 +3461,6 @@ dhtmlXGridObject.prototype = {
             }
         }
     }, //#}
-    /**
-     *   @desc:  get values of all cells in row
-     *   @type:  private
-     */
     _getRowArray: function (row) {
         var text = [];
         for (var ii = 0; ii < row.childNodes.length; ii++) {
@@ -3617,27 +3470,10 @@ dhtmlXGridObject.prototype = {
         return text;
     }, //#__pro_feature:21092006{
     //#data_format:12052006{
-    /**
-     *     @desc: set mask for date formatting in cell
-     *     @param: mask - date mask, d,m,y will mean day,month,year; for example "d/m/y" - 22/05/1985
-     *     @type: public
-     *     @edition: Professional
-     *     @topic: 0
-     */
     setDateFormat: function (mask, incoming) {
         this._dtmask = mask;
         this._dtmask_inc = incoming;
     },
-    /**
-     *     @desc: set mask for formatting numeric data ( works for [ed/ro]n excell only or oher cell types with suport for this method)
-     *     @param: mask - numeric mask; for example 0,000.00 - 1,234.56
-     *     @param: cInd - column index
-     *     @param: p_sep - char used as decimalseparator ( point by default )
-     *     @param: d_sep - char used as groups part separator ( comma by default )
-     *     @type: public
-     *     @edition: Professional
-     *     @topic: 0
-     */
     setNumberFormat: function (mask, cInd, p_sep, d_sep) {
         var nmask = mask.replace(/[^0\,\.]*/g, "");
         var pfix = nmask.indexOf(".");
@@ -3658,10 +3494,6 @@ dhtmlXGridObject.prototype = {
         var postf = mask.split(nmask)[1];
         this._maskArr[cInd] = [pfix, dfix, pref, postf, p_sep, d_sep];
     },
-    /**
-     *   @desc:  convert formated value to original
-     *   @type:  private
-     */
     _aplNFb: function (data, ind) {
         var a = this._maskArr[ind];
         if (!a) {
@@ -3676,10 +3508,6 @@ dhtmlXGridObject.prototype = {
         }
         return ndata;
     },
-    /**
-     *   @desc:  format data with mask
-     *   @type:  private
-     */
     _aplNF: function (data, ind) {
         var a = this._maskArr[ind];
         if (!a) {
@@ -3698,10 +3526,6 @@ dhtmlXGridObject.prototype = {
     }, //#}
     //#}
     //#config_from_xml:20092006{
-    /**
-     *   @desc:  configure grid structure from XML
-     *   @type:  private
-     */
     _launchCommands: function (arr) {
         for (var i = 0; i < arr.length; i++) {
             var args = [];
@@ -3713,10 +3537,6 @@ dhtmlXGridObject.prototype = {
             this[arr[i].getAttribute("command")].apply(this, args);
         }
     },
-    /**
-     *   @desc:  configure grid structure from XML
-     *   @type:  private
-     */
     _parseHead: function (xmlDoc) {
         var hheadCol = dhx4.ajax.xpath("./head", xmlDoc);
         if (hheadCol.length) {
@@ -3810,12 +3630,6 @@ dhtmlXGridObject.prototype = {
             }
         }
     }, //#}
-    /**
-     *   @desc: get list of Ids of all rows with checked exCell in specified column
-     *   @type: public
-     *   @param: col_ind - column index
-     *   @topic: 5
-     */
     getCheckedRows: function (col_ind) {
         var d = [];
         this.forEachRowA(function (id) {
@@ -3826,12 +3640,6 @@ dhtmlXGridObject.prototype = {
         }, true);
         return d.join(",");
     },
-    /**
-     *   @desc: check all checkboxes in grid
-     *   @type: public
-     *   @param: col_ind - column index
-     *   @topic: 5
-     */
     checkAll: function () {
         var mode = arguments.length ? arguments[0] : 1;
         for (var cInd = 0; cInd < this.getColumnsNum(); cInd++) {
@@ -3840,21 +3648,9 @@ dhtmlXGridObject.prototype = {
             }
         }
     },
-    /**
-     *   @desc: uncheck all checkboxes in grid
-     *   @type: public
-     *   @param: col_ind - column index
-     *   @topic: 5
-     */
     uncheckAll: function () {
         this.checkAll(0);
     },
-    /**
-     *   @desc: set value for all checkboxes in specified column
-     *   @type: public
-     *   @param: col_ind - column index
-     *   @topic: 5
-     */
     setCheckedRows: function (cInd, v) {
         this.forEachRowA(function (id) {
             if (this.cells(id, cInd).isCheckbox()) {
@@ -3862,10 +3658,6 @@ dhtmlXGridObject.prototype = {
             }
         })
     }, //#tooltips:06042008{
-    /**
-     *   @desc:  grid body onmouseover function
-     *   @type:  private
-     */
     _drawTooltip: function (e) {
         var c = this.grid.getFirstParentOfType(e ? e.target : event.srcElement, 'TD');
         if (!c || ((this.grid.editor) && (this.grid.editor.cell == c))) {
@@ -3906,22 +3698,11 @@ dhtmlXGridObject.prototype = {
         }
         return true;
     }, //#}
-    /**
-     *   @desc:  can be used for setting correction for cell padding, while calculation setSizes
-     *   @type:  private
-     */
     enableCellWidthCorrection: function (size) {
         if (dhx4.isFF) {
             this._wcorr = parseInt(size);
         }
     },
-    /**
-     *    @desc: gets a list of all row ids in grid
-     *    @param: separator - delimiter to use in list
-     *    @returns: list of all row ids in grid
-     *    @type: public
-     *    @topic: 2,7
-     */
     getAllRowIds: function (separator) {
         var ar = [];
         for (var i = 0; i < this.rowsBuffer.length; i++) {
@@ -3935,15 +3716,6 @@ dhtmlXGridObject.prototype = {
         return this.getAllRowIds();
     }, //#__pro_feature:21092006{
     //#colspan:20092006{
-    /**
-     *   @desc: dynamicaly set colspan in row starting from specified column index
-     *   @param: row_id - row id
-     *   @param: col_id - index of column
-     *   @param: colspan - size of colspan
-     *   @type: public
-     *   @edition: Professional
-     *   @topic: 2,9
-     */
     setColspan: function (row_id, col_ind, colspan) {
         if (!this._ecspn) {
             return;
@@ -3996,23 +3768,12 @@ dhtmlXGridObject.prototype = {
         }
     }, //#}
     //#}
-    /**
-     *   @desc: prevent caching in IE  by adding random values to URL string
-     *   @param: mode - enable/disable random values in URLs ( disabled by default )
-     *   @type: public
-     *   @topic: 2,9
-     */
     preventIECaching: function (mode) {
         dhx4.ajax.cache = !mode;
     },
     enableColumnAutoSize: function (mode) {
         this._eCAS = dhx4.s2b(mode);
     },
-    /**
-     *   @desc: called when header was dbllicked
-     *   @type: private
-     *   @topic: 1,2
-     */
     _onHeaderDblClick: function (e) {
         var that = this.grid;
         var el = that.getFirstParentOfType(dhx4.isIE ? event.srcElement : e.target, "TD");
@@ -4021,11 +3782,6 @@ dhtmlXGridObject.prototype = {
         }
         that.adjustColumnSize(el._cellIndexS)
     },
-    /**
-     *   @desc: autosize column  to max content size
-     *   @param: cInd - index of column
-     *   @type:  public
-     */
     adjustColumnSize: function (cInd, complex) {
         if (this._hrrar && this._hrrar[cInd]) {
             return;
@@ -4074,12 +3830,6 @@ dhtmlXGridObject.prototype = {
         this._notresize = false;
         this.setSizes();
     }, //#header_footer:06042008{
-    /**
-     *   @desc: remove header line from grid (opposite to attachHeader)
-     *   @param: index - index of row to be removed ( zero based )
-     *    @param: hdr - header object (optional)
-     *   @type:  public
-     */
     detachHeader: function (index, hdr) {
         hdr = hdr || this.hdr;
         var row = hdr.rows[index + 1];
@@ -4088,21 +3838,9 @@ dhtmlXGridObject.prototype = {
         }
         this.setSizes();
     },
-    /**
-     *   @desc: remove footer line from grid (opposite to attachFooter)
-     *   @param: values - array of header titles
-     *   @type:  public
-     */
     detachFooter: function (index) {
         this.detachHeader(index, this.ftr);
     },
-    /**
-     *   @desc: attach additional line to header
-     *   @param: values - array of header titles
-     *   @param: style - array of styles, optional
-     *    @param: _type - reserved
-     *   @type:  public
-     */
     attachHeader: function (values, style, _type) {
         if (typeof (values) == "string") {
             values = this._eSplit(values);
@@ -4126,10 +3864,6 @@ dhtmlXGridObject.prototype = {
             this[_type][this[_type].length] = [values, style, _type];
         }
     },
-    /**
-     *    @desc:
-     *    @type: private
-     */
     _createHRow: function (data, parent) {
         if (!parent) {
             if (this.entBox.style.position != "absolute") {
@@ -4230,34 +3964,15 @@ dhtmlXGridObject.prototype = {
             }, 500);
         }
     }, //#__pro_feature:21092006{
-    /**
-     *   @desc: attach additional line to footer
-     *   @param: values - array of header titles
-     *   @param: style - array of styles, optional
-     *   @edition: Professional
-     *   @type:  public
-     */
     attachFooter: function (values, style) {
         this.attachHeader(values, style, "_aFoot");
     }, //#}
     //#}
     //#__pro_feature:21092006{
     //#dyn_cell_types:04062008{
-    /**
-     *   @desc: set excell type for cell in question
-     *   @param: rowId - row ID
-     *   @param: cellIndex - cell index
-     *   @param: type - type of excell (code like "ed", "txt", "ch" etc.)
-     *   @edition: Professional
-     *   @type:  public
-     */
     setCellExcellType: function (rowId, cellIndex, type) {
         this.changeCellType(this.getRowById(rowId), cellIndex, type);
     },
-    /**
-     *    @desc:
-     *    @type: private
-     */
     changeCellType: function (r, ind, type) {
         type = type || this.cellType[ind];
         var z = this.cells3(r, ind);
@@ -4266,26 +3981,12 @@ dhtmlXGridObject.prototype = {
         var z = this.cells3(r, ind);
         z.setValue(v);
     },
-    /**
-     *   @desc: set excell type for all cells in specified row
-     *   @param: rowId - row ID
-     *   @param: type - type of excell
-     *   @edition: Professional
-     *   @type:  public
-     */
     setRowExcellType: function (rowId, type) {
         var z = this.rowsAr[rowId];
         for (var i = 0; i < z.childNodes.length; i++) {
             this.changeCellType(z, i, type);
         }
     },
-    /**
-     *   @desc: set excell type for all cells in specified column
-     *   @param: colIndex - column index
-     *   @param: type - type of excell
-     *   @edition: Professional
-     *   @type:  public
-     */
     setColumnExcellType: function (colIndex, type) {
         for (var i = 0; i < this.rowsBuffer.length; i++) {
             if (this.rowsBuffer[i] && this.rowsBuffer[i].tagName == "TR") {
@@ -4299,11 +4000,6 @@ dhtmlXGridObject.prototype = {
         }
     }, //#}
     //#}
-    /**
-     *   @desc: execute code for each row in a grid
-     *   @param: custom_code - function which get row id as incomming argument
-     *   @type:  public
-     */
     forEachRow: function (custom_code) {
         for (var a in this.rowsAr) {
             if (this.rowsAr[a] && this.rowsAr[a].idd) {
@@ -4318,12 +4014,6 @@ dhtmlXGridObject.prototype = {
             }
         }
     },
-    /**
-     *   @desc: execute code for each cell in a row
-     *   @param: rowId - id of row where cell must be itterated
-     *   @param: custom_code - function which get eXcell object as incomming argument
-     *   @type:  public
-     */
     forEachCell: function (rowId, custom_code) {
         var z = this.getRowById(rowId);
         if (!z) {
@@ -4333,27 +4023,12 @@ dhtmlXGridObject.prototype = {
             custom_code(this.cells3(z, i), i);
         }
     },
-    /**
-     *   @desc: changes grid's container size on the fly to fit total width of grid columns
-     *   @param: mode  - truse/false - enable / disable
-     *   @param: max_limit  - max allowed width, not limited by default
-     *   @param: min_limit  - min allowed width, not limited by default
-     *   @type:  public
-     */
     enableAutoWidth: function (mode, max_limit, min_limit) {
         this._awdth = [dhx4.s2b(mode), parseInt(max_limit || 99999), parseInt(min_limit || 0)];
         if (arguments.length == 1) {
             this.objBox.style.overflowX = mode ? "hidden" : "auto";
         }
     }, //#update_from_xml:06042008{
-    /**
-     *   @desc: refresh grid from XML ( doesnt work for buffering, tree grid or rows in smart rendering mode )
-     *   @param: insert_new - insert new items
-     *   @param: del_missed - delete missed rows
-     *   @param: afterCall - function, will be executed after refresh completted
-     *   @type:  public
-     */
-
     updateFromXML: function (url, insert_new, del_missed, afterCall) {
         if (typeof insert_new == "undefined") {
             insert_new = true;
@@ -4460,12 +4135,6 @@ dhtmlXGridObject.prototype = {
         }
     }, //#}
     //#co_excell:06042008{
-    /**
-     *   @desc: get combobox specific for cell in question
-     *   @param: id - row id
-     *   @param: ind  - column index
-     *   @type:  public
-     */
     getCustomCombo: function (id, ind) {
         var cell = this.cells(id, ind).cell;
         if (!cell._combo) {
@@ -4473,11 +4142,6 @@ dhtmlXGridObject.prototype = {
         }
         return cell._combo;
     }, //#}
-    /**
-     *   @desc: set tab order of columns
-     *   @param: order - list of tab indexes (default delimiter is ",")
-     *   @type:  public
-     */
     setTabOrder: function (order) {
         var t = order.split(this.delim);
         this._tabOrder = [];
@@ -4856,13 +4520,6 @@ dhtmlXGridObject.prototype = {
         }
         this.callEvent("onRowCreated", [r.idd, r, null]);
     },
-    /**
-     *   @desc: load data from external file ( xml, json, jsarray, csv )
-     *   @param: url - url to external file
-     *   @param: call - after loading callback function, optional, can be ommited
-     *   @param: type - type of data (xml,csv,json,jsarray) , optional, xml by default
-     *   @type:  public
-     */
     load: function (url, call, type) {
         this.callEvent("onXLS", [this]);
         if (arguments.length == 2 && typeof call != "function") {
@@ -4903,12 +4560,6 @@ dhtmlXGridObject.prototype = {
         }
         this.load(url, afterCall, "xml")
     },
-    /**
-     *   @desc: load data from local datasource ( xml string, csv string, xml island, xml object, json objecs , javascript array )
-     *   @param: data - string or object
-     *   @param: type - data type (xml,json,jsarray,csv), optional, data threated as xml by default
-     *   @type:  public
-     */
     parse: function (data, call, type) {
         if (arguments.length == 2 && typeof call != "function") {
             type = call;
@@ -5230,13 +4881,6 @@ dhtmlXGridObject.prototype = {
         }
         return this.cells3(row, ind)[method ? method : "getValue"]();
     }, //#sorting:06042008{
-    /**
-     *   @desc: sort grid
-     *   @param: col - index of column, by which grid need to be sorted
-     *   @param: type - sorting type (str,int,date), optional, by default sorting type taken from column setting
-     *   @param: order - sorting order (asc,des), optional, by default sorting order based on previous sorting operation
-     *   @type:  public
-     */
     sortRows: function (col, type, order) {
         this.editStop();
         //default values
@@ -5262,10 +4906,6 @@ dhtmlXGridObject.prototype = {
         }
         this.callEvent("onAfterSorting", [col, type, order]);
     },
-    /**
-     *    @desc:
-     *    @type: private
-     */
     _sortCore: function (col, type, order, arrTS, s) {
         var sort = "sort";
         if (this._sst) {
@@ -5321,11 +4961,6 @@ dhtmlXGridObject.prototype = {
             });
         }
     },
-    /**
-     *   @desc: inner sorting routine
-     *   @type: private
-     *   @topic: 7
-     */
     _sortRows: function (col, type, order, arrTS) {
         this._sortCore(col, type, order, arrTS, this.rowsBuffer);
         this._reset_view();
@@ -5356,7 +4991,7 @@ dhtmlXGridObject.prototype = {
             tb.innerHTML = "";
         }
         tb.appendChild(tr);
-        this.rowsCol = dhtmlxArray();
+        this.rowsCol = dhtmlxArray.cast();
         if (this._sst) {
             this.enableStableSorting(true);
         }
@@ -5372,11 +5007,6 @@ dhtmlXGridObject.prototype = {
             }
         }
     },
-    /**
-     *   @desc: delete row from the grid
-     *   @param: row_id - row ID
-     *   @type:  public
-     */
     deleteRow: function (row_id, node) {
         if (!node) {
             node = this.getRowById(row_id);
@@ -5506,13 +5136,6 @@ dhtmlXGridObject.prototype = {
         this.rowsBuffer._dhx_insertAt(ind, row);
         return this._insertRowAt(row, ind);
     },
-    /**
-     *   @desc: add row to the grid
-     *   @param: new_id - row ID, must be unique
-     *   @param: text - row values, may be a comma separated list or an array
-     *   @param: ind - index of new row, optional, row added to the last position by default
-     *   @type:  public
-     */
     addRow: function (new_id, text, ind) {
         var r = this._addRow(new_id, text, ind);
         if (!this.dragContext) {
@@ -5592,25 +5215,9 @@ dhtmlXGridObject.prototype = {
         }
         return null;
     },
-    /**
-     *   @desc: gets dhtmlXGridCellObject object (if no arguments then gets dhtmlXGridCellObject object of currently selected cell)
-     *   @param: row_id -  row id
-     *   @param: col -  column index
-     *   @returns: dhtmlXGridCellObject object (see its methods below)
-     *   @type: public
-     *   @topic: 4
-     */
     cellById: function (row_id, col) {
         return this.cells(row_id, col);
     },
-    /**
-     *   @desc: gets dhtmlXGridCellObject object (if no arguments then gets dhtmlXGridCellObject object of currently selected cell)
-     *   @param: row_id -  row id
-     *   @param: col -  column index
-     *   @returns: dhtmlXGridCellObject object (use it to get/set value to cell etc.)
-     *   @type: public
-     *   @topic: 4
-     */
     cells: function (row_id, col) {
         if (arguments.length == 0) {
             return this.cells4(this.cell);
@@ -5623,25 +5230,9 @@ dhtmlXGridObject.prototype = {
         }
         return this.cells4(cell);
     },
-    /**
-     *   @desc: gets dhtmlXGridCellObject object
-     *   @param: row_index -  row index
-     *   @param: col -  column index
-     *   @returns: dhtmlXGridCellObject object (see its methods below)
-     *   @type: public
-     *   @topic: 4
-     */
     cellByIndex: function (row_index, col) {
         return this.cells2(row_index, col);
     },
-    /**
-     *   @desc: gets dhtmlXGridCellObject object
-     *   @param: row_index -  row index
-     *   @param: col -  column index
-     *   @returns: dhtmlXGridCellObject object (see its methods below)
-     *   @type: public
-     *   @topic: 4
-     */
     cells2: function (row_index, col) {
         var c = this.render_row(row_index);
         var cell = (c._childIndexes ? c.childNodes[c._childIndexes[col]] : c.childNodes[col]);
@@ -5650,20 +5241,10 @@ dhtmlXGridObject.prototype = {
         }
         return this.cells4(cell);
     },
-    /**
-     *   @desc: gets exCell editor for row  object and column id
-     *   @type: private
-     *   @topic: 4
-     */
     cells3: function (row, col) {
         var cell = (row._childIndexes ? row.childNodes[row._childIndexes[col]] : row.childNodes[col]);
         return this.cells4(cell);
     },
-    /**
-     *   @desc: gets exCell editor for cell  object
-     *   @type: private
-     *   @topic: 4
-     */
     cells4: function (cell) {
         var type = window["eXcell_" + (cell._cellType || this.cellType[cell._cellIndex])];
         if (type) {
@@ -5695,19 +5276,9 @@ dhtmlXGridObject.prototype = {
             this._dma = null;
         }
     },
-    /**
-     *   @desc: returns count of row in grid ( in case of dynamic mode it will return expected count of rows )
-     *   @type:  public
-     *    @returns: count of rows in grid
-     */
     getRowsNum: function () {
         return this.rowsBuffer.length;
     },
-    /**
-     *   @desc: enables/disables mode when readonly cell is not available with tab
-     *   @param: mode - (boolean) true/false
-     *   @type:  public
-     */
     enableEditTabOnly: function (mode) {
         if (arguments.length > 0) {
             this.smartTabOrder = dhx4.s2b(mode);
@@ -5715,12 +5286,6 @@ dhtmlXGridObject.prototype = {
             this.smartTabOrder = true;
         }
     },
-    /**
-     *   @desc: sets elements which get focus when tab is pressed in the last or first (tab+shift) cell
-     *   @param: start - html object or its id - gets focus when tab+shift are pressed in the first cell
-     *   @param: end - html object or its id - gets focus when tab is pressed in the last cell
-     *   @type:  public
-     */
     setExternalTabOrder: function (start, end) {
         var grid = this;
         this.tabStart = ( typeof (start) == "object") ? start : document.getElementById(start);
@@ -5764,10 +5329,6 @@ dhtmlXGridObject.prototype = {
             this.tabEnd.onkeypress = this.tabEnd.onkeydown;
         }
     },
-    /**
-     *   @desc: returns unique ID
-     *   @type:  public
-     */
     uid: function () {
         if (!this._ui_seed) {
             this._ui_seed = (new Date()).valueOf();
@@ -5777,10 +5338,6 @@ dhtmlXGridObject.prototype = {
     setIconset: function (name) {
         this.iconset = name;
     },
-    /**
-     *   @desc: clears existing grid state and load new XML
-     *   @type:  public
-     */
     clearAndLoad: function () {
         if (this._last_load_request) {
             //abort last loading if new issued
@@ -5800,10 +5357,6 @@ dhtmlXGridObject.prototype = {
         this._pgn_skin = t;
         this._last_load_request = this.load.apply(this, arguments);
     },
-    /**
-     *   @desc: returns details about current grid state
-     *   @type:  public
-     */
     getStateOfView: function () {
         if (this.pagingOn) {
             var start = (this.currentPage - 1) * this.rowsBufferOutSize;
@@ -5813,19 +5366,15 @@ dhtmlXGridObject.prototype = {
     }
 };
 (function () {
-    //local helpers
     function direct_set(name, value) {
         this[name] = value;
     }
-
     function direct_call(name, value) {
         this[name].call(this, value);
     }
-
     function joined_call(name, value) {
         this[name].call(this, value.join(this.delim));
     }
-
     function set_options(name, value) {
         for (var i = 0; i < value.length; i++) {
             if (typeof value[i] == "object") {
@@ -5836,7 +5385,6 @@ dhtmlXGridObject.prototype = {
             }
         }
     }
-
     function header_set(name, value, obj) {
         //make a matrix
         var rows = 1;
@@ -5884,8 +5432,6 @@ dhtmlXGridObject.prototype = {
             this.attachHeader(header[i]);
         }
     }
-
-    //defenitions
     var columns_map = [{
         name: "label",
         def: "&nbsp;",
@@ -5927,7 +5473,6 @@ dhtmlXGridObject.prototype = {
         operation: "",
         type: set_options
     }];
-    //extending
     dhtmlx.extend_api("dhtmlXGridObject", {
         _init: function (obj) {
             return [obj.parent];
@@ -7468,8 +7013,8 @@ function eXcell_rotxt(cell) {
 }
 eXcell_rotxt.prototype = new eXcell;
 function dhtmlXGridComboObject() {
-    this.keys = new dhtmlxArray();
-    this.values = new dhtmlxArray();
+    this.keys = dhtmlxArray.cast();
+    this.values = dhtmlxArray.cast();
     /**
      *    @desc: puts new combination of key and value into combobox
      *    @type: public
@@ -7509,8 +7054,8 @@ function dhtmlXGridComboObject() {
          this.keys._dhx_removeAt(i);
          this.values._dhx_removeAt(i);
          }*/
-        this.keys = new dhtmlxArray();
-        this.values = new dhtmlxArray();
+        this.keys = dhtmlxArray.cast();
+        this.values = dhtmlxArray.cast();
     };
     /**
      *    @desc: remove pair of key-value from combobox with given key
@@ -7579,8 +7124,8 @@ function dhtmlXGridComboObject() {
     return this;
 }
 function Hashtable() {
-    this.keys = new dhtmlxArray();
-    this.values = new dhtmlxArray();
+    this.keys = dhtmlxArray.cast();
+    this.values = dhtmlxArray.cast();
     return this;
 }
 Hashtable.prototype = new dhtmlXGridComboObject;

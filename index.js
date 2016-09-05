@@ -129,6 +129,18 @@ class App {
                 { id: "a5", text: "Tab 5" }
             ]
         });
+        let el =document.createElement('div');
+        myTabbar.cells('a2').cell.appendChild(el);
+        let mySlider = new dhtmlXSlider({
+            parent: el,
+            size: 150,
+            value: 5,
+            step: 1,
+            min: 0,
+            max: 10,
+            tooltip: true
+        });
+
         var myForm = myTabbar.cells('a1').attachForm([
             {type: "settings", position: "label-left", labelWidth: 200, inputWidth: 200},
             {type: "block", inputWidth: "auto", offsetTop: 12, list: [
@@ -261,6 +273,10 @@ class App {
                 ]}
             ]
         });
+        myRibbon.attachEvent('onClick',(id)=>{
+            alert(id);
+            console.info(this);
+        });
         let myList = this.main.cells("b").attachList({
             type:{
                 template:"<span class='dhx_strong'>#name#</span>#address# <br/><span class='dhx_light'>#city#</span>",
@@ -268,8 +284,14 @@ class App {
                 height:80
             }
         });
-
         myList.load("./kitchen/data/list.xml");
+    }
+    showSlider(){
+        let mySlider =  this.main.cells("b").attachToolbar({
+            iconset: "awesome",
+            icons_size: 24,
+            xml: "./kitchen/layout/toolbar.xml"
+        });
     }
 }
 

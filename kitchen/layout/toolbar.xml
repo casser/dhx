@@ -10,4 +10,5 @@
         <item id="view_icons" text="Icons" type="button"/>
         <item id="view_tiles" text="Tiles" type="button"/>
     </item>
+    <item id="folders" type="slider"/>
 </toolbar>

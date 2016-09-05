@@ -108,6 +108,7 @@ dhtmlXList.prototype = {
     template_item_end: dhtmlx.Template.fromHTML("</div>")
 };
 dhtmlx.compat("layout");
+
 dhtmlXCellObject.prototype.attachList = function (conf) {
     this.callEvent("_onBeforeContentAttach", ["list"]);
     var obj = document.createElement("DIV");

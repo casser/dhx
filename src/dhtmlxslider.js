@@ -1,5 +1,6 @@
 class dhtmlXSlider {
     constructor(data) {
+        console.info("AAAAAA")
         var that = this;
         this.conf = {
             size: null,
@@ -259,572 +260,572 @@ class dhtmlXSlider {
         }
         return this;
     }
-}
-dhtmlXSlider.prototype._setOrient = function (vertical) {
-    vertical = vertical || false;
-    if (/\s?dhxsl_cont_hr/i.test(this._nodes.cont.className)) {
-        this._nodes.cont.className = this._nodes.cont.className.replace(/\s?dhxsl_cont_hr/i, "");
-    }
-    if (/\s?dhxsl_cont_vr/i.test(this._nodes.cont.className)) {
-        this._nodes.cont.className = this._nodes.cont.className.replace(/\s?dhxsl_cont_vr/i, "");
-    }
-    if (vertical) {
-        this._nodes.cont.className += " dhxsl_cont_vr";
-    } else {
-        this._nodes.cont.className += " dhxsl_cont_hr";
-    }
-};
-dhtmlXSlider.prototype._getTouchCoord = function (e) {
-    var type = (e.type.match(/mouse/) != null ? "client" : "page") + (this.conf.vertical == true ? "Y" : "X");
-    var coord = (typeof(e[type]) != "undefined" && e[type] != 0 ? e[type] : (e.touches != null && e.touches[0] != null ? e.touches[0][type] || 0 : 0));
-    return coord;
-};
-dhtmlXSlider.prototype._attachEvents = function (nodes) {
-    if (typeof(window.addEventListener) == "function") {
-        nodes.runner.addEventListener("mousedown", this._initMover, false);
-        nodes.runner.addEventListener("touchstart", this._initMover, false);
-        nodes.cont.addEventListener("mousedown", this._doOnSetValue, false);
-        nodes.cont.addEventListener("touchstart", this._doOnSetValue, false);
-        if (nodes.runner2) {
-            nodes.runner2.addEventListener("mousedown", this._initMover, false);
-            nodes.runner2.addEventListener("touchstart", this._initMover, false);
+    _setOrient(vertical) {
+        vertical = vertical || false;
+        if (/\s?dhxsl_cont_hr/i.test(this._nodes.cont.className)) {
+            this._nodes.cont.className = this._nodes.cont.className.replace(/\s?dhxsl_cont_hr/i, "");
         }
-    } else {
-        nodes.runner.attachEvent("onmousedown", this._initMover);
-        nodes.cont.attachEvent("onmousedown", this._doOnSetValue);
-        if (nodes.runner2) {
-            nodes.runner2.attachEvent("onmousedown", this._initMover);
+        if (/\s?dhxsl_cont_vr/i.test(this._nodes.cont.className)) {
+            this._nodes.cont.className = this._nodes.cont.className.replace(/\s?dhxsl_cont_vr/i, "");
         }
-    }
-};
-dhtmlXSlider.prototype._detachEvents = function (nodes) {
-    if (typeof(window.addEventListener) == "function") {
-        nodes.runner.removeEventListener("mousedown", this._initMover, false);
-        nodes.runner.removeEventListener("touchstart", this._initMover, false);
-        nodes.cont.removeEventListener("mousedown", this._doOnSetValue, false);
-        nodes.cont.removeEventListener("touchstart", this._doOnSetValue, false);
-        if (nodes.runner2) {
-            nodes.runner2.removeEventListener("mousedown", this._initMover, false);
-            nodes.runner2.removeEventListener("touchstart", this._initMover, false);
+        if (vertical) {
+            this._nodes.cont.className += " dhxsl_cont_vr";
+        } else {
+            this._nodes.cont.className += " dhxsl_cont_hr";
         }
-    } else {
-        nodes.runner.detachEvent("onmousedown", this._initMover);
-        nodes.cont.detachEvent("onmousedown", this._doOnSetValue);
-        if (nodes.runner2) {
-            nodes.runner2.detachEvent("onmousedown", this._initMover);
+    };
+    _getTouchCoord(e) {
+        var type = (e.type.match(/mouse/) != null ? "client" : "page") + (this.conf.vertical == true ? "Y" : "X");
+        var coord = (typeof(e[type]) != "undefined" && e[type] != 0 ? e[type] : (e.touches != null && e.touches[0] != null ? e.touches[0][type] || 0 : 0));
+        return coord;
+    };
+    _attachEvents(nodes) {
+        if (typeof(window.addEventListener) == "function") {
+            nodes.runner.addEventListener("mousedown", this._initMover, false);
+            nodes.runner.addEventListener("touchstart", this._initMover, false);
+            nodes.cont.addEventListener("mousedown", this._doOnSetValue, false);
+            nodes.cont.addEventListener("touchstart", this._doOnSetValue, false);
+            if (nodes.runner2) {
+                nodes.runner2.addEventListener("mousedown", this._initMover, false);
+                nodes.runner2.addEventListener("touchstart", this._initMover, false);
+            }
+        } else {
+            nodes.runner.attachEvent("onmousedown", this._initMover);
+            nodes.cont.attachEvent("onmousedown", this._doOnSetValue);
+            if (nodes.runner2) {
+                nodes.runner2.attachEvent("onmousedown", this._initMover);
+            }
         }
-    }
-};
-dhtmlXSlider.prototype._mergeConfig = function (data) {
-    for (var key in data) {
-        switch (key.toLowerCase()) {
-            case "min":
-            case "max":
-            case "size":
-            case "step":
-            case "value":
-            case "inverse":
-                this.conf[key] = data[key];
+    };
+    _detachEvents(nodes) {
+        if (typeof(window.addEventListener) == "function") {
+            nodes.runner.removeEventListener("mousedown", this._initMover, false);
+            nodes.runner.removeEventListener("touchstart", this._initMover, false);
+            nodes.cont.removeEventListener("mousedown", this._doOnSetValue, false);
+            nodes.cont.removeEventListener("touchstart", this._doOnSetValue, false);
+            if (nodes.runner2) {
+                nodes.runner2.removeEventListener("mousedown", this._initMover, false);
+                nodes.runner2.removeEventListener("touchstart", this._initMover, false);
+            }
+        } else {
+            nodes.runner.detachEvent("onmousedown", this._initMover);
+            nodes.cont.detachEvent("onmousedown", this._doOnSetValue);
+            if (nodes.runner2) {
+                nodes.runner2.detachEvent("onmousedown", this._initMover);
+            }
+        }
+    };
+    _mergeConfig(data) {
+        for (var key in data) {
+            switch (key.toLowerCase()) {
+                case "min":
+                case "max":
+                case "size":
+                case "step":
+                case "value":
+                case "inverse":
+                    this.conf[key] = data[key];
+                    break;
+                case "tooltip":
+                case "visible":
+                case "vertical":
+                case "disabled":
+                case "range":
+                case "bg":
+                    this.conf[key] = dhx4.s2b(data[key]);
+                    break;
+                case "bg_mode":
+                    this.conf[key] = ({
+                            "left": "left",
+                            "right": "right"
+                        }[data[key]]) || "left";
+                    break;
+                case "parent":
+                    continue;
+                    break;
+                case "skin":
+                    this.conf[key] = (this._skinCollection[data[key]] == true ? data[key] : null); // reset not supported 3.6 skins to default
+                    break;
+                default:
+                    this.conf[key] = data[key];
+            }
+        }
+    };
+    _readAttFormNode(node) {
+        var atts = node.attributes, l = atts.length, i, answer = {}, att;
+        for (i = 0; i < l; i++) {
+            att = atts[i];
+            switch (att.name.toLowerCase()) {
+                case "size":
+                case "min":
+                case "max":
+                case "value":
+                case "step":
+                    answer[att.name] = Number(att.value);
+                    break;
+                case "skin":
+                    answer[att.name] = att.value;
+                    break;
+                case "vertical":
+                case "disabled":
+                case "visible":
+                case "range":
+                case "bg":
+                    answer[att.name] = dhx4.s2b(att.value);
+                    break;
+                case "linkto":
+                    answer[att.name] = att.value;
+                    break;
+                case "tooltip":
+                    answer[att.name] = dhx4.s2b(att.value);
+                    break;
+                case "bg_mode":
+                    answer[att.name] = ({
+                            "left": "left",
+                            "right": "right"
+                        }[att.value]) || "left";
+                    break;
+            }
+        }
+        return answer;
+    };
+    _renderArgumets(arg) {
+        var answer = {}, i, l;
+        l = arg.length;
+        for (i = 0; i < l; i++) {
+            switch (i) {
+                case 0:
+                    answer.parent = arg[i];
+                    break;
+                case 1:
+                    answer.size = arg[i];
+                    break;
+                case 2:
+                    answer.skin = arg[i];
+                    break;
+                case 3:
+                    answer.vertical = arg[i];
+                    break;
+                case 4:
+                    answer.min = arg[i];
+                    break;
+                case 5:
+                    answer.max = arg[i];
+                    break;
+                case 6:
+                    answer.value = arg[i];
+                    break;
+                case 7:
+                    answer.step = arg[i];
+                    break;
+            }
+        }
+        return answer;
+    };
+    _indexOf(arr, el) {
+        var i, l, answer = -1;
+        l = arr.length;
+        for (i = l; i >= 0; i--) {
+            if (arr[i] == el) {
+                answer = i;
                 break;
-            case "tooltip":
-            case "visible":
-            case "vertical":
-            case "disabled":
-            case "range":
-            case "bg":
-                this.conf[key] = dhx4.s2b(data[key]);
-                break;
-            case "bg_mode":
-                this.conf[key] = ({
-                        "left": "left",
-                        "right": "right"
-                    }[data[key]]) || "left";
-                break;
-            case "parent":
-                continue;
-                break;
-            case "skin":
-                this.conf[key] = (this._skinCollection[data[key]] == true ? data[key] : null); // reset not supported 3.6 skins to default
+            }
+        }
+        return answer;
+    };
+    _refreshRunner(index) {
+        var k = (this.conf.vertical == true ? {
+            x: "top",
+            y: "left",
+            ofs_w: "offsetHeight",
+            ofs_h: "offsetWidth"
+        } : {
+            x: "left",
+            y: "top",
+            ofs_w: "offsetWidth",
+            ofs_h: "offsetHeight"
+        });
+        var cmax = this._nodes.cont[k.ofs_w] - this._nodes.runner[k.ofs_w];
+        var r1 = this._nodes.runner;
+        var r2 = this._nodes.runner2;
+        // single or left
+        if (index == null || index == 0) {
+            var cp = this._getCoord(cmax, (this.conf.value instanceof Array ? this.conf.value[0] : this.conf.value));
+            r1.style[k.x] = cp + this.conf.border + "px";
+            r1.style[k.y] = Math.round((this._nodes.cont[k.ofs_h] - r1[k.ofs_h]) / 2) + "px";
+        }
+        // right
+        if (this.conf.range == true && (index == null || index == 1)) {
+            var cp = this._getCoord(cmax, this.conf.value[1]);
+            r2.style[k.x] = cp + this.conf.border + "px";
+            r2.style[k.y] = Math.round((this._nodes.cont[k.ofs_h] - r1[k.ofs_h]) / 2) + "px";
+        }
+        // check z-index
+        if (this.conf.range == true) {
+            if (r1.style[k.x] == r2.style[k.x] && this.conf.value[1] == this.conf.max) {
+                if (r1.style.zIndex != 2) {
+                    r1.style.zIndex = 2;
+                }
+            } else {
+                if (r1.style.zIndex == 2) {
+                    r1.style.zIndex = 1;
+                }
+            }
+        }
+        r1 = r2 = null;
+        this._refreshBG();
+    };
+    _setValueByCoord(data) {
+        var cx = dhx4.absLeft(this._nodes.cont), cy = dhx4.absTop(this._nodes.cont), value, k;
+        if (this.conf.vertical) {
+            k = (data.y - cy - this._nodes.runner.offsetHeight / 2) / (this._nodes.cont.offsetHeight - this._nodes.runner.offsetHeight);
+        } else {
+            k = (data.x - cx - this._nodes.runner.offsetWidth / 2) / (this._nodes.cont.offsetWidth - this._nodes.runner.offsetWidth);
+        }
+        value = (this.conf.max - this.conf.min) * k + this.conf.min;
+        this.setValue(value, true);
+    };
+    _getCoord(max, value) {
+        var v = (this.conf.inverse ? this._inverseValue(value) : value);
+        var k = (v - this.conf.min) / (this.conf.max - this.conf.min);
+        return Math.round(max * k);
+    };
+    _normalize(value, min, max) {
+        value = Number(value); // for decimals
+        value = Math.round(value / this.conf.step) * this.conf.step;
+        var ten = Math.pow(10, this.conf.decimals);
+        value = Math.round(value * ten) / ten;
+        value = Math.max(min, Math.min(max, value));
+        return value;
+    };
+    _normalizeRange(value, min, max) {
+        if (value[1] < value[0]) {
+            value[1] = value[0];
+        }
+        value[0] = this._normalize(value[0], min, Math.min(max, value[1]));
+        value[1] = this._normalize(value[1], Math.max(min, value[0]), max);
+        return value;
+    };
+    _refreshBG() {
+        if (this.conf.bg != true) {
+            return;
+        }
+        var p = this._nodes.track.firstChild;
+        var r = this._nodes.runner;
+        var r2 = r.nextSibling;
+        var k = (this.conf.vertical == true ? {
+            x: "top",
+            w: "height",
+            ofs: "offsetHeight"
+        } : {
+            x: "left",
+            w: "width",
+            ofs: "offsetWidth"
+        });
+        if (this.conf.range == true) {
+            p.style[k.x] = Math.floor(parseInt(r.style[k.x]) + r[k.ofs] / 2) + "px";
+            p.style[k.w] = Math.max(Math.floor(parseInt(r2.style[k.x]) + r2[k.ofs] / 2) - parseInt(p.style[k.x]), 0) + "px";
+        } else {
+            var mode = (this.conf.inverse == true ? {
+                "left": "right",
+                "right": "left"
+            }[this.conf.bg_mode] : this.conf.bg_mode);
+            p.style[k.x] = (mode == "left" ? "0" : Math.floor(parseInt(r.style[k.x]) + r[k.ofs] / 2)) + "px";
+            p.style[k.w] = (mode == "left" ? Math.floor(parseInt(r.style[k.x]) + r[k.ofs] / 2) : this._nodes.track[k.ofs] - parseInt(p.style[k.x])) + "px";
+        }
+        p = r = r2 = null;
+    };
+    _attachNode(node, index) {
+        this._detachNode(index);
+        var tagName = node.tagName.toLowerCase();
+        if (!tagName) {
+            return;
+        }
+        // node._dhxsl_mode = mode;
+        this._attachedNode["node_" + index] = node;
+        switch (tagName) {
+            case "input":
+            case "select":
+                if (typeof(window.addEventListener) == "function") {
+                    node.addEventListener("change", this._doOnChangeInput, false);
+                    node.addEventListener("keydown", this._doOnKeyDown, false);
+                } else {
+                    node.attachEvent("onchange", this._doOnChangeInput);
+                    node.attachEvent("onkeydown", this._doOnKeyDown);
+                }
+                this._attachedNode.setValue = function (value, decimals, index) {
+                    var v = (value instanceof Array ? value[index || 0] : value);
+                    this["node_" + (index || 0)].value = dhtmlXSlider.prototype._atatchedNodeFixDec(v, decimals);
+                };
                 break;
             default:
-                this.conf[key] = data[key];
+                this._attachedNode.setValue = function (value, decimals, index) {
+                    var v = (value instanceof Array ? value[index || 0] : value);
+                    this["node_" + (index || 0)].innerHTML = dhtmlXSlider.prototype._atatchedNodeFixDec(v, decimals);
+                };
         }
-    }
-};
-dhtmlXSlider.prototype._readAttFormNode = function (node) {
-    var atts = node.attributes, l = atts.length, i, answer = {}, att;
-    for (i = 0; i < l; i++) {
-        att = atts[i];
-        switch (att.name.toLowerCase()) {
-            case "size":
-            case "min":
-            case "max":
-            case "value":
-            case "step":
-                answer[att.name] = Number(att.value);
-                break;
-            case "skin":
-                answer[att.name] = att.value;
-                break;
-            case "vertical":
-            case "disabled":
-            case "visible":
-            case "range":
-            case "bg":
-                answer[att.name] = dhx4.s2b(att.value);
-                break;
-            case "linkto":
-                answer[att.name] = att.value;
-                break;
-            case "tooltip":
-                answer[att.name] = dhx4.s2b(att.value);
-                break;
-            case "bg_mode":
-                answer[att.name] = ({
-                        "left": "left",
-                        "right": "right"
-                    }[att.value]) || "left";
+        this._attachedNode.setValue(this.conf.value, this.conf.decimals, index);
+    };
+    _detachNode(index) {
+        var node = this._attachedNode["node_" + index];
+        if (!node) {
+            return;
+        }
+        var tagName = node.tagName;
+        switch (tagName) {
+            case "input":
+            case "select":
+                if (typeof(window.addEventListener) == "function") {
+                    node.removeEventListener("change", this._doOnChangeInput, false);
+                    node.removeEventListener("keydown", this._doOnChangeInput, false);
+                } else {
+                    node.detachEvent("change", this._doOnChangeInput);
+                    node.detachEvent("keydown", this._doOnChangeInput);
+                }
                 break;
         }
-    }
-    return answer;
-};
-dhtmlXSlider.prototype._renderArgumets = function (arg) {
-    var answer = {}, i, l;
-    l = arg.length;
-    for (i = 0; i < l; i++) {
-        switch (i) {
-            case 0:
-                answer.parent = arg[i];
-                break;
-            case 1:
-                answer.size = arg[i];
-                break;
-            case 2:
-                answer.skin = arg[i];
-                break;
-            case 3:
-                answer.vertical = arg[i];
-                break;
-            case 4:
-                answer.min = arg[i];
-                break;
-            case 5:
-                answer.max = arg[i];
-                break;
-            case 6:
-                answer.value = arg[i];
-                break;
-            case 7:
-                answer.step = arg[i];
-                break;
+        delete this._attachedNode["node_" + index];
+        delete this._attachedNode.setValue;
+        node = null;
+    };
+    _atatchedNodeFixDec(value, decimals) {
+        value = String(value);
+        if (decimals > 0) {
+            var k = value.match(/\.\d{1,}$/);
+            if (k != null) {
+                decimals = Math.max(decimals - k[0].length + 1);
+            }
+            value += (value.indexOf(".") < 0 ? "." : "");
+            for (var q = 0; q < decimals; q++) {
+                value += "0";
+            }
         }
-    }
-    return answer;
-};
+        return value;
+    };
+    _detectDecimals() {
+        var k = this.conf.step.toString().match(/\.(\d*)$/);
+        this.conf.decimals = (k != null ? k[1].length : 0);
+    };
+    setSize(size) {
+        if (!isNaN(size)) {
+            if (this.conf.vertical) {
+                if (this._nodes.cont.style.width) {
+                    delete this._nodes.cont.style.width;
+                }
+                this._nodes.cont.style.height = size - this.conf.margin + "px";
+            } else {
+                if (this._nodes.cont.style.height) {
+                    delete this._nodes.cont.style.height;
+                }
+                this._nodes.cont.style.width = size - this.conf.margin + "px";
+            }
+            this._refreshRunner();
+        }
+    };
+    setSkin(skin) {
+        skin = skin.toLowerCase();
+        var classes, _int = -1, skinName, className = "dhtmlxslider";
+        classes = this.base.className.match(/\S\w+/ig);
+        if (classes instanceof Array) {
+            for (skinName in this._skinCollection) {
+                if (_int == -1) {
+                    _int = this._indexOf(classes, className + "_" + skinName);
+                } else {
+                    break;
+                }
+            }
+            _int = (_int == -1) ? classes.length : _int;
+        } else {
+            classes = [];
+            _int = 0;
+        }
+        classes[_int] = className + "_" + skin;
+        this.base.className = classes.join(" ");
+        this.conf.skin = skin;
+        if (this._nodes) {
+            this._refreshRunner();
+        }
+    };
+    setValue(value, callEvent) {
+        callEvent = callEvent || false;
+        var index = null;
+        var refresh = false;
+        if (this.conf.range == true) {
+            if (this._r_actv != null) {
+                index = (this._r_actv == this._nodes.runner ? 0 : 1);
+            }
+            value = this._normalizeRange(value, this.conf.min, this.conf.max);
+            refresh = (this.conf.value[0] != value[0] || this.conf.value[1] != value[1]);
+        } else {
+            value = this._normalize(value, this.conf.min, this.conf.max);
+            refresh = (this.conf.value != value);
+        }
+        if (refresh = true) {
+            this.conf.value = value;
+            this._refreshRunner(index);
+            this._refreshTooltip();
+            if (callEvent) {
+                var args = [value, this];
+                if (this.conf.range == true) {
+                    if (this._r_actv != null) {
+                        args.push(this._r_actv == this._nodes.runner ? 0 : 1);
+                    } else if (this.conf.init_index != null) {
+                        args.push(this.conf.init_index.valueOf());
+                    }
+                }
+                this.callEvent("onChange", args);
+            }
+        }
+        if (typeof(this._attachedNode.setValue) == "function") {
+            if (index == null) {
+                index = this.conf.init_index;
+            }
+            this._attachedNode.setValue(this.conf.value, this.conf.decimals, index);
+        }
+    };
+    getValue() {
+        if (this.conf.range == true) {
+            return [this.conf.value[0].valueOf(), this.conf.value[1].valueOf()];
+        } else {
+            return this.conf.value.valueOf();
+        }
+    };
+    _inverseValue(value) {
+        return this.conf.max + this.conf.min - value;
+    };
+    disable(mode) {
+        mode = (mode == false) ? false : true; // deprecated
+        var reg = null;
+        if (mode) {
+            for (var nm in this._nodes) {
+                if (nm == "cont") {
+                    continue;
+                }
+                var a = (nm == "runner2" ? "runner" : nm);
+                if (this._nodes[nm] != null) {
+                    reg = new RegExp("\\s?dhxsl_" + a + "_dis", "i");
+                    if (!reg.test(this._nodes[nm].className)) {
+                        this._nodes[nm].className += " dhxsl_" + a + "_dis";
+                    }
+                }
+            }
+            this.conf.disabled = true;
+        } else {
+            this.enable();
+        }
+    };
+    enable() {
+        var reg;
+        for (var nm in this._nodes) {
+            if (nm == "cont") {
+                continue;
+            }
+            var a = (nm == "runner2" ? "runner" : nm);
+            if (this._nodes[nm] != null) {
+                reg = new RegExp("\\s?dhxsl_" + a + "_dis", "i");
+                if (reg.test(this._nodes[nm].className)) {
+                    this._nodes[nm].className = this._nodes[nm].className.replace(reg, "");
+                }
+            }
+        }
+        this.conf.disabled = false;
+    };
+    isEnabled() {
+        return !this.conf.disabled;
+    };
+    disableTooltip() {
+        this._nodes.cont.removeAttribute("title");
+        this.conf.tooltip = false;
+    };
+    enableTooltip(mode) {
+        if (typeof(mode) == "undefined") {
+            mode = true;
+        } else {
+            mode = dhx4.s2b(mode);
+        }
+        if (mode) {
+            this.conf.tooltip = true;
+            this._refreshTooltip();
+        } else {
+            this.disableTooltip();
+        }
+    };
+    setMax(value) {
+        if (!isNaN(value) && this.conf.min < value) {
+            this.conf.max = value;
+            this.setValue(this.conf.value);
+        }
+    };
+    getMax() {
+        return this.conf.max;
+    };
+    setMin(value) {
+        if (!isNaN(value) && this.conf.max > value) {
+            this.conf.min = value;
+            this.setValue(this.conf.value);
+        }
+    };
+    getMin() {
+        return this.conf.min;
+    };
+    setStep(value) {
+        var maxValue = this.conf.max - this.conf.min;
+        if (!isNaN(value) && value < maxValue) {
+            this.conf.step = value;
+            this._detectDecimals();
+            this.setValue(this.conf.value);
+        }
+    };
+    getStep() {
+        return this.conf.step;
+    };
+    show() {
+        if (/\s?dhxsl_hidden/i.test(this._nodes.cont.className)) {
+            this._nodes.cont.className = this._nodes.cont.className.replace(/\s?dhxsl_hidden/i, "");
+        }
+        this.conf.visible = true;
+    };
+    hide() {
+        if (!/\s?dhxsl_hidden/i.test(this._nodes.cont.className)) {
+            this._nodes.cont.className += " dhxsl_hidden";
+        }
+        this.conf.visible = false;
+    };
+    isVisible() {
+        return this.conf.visible;
+    };
+    linkTo(node) {
+        if (!(node instanceof Array)) {
+            node = [node];
+        }
+        for (var q = 0; q < node.length && q < 2; q++) {
+            if (node[q] != null) {
+                if (typeof(node[q]) == "string") {
+                    node[q] = document.getElementById(node[q]);
+                }
+                this._attachNode(node[q], q);
+            }
+        }
+    };
+    _refreshTooltip() {
+        if (this.conf.tooltip == true) {
+            if (this.conf.value instanceof Array) {
+                this._nodes.cont.title = this.conf.value.join(", ");
+            } else {
+                this._nodes.cont.title = this.conf.value;
+            }
+        }
+    };
+    getRunnerIndex() {
+        if (this._r_actv == null) {
+            return -1;
+        }
+        return (this._r_actv == this._nodes.runner ? 0 : 1);
+    };
+}
 dhtmlXSlider.prototype._skinCollection = {
     dhx_skyblue: true,
     dhx_web: true,
     dhx_terrace: true,
     material: true
-};
-dhtmlXSlider.prototype._indexOf = function (arr, el) {
-    var i, l, answer = -1;
-    l = arr.length;
-    for (i = l; i >= 0; i--) {
-        if (arr[i] == el) {
-            answer = i;
-            break;
-        }
-    }
-    return answer;
-};
-dhtmlXSlider.prototype._refreshRunner = function (index) {
-    var k = (this.conf.vertical == true ? {
-        x: "top",
-        y: "left",
-        ofs_w: "offsetHeight",
-        ofs_h: "offsetWidth"
-    } : {
-        x: "left",
-        y: "top",
-        ofs_w: "offsetWidth",
-        ofs_h: "offsetHeight"
-    });
-    var cmax = this._nodes.cont[k.ofs_w] - this._nodes.runner[k.ofs_w];
-    var r1 = this._nodes.runner;
-    var r2 = this._nodes.runner2;
-    // single or left
-    if (index == null || index == 0) {
-        var cp = this._getCoord(cmax, (this.conf.value instanceof Array ? this.conf.value[0] : this.conf.value));
-        r1.style[k.x] = cp + this.conf.border + "px";
-        r1.style[k.y] = Math.round((this._nodes.cont[k.ofs_h] - r1[k.ofs_h]) / 2) + "px";
-    }
-    // right
-    if (this.conf.range == true && (index == null || index == 1)) {
-        var cp = this._getCoord(cmax, this.conf.value[1]);
-        r2.style[k.x] = cp + this.conf.border + "px";
-        r2.style[k.y] = Math.round((this._nodes.cont[k.ofs_h] - r1[k.ofs_h]) / 2) + "px";
-    }
-    // check z-index
-    if (this.conf.range == true) {
-        if (r1.style[k.x] == r2.style[k.x] && this.conf.value[1] == this.conf.max) {
-			if (r1.style.zIndex != 2) {
-				r1.style.zIndex = 2;
-			}
-		} else {
-			if (r1.style.zIndex == 2) {
-				r1.style.zIndex = 1;
-			}
-		}
-    }
-    r1 = r2 = null;
-    this._refreshBG();
-};
-dhtmlXSlider.prototype._setValueByCoord = function (data) {
-    var cx = dhx4.absLeft(this._nodes.cont), cy = dhx4.absTop(this._nodes.cont), value, k;
-    if (this.conf.vertical) {
-        k = (data.y - cy - this._nodes.runner.offsetHeight / 2) / (this._nodes.cont.offsetHeight - this._nodes.runner.offsetHeight);
-    } else {
-        k = (data.x - cx - this._nodes.runner.offsetWidth / 2) / (this._nodes.cont.offsetWidth - this._nodes.runner.offsetWidth);
-    }
-    value = (this.conf.max - this.conf.min) * k + this.conf.min;
-    this.setValue(value, true);
-};
-dhtmlXSlider.prototype._getCoord = function (max, value) {
-    var v = (this.conf.inverse ? this._inverseValue(value) : value);
-    var k = (v - this.conf.min) / (this.conf.max - this.conf.min);
-    return Math.round(max * k);
-};
-dhtmlXSlider.prototype._normalize = function (value, min, max) {
-    value = Number(value); // for decimals
-    value = Math.round(value / this.conf.step) * this.conf.step;
-    var ten = Math.pow(10, this.conf.decimals);
-    value = Math.round(value * ten) / ten;
-    value = Math.max(min, Math.min(max, value));
-    return value;
-};
-dhtmlXSlider.prototype._normalizeRange = function (value, min, max) {
-	if (value[1] < value[0]) {
-		value[1] = value[0];
-	}
-	value[0] = this._normalize(value[0], min, Math.min(max, value[1]));
-    value[1] = this._normalize(value[1], Math.max(min, value[0]), max);
-    return value;
-};
-dhtmlXSlider.prototype._refreshBG = function () {
-	if (this.conf.bg != true) {
-		return;
-	}
-	var p = this._nodes.track.firstChild;
-    var r = this._nodes.runner;
-    var r2 = r.nextSibling;
-    var k = (this.conf.vertical == true ? {
-        x: "top",
-        w: "height",
-        ofs: "offsetHeight"
-    } : {
-        x: "left",
-        w: "width",
-        ofs: "offsetWidth"
-    });
-    if (this.conf.range == true) {
-        p.style[k.x] = Math.floor(parseInt(r.style[k.x]) + r[k.ofs] / 2) + "px";
-        p.style[k.w] = Math.max(Math.floor(parseInt(r2.style[k.x]) + r2[k.ofs] / 2) - parseInt(p.style[k.x]), 0) + "px";
-    } else {
-        var mode = (this.conf.inverse == true ? {
-            "left": "right",
-            "right": "left"
-        }[this.conf.bg_mode] : this.conf.bg_mode);
-        p.style[k.x] = (mode == "left" ? "0" : Math.floor(parseInt(r.style[k.x]) + r[k.ofs] / 2)) + "px";
-        p.style[k.w] = (mode == "left" ? Math.floor(parseInt(r.style[k.x]) + r[k.ofs] / 2) : this._nodes.track[k.ofs] - parseInt(p.style[k.x])) + "px";
-    }
-    p = r = r2 = null;
-};
-dhtmlXSlider.prototype._attachNode = function (node, index) {
-    this._detachNode(index);
-    var tagName = node.tagName.toLowerCase();
-	if (!tagName) {
-		return;
-	}
-	// node._dhxsl_mode = mode;
-    this._attachedNode["node_" + index] = node;
-    switch (tagName) {
-        case "input":
-        case "select":
-            if (typeof(window.addEventListener) == "function") {
-                node.addEventListener("change", this._doOnChangeInput, false);
-                node.addEventListener("keydown", this._doOnKeyDown, false);
-            } else {
-                node.attachEvent("onchange", this._doOnChangeInput);
-                node.attachEvent("onkeydown", this._doOnKeyDown);
-            }
-            this._attachedNode.setValue = function (value, decimals, index) {
-                var v = (value instanceof Array ? value[index || 0] : value);
-                this["node_" + (index || 0)].value = dhtmlXSlider.prototype._atatchedNodeFixDec(v, decimals);
-            };
-            break;
-        default:
-            this._attachedNode.setValue = function (value, decimals, index) {
-                var v = (value instanceof Array ? value[index || 0] : value);
-                this["node_" + (index || 0)].innerHTML = dhtmlXSlider.prototype._atatchedNodeFixDec(v, decimals);
-            };
-    }
-    this._attachedNode.setValue(this.conf.value, this.conf.decimals, index);
-};
-dhtmlXSlider.prototype._detachNode = function (index) {
-    var node = this._attachedNode["node_" + index];
-	if (!node) {
-		return;
-	}
-	var tagName = node.tagName;
-    switch (tagName) {
-        case "input":
-        case "select":
-            if (typeof(window.addEventListener) == "function") {
-                node.removeEventListener("change", this._doOnChangeInput, false);
-                node.removeEventListener("keydown", this._doOnChangeInput, false);
-            } else {
-                node.detachEvent("change", this._doOnChangeInput);
-                node.detachEvent("keydown", this._doOnChangeInput);
-            }
-            break;
-    }
-    delete this._attachedNode["node_" + index];
-    delete this._attachedNode.setValue;
-    node = null;
-};
-dhtmlXSlider.prototype._atatchedNodeFixDec = function (value, decimals) {
-    value = String(value);
-    if (decimals > 0) {
-        var k = value.match(/\.\d{1,}$/);
-		if (k != null) {
-			decimals = Math.max(decimals - k[0].length + 1);
-		}
-		value += (value.indexOf(".") < 0 ? "." : "");
-		for (var q = 0; q < decimals; q++) {
-			value += "0";
-		}
-	}
-    return value;
-};
-dhtmlXSlider.prototype._detectDecimals = function () {
-    var k = this.conf.step.toString().match(/\.(\d*)$/);
-    this.conf.decimals = (k != null ? k[1].length : 0);
-};
-dhtmlXSlider.prototype.setSize = function (size) {
-    if (!isNaN(size)) {
-        if (this.conf.vertical) {
-			if (this._nodes.cont.style.width) {
-				delete this._nodes.cont.style.width;
-			}
-			this._nodes.cont.style.height = size - this.conf.margin + "px";
-        } else {
-			if (this._nodes.cont.style.height) {
-				delete this._nodes.cont.style.height;
-			}
-			this._nodes.cont.style.width = size - this.conf.margin + "px";
-        }
-        this._refreshRunner();
-    }
-};
-dhtmlXSlider.prototype.setSkin = function (skin) {
-    skin = skin.toLowerCase();
-    var classes, _int = -1, skinName, className = "dhtmlxslider";
-    classes = this.base.className.match(/\S\w+/ig);
-    if (classes instanceof Array) {
-        for (skinName in this._skinCollection) {
-            if (_int == -1) {
-                _int = this._indexOf(classes, className + "_" + skinName);
-            } else {
-                break;
-            }
-        }
-        _int = (_int == -1) ? classes.length : _int;
-    } else {
-        classes = [];
-        _int = 0;
-    }
-    classes[_int] = className + "_" + skin;
-    this.base.className = classes.join(" ");
-    this.conf.skin = skin;
-	if (this._nodes) {
-		this._refreshRunner();
-	}
-};
-dhtmlXSlider.prototype.setValue = function (value, callEvent) {
-    callEvent = callEvent || false;
-    var index = null;
-    var refresh = false;
-    if (this.conf.range == true) {
-		if (this._r_actv != null) {
-			index = (this._r_actv == this._nodes.runner ? 0 : 1);
-		}
-		value = this._normalizeRange(value, this.conf.min, this.conf.max);
-        refresh = (this.conf.value[0] != value[0] || this.conf.value[1] != value[1]);
-    } else {
-        value = this._normalize(value, this.conf.min, this.conf.max);
-        refresh = (this.conf.value != value);
-    }
-    if (refresh = true) {
-        this.conf.value = value;
-        this._refreshRunner(index);
-        this._refreshTooltip();
-        if (callEvent) {
-            var args = [value, this];
-            if (this.conf.range == true) {
-                if (this._r_actv != null) {
-                    args.push(this._r_actv == this._nodes.runner ? 0 : 1);
-                } else if (this.conf.init_index != null) {
-                    args.push(this.conf.init_index.valueOf());
-                }
-            }
-            this.callEvent("onChange", args);
-        }
-    }
-    if (typeof(this._attachedNode.setValue) == "function") {
-		if (index == null) {
-			index = this.conf.init_index;
-		}
-		this._attachedNode.setValue(this.conf.value, this.conf.decimals, index);
-    }
-};
-dhtmlXSlider.prototype.getValue = function () {
-    if (this.conf.range == true) {
-        return [this.conf.value[0].valueOf(), this.conf.value[1].valueOf()];
-    } else {
-        return this.conf.value.valueOf();
-    }
-};
-dhtmlXSlider.prototype._inverseValue = function (value) {
-    return this.conf.max + this.conf.min - value;
-};
-dhtmlXSlider.prototype.disable = function (mode) {
-    mode = (mode == false) ? false : true; // deprecated
-    var reg = null;
-    if (mode) {
-        for (var nm in this._nodes) {
-			if (nm == "cont") {
-				continue;
-			}
-			var a = (nm == "runner2" ? "runner" : nm);
-            if (this._nodes[nm] != null) {
-                reg = new RegExp("\\s?dhxsl_" + a + "_dis", "i");
-				if (!reg.test(this._nodes[nm].className)) {
-					this._nodes[nm].className += " dhxsl_" + a + "_dis";
-				}
-			}
-        }
-        this.conf.disabled = true;
-    } else {
-        this.enable();
-    }
-};
-dhtmlXSlider.prototype.enable = function () {
-    var reg;
-    for (var nm in this._nodes) {
-		if (nm == "cont") {
-			continue;
-		}
-		var a = (nm == "runner2" ? "runner" : nm);
-        if (this._nodes[nm] != null) {
-            reg = new RegExp("\\s?dhxsl_" + a + "_dis", "i");
-			if (reg.test(this._nodes[nm].className)) {
-				this._nodes[nm].className = this._nodes[nm].className.replace(reg, "");
-			}
-		}
-    }
-    this.conf.disabled = false;
-};
-dhtmlXSlider.prototype.isEnabled = function () {
-    return !this.conf.disabled;
-};
-dhtmlXSlider.prototype.disableTooltip = function () {
-    this._nodes.cont.removeAttribute("title");
-    this.conf.tooltip = false;
-};
-dhtmlXSlider.prototype.enableTooltip = function (mode) {
-	if (typeof(mode) == "undefined") {
-		mode = true;
-	} else {
-		mode = dhx4.s2b(mode);
-	}
-	if (mode) {
-        this.conf.tooltip = true;
-        this._refreshTooltip();
-    } else {
-        this.disableTooltip();
-    }
-};
-dhtmlXSlider.prototype.setMax = function (value) {
-    if (!isNaN(value) && this.conf.min < value) {
-        this.conf.max = value;
-        this.setValue(this.conf.value);
-    }
-};
-dhtmlXSlider.prototype.getMax = function () {
-    return this.conf.max;
-};
-dhtmlXSlider.prototype.setMin = function (value) {
-    if (!isNaN(value) && this.conf.max > value) {
-        this.conf.min = value;
-        this.setValue(this.conf.value);
-    }
-};
-dhtmlXSlider.prototype.getMin = function () {
-    return this.conf.min;
-};
-dhtmlXSlider.prototype.setStep = function (value) {
-    var maxValue = this.conf.max - this.conf.min;
-    if (!isNaN(value) && value < maxValue) {
-        this.conf.step = value;
-        this._detectDecimals();
-        this.setValue(this.conf.value);
-    }
-};
-dhtmlXSlider.prototype.getStep = function () {
-    return this.conf.step;
-};
-dhtmlXSlider.prototype.show = function () {
-    if (/\s?dhxsl_hidden/i.test(this._nodes.cont.className)) {
-        this._nodes.cont.className = this._nodes.cont.className.replace(/\s?dhxsl_hidden/i, "");
-    }
-    this.conf.visible = true;
-};
-dhtmlXSlider.prototype.hide = function () {
-    if (!/\s?dhxsl_hidden/i.test(this._nodes.cont.className)) {
-        this._nodes.cont.className += " dhxsl_hidden";
-    }
-    this.conf.visible = false;
-};
-dhtmlXSlider.prototype.isVisible = function () {
-    return this.conf.visible;
-};
-dhtmlXSlider.prototype.linkTo = function (node) {
-	if (!(node instanceof Array)) {
-		node = [node];
-	}
-	for (var q = 0; q < node.length && q < 2; q++) {
-        if (node[q] != null) {
-			if (typeof(node[q]) == "string") {
-				node[q] = document.getElementById(node[q]);
-			}
-			this._attachNode(node[q], q);
-        }
-    }
-};
-dhtmlXSlider.prototype._refreshTooltip = function () {
-    if (this.conf.tooltip == true) {
-        if (this.conf.value instanceof Array) {
-            this._nodes.cont.title = this.conf.value.join(", ");
-        } else {
-            this._nodes.cont.title = this.conf.value;
-        }
-    }
-};
-dhtmlXSlider.prototype.getRunnerIndex = function () {
-	if (this._r_actv == null) {
-		return -1;
-	}
-	return (this._r_actv == this._nodes.runner ? 0 : 1);
 };

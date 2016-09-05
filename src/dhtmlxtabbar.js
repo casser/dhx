@@ -1,4 +1,4 @@
-class dhtmlXTabBar extends dhtmlXCellTop{
+class dhtmlXTabBar extends dhtmlXCellTop {
     constructor(conf, mode) {
         super();
         var that = this;
@@ -795,279 +795,284 @@ class dhtmlXTabBar extends dhtmlXCellTop{
         this.setSizes();
         return this;
     }
-}
-dhtmlXTabBar.prototype._fixTabsOfs = function () {
-    this.conf.tabsOfs = ({
-        dhx_skyblue: 1,
-        dhx_web: 0,
-        dhx_terrace: 1,
-        material: 0
-    }[this.conf.skin]);
-};
-dhtmlXTabBar.prototype.cells = dhtmlXTabBar.prototype.tabs = function (id) {
-    if (this.t[id]) {
-        return this.t[id].cell;
+    _fixTabsOfs() {
+        this.conf.tabsOfs = ({
+            dhx_skyblue: 1,
+            dhx_web: 0,
+            dhx_terrace: 1,
+            material: 0
+        }[this.conf.skin]);
     }
-    return null;
-};
-dhtmlXTabBar.prototype.getAllTabs = function () {
-    var t = [];
-    for (var a in this.t) {
-        t.push(a);
+    cells(id) {
+        return this.tabs(id)
     }
-    return t;
-};
-dhtmlXTabBar.prototype._setTabActive = function (id, mode) {
-
-    // mode - if set to true - call onSelect event handler (true by default)
-    if (!this.t[id] || this.t[id].conf.active) {
-        return;
-    }
-    if (typeof(mode) == "undefined") {
-        mode = true;
-    }
-    if (mode == true && this.callEvent("onSelect", [id, this.conf.lastActive]) !== true) {
-        return;
-    }
-    this.setTabInActive();
-    this.t[id].conf.active = true;
-    if (this.conf.contZone) {
-        this.t[id].cell.cell.style.visibility = "visible";
-        this.t[id].cell.cell.style.top = "0px";
-        this.t[id].cell.cell.style.zIndex = 1;
-    }
-    this.t[id].tab.className = this._tabCss(id);
-    this.conf.lastActive = id;
-    this.setSizes();
-    if (this.conf.url_demand == true) {
-        this._loadURLOnDemand(id);
-    }
-};
-dhtmlXTabBar.prototype.setTabInActive = function () {
-    if (this.conf.lastActive != null && this.t[this.conf.lastActive]) {
-        this.t[this.conf.lastActive].conf.active = false;
-        if (this.conf.contZone) {
-            this.t[this.conf.lastActive].cell.cell.style.visibility = "hidden";
-            this.t[this.conf.lastActive].cell.cell.style.top = "-5000px";
-            this.t[this.conf.lastActive].cell.cell.style.zIndex = 0;
+    tabs(id) {
+        if (this.t[id]) {
+            return this.t[id].cell;
         }
-        this.t[this.conf.lastActive].tab.className = this._tabCss(this.conf.lastActive);
-        this.conf.lastActive = null;
-    }
-};
-dhtmlXTabBar.prototype._isTabActive = function (id) {
-    return (id == this.conf.lastActive && this.conf.lastActive != null);
-};
-dhtmlXTabBar.prototype.getActiveTab = function () {
-    return this.conf.lastActive;
-};
-dhtmlXTabBar.prototype.goToNextTab = function () {
-    var id = this._getNextVisible(this.conf.lastActive, true);
-    if (id != null) {
-        this._setTabActive(id);
-    }
-};
-dhtmlXTabBar.prototype.goToPrevTab = function () {
-    var id = this._getPrevVisible(this.conf.lastActive, true);
-    if (id != null) {
-        this._setTabActive(id);
-    }
-};
-dhtmlXTabBar.prototype._enableTab = function (id, mode) {
-
-    // mode - set to true to select tab
-    if (!this.t[id] || this.t[id].conf.enabled) {
-        return;
-    }
-    this.t[id].conf.enabled = true;
-    this.t[id].tab.className = this._tabCss(id);
-    if (mode == true) {
-        this._setTabActive(id);
-    }
-};
-dhtmlXTabBar.prototype._disableTab = function (id, activateId) {
-
-    // old code have 2nd param in descr but not in script, will added (logic the same as for hideTab)
-    // activateId - if set to true, selection jump from current tab to nearest one, or you can specify tab id
-    if (!this.t[id] || !this.t[id].conf.enabled) {
-        return;
-    }
-    this.t[id].conf.enabled = false;
-    this.t[id].tab.className = this._tabCss(id);
-    if (activateId !== false && this.conf.lastActive == id) {
-        if (activateId == true) {
-            activateId = this._getNextVisible(id) || this._getPrevVisible(id);
-        }
-        this._setTabActive(activateId);
-    }
-};
-dhtmlXTabBar.prototype._isTabEnabled = function (id) {
-    return (this.t[id] != null && this.t[id].conf.enabled == true);
-};
-dhtmlXTabBar.prototype._setTabText = function (id, text, width) {
-    if (!this.t[id]) {
-        return;
-    }
-    var autowidth = false;
-    if (typeof(width) == "undefined" || width == null) {
-        width = this._getLabelWidth(text, this.t[id].conf.close);
-        autowidth = true;
-    }
-    this.t[id].tab.style.width = width + "px";
-    this.t[id].tab.childNodes[0].innerHTML = text;
-    this.t[id].conf.text = text;
-    this.t[id].conf.width = width;
-    this.t[id].conf.autowidth = autowidth;
-};
-dhtmlXTabBar.prototype._getTabText = function (id) {
-    if (!this.t[id]) {
         return null;
     }
-    return this.t[id].conf.text;
-};
-dhtmlXTabBar.prototype._removeTab = function (id, activateId, force) { // force = w/o effect, private?
-    if (!this.t[id]) {
-        return;
-    }
-    if (force != true && this.t[id].conf.remove != true) {
-        this.t[id].conf.remove = true;
-        this._hideTab(id, activateId);
-        return;
-    }
-    if (typeof(activateId) == "undefined") {
-        activateId = true;
-    }
-    var next = this._getNextVisible(id);
-    var prev = this._getPrevVisible(id);
-    if (this.t[id].conf.transEv == true) {
-        this.t[id].tab.removeEventListener(this.conf.transEv, this._doOnTrEnd, false);
-        this.t[id].conf.transEv = false;
-    }
-    for (var a in this.t[id].conf) {
-        this.t[id].conf[a] = null;
-    }
-    this.t[id].conf = null;
-    delete this.t[id].conf;
-    this.t[id].cell._unload();
-    this.t[id].cell = null;
-    this.t[id].tab.parentNode.removeChild(this.t[id].tab);
-    this.t[id].tab = null;
-    this.t[id] = null;
-    delete this.t[id];
-    this.conf.urls[id] = null;
-    delete this.conf.urls[id];
-    if (this.conf.lastActive == id) {
-        this.conf.lastActive = null;
-        if (activateId != false) {
-            var actvId = (activateId == true ? (next || prev || this._getFirstVisible()) : activateId);
-            if (actvId != null) {
-                this._setTabActive(actvId);
-            }
-        }
-    } else if (force != true) {
-        this._adjustTabs();
-    }
-};
-dhtmlXTabBar.prototype.clearAll = function () {
-    // remove all tabs
-    for (var a in this.t) {
-        this._removeTab(a, false, true);
-    }
-    this.tabsArea.childNodes[1].childNodes[0].style[this.conf.align] = "0px";
-};
-dhtmlXTabBar.prototype.moveTab = function (id, index) {
-    if (!this.t[id] || index < 0) {
-        return;
-    }
-    index += 1; // firstChild is line
-    var p = this.tabsArea.childNodes[1].firstChild;
-    if (p.childNodes[index] != this.t[id].tab) {
-        p.removeChild(this.t[id].tab);
-        if (index >= p.childNodes.length) {
-            p.appendChild(this.t[id].tab);
-        } else {
-            p.insertBefore(this.t[id].tab, p.childNodes[index]);
-        }
-    }
-    p = null;
-};
-dhtmlXTabBar.prototype._getIndex = function (id) {
-    var i = -1;
-    var p = this.tabsArea.childNodes[1].firstChild;
-    for (var q = 1; q < p.childNodes.length; q++) {
-        if (p.childNodes[q]._tabId == id) {
-            i = q - 1;
-        } // firstChild is line
-    }
-    p = null;
-    return i;
-};
-dhtmlXTabBar.prototype.getNumberOfTabs = function (mode) {
-    // mode - set to true for visible only (new)
-    var p = 0;
-    for (var a in this.t) {
-        p += (mode != true ? 1 : (this.t[a].conf.visible == true ? 1 : 0));
-    }
-    return p;
-};
-dhtmlXTabBar.prototype.forEachCell = dhtmlXTabBar.prototype.forEachTab = function (func) {
-    for (var a in this.t) {
-        func.apply(window, [this.t[a].cell]);
-    }
-};
-dhtmlXTabBar.prototype.enableAutoReSize = function () {
-    this._initFSResize();
-};
-dhtmlXTabBar.prototype.setArrowsMode = function (mode) {
-    mode = {
-        auto: "auto",
-        always: "always"
-    }[String(mode)];
-    if (mode == null || mode == this.conf.mode) {
-        return;
-    }
-    this.conf.arwMode = mode;
-    if (mode == "always") {
-        this.tabsArea.childNodes[0].className = "dhxtabbar_tabs_ar_left";
-        this.tabsArea.childNodes[2].className = "dhxtabbar_tabs_ar_right";
-    }
-    this.setSizes();
-};
-dhtmlXTabBar.prototype._checkArrows = function () {
-    var adj = false;
-    if (this.conf.arwMode == "auto") {
-        var w = 0;
+    getAllTabs() {
+        var t = [];
         for (var a in this.t) {
-            w += this.t[a].tab.offsetWidth;
+            t.push(a);
         }
-        var arLeft = this.tabsArea.childNodes[0];
-        var arRight = this.tabsArea.childNodes[2];
-        if (w > this.cont.offsetWidth) {
-            // show arows
-            if (arLeft.className.search(/dhxtabbar_tabs_ar_hidden/) >= 0) {
-                arLeft.className = arLeft.className.replace(/\s{0,}dhxtabbar_tabs_ar_hidden/, "");
-                arRight.className = arRight.className.replace(/\s{0,}dhxtabbar_tabs_ar_hidden/, "");
-                adj = true;
-            }
-        } else {
-            // hide arrows
-            if (arLeft.className.search(/dhxtabbar_tabs_ar_hidden/) < 1) {
-                arLeft.className += " dhxtabbar_tabs_ar_hidden";
-                arRight.className += " dhxtabbar_tabs_ar_hidden";
-                adj = true;
-            }
-        }
-        arLeft = arRight = null;
+        return t;
     }
-    return adj;
-};
-dhtmlXTabBar.prototype._loadURLOnDemand = function (id) {
-    if (id != null && this.conf.urls[id] != null) {
-        this.cells(id).attachURL(this.conf.urls[id].href, this.conf.urls[id].ajax);
-        this.conf.urls[id] = null;
-    }
-};
+    _setTabActive(id, mode) {
 
+        // mode - if set to true - call onSelect event handler (true by default)
+        if (!this.t[id] || this.t[id].conf.active) {
+            return;
+        }
+        if (typeof(mode) == "undefined") {
+            mode = true;
+        }
+        if (mode == true && this.callEvent("onSelect", [id, this.conf.lastActive]) !== true) {
+            return;
+        }
+        this.setTabInActive();
+        this.t[id].conf.active = true;
+        if (this.conf.contZone) {
+            this.t[id].cell.cell.style.visibility = "visible";
+            this.t[id].cell.cell.style.top = "0px";
+            this.t[id].cell.cell.style.zIndex = 1;
+        }
+        this.t[id].tab.className = this._tabCss(id);
+        this.conf.lastActive = id;
+        this.setSizes();
+        if (this.conf.url_demand == true) {
+            this._loadURLOnDemand(id);
+        }
+    }
+    setTabInActive() {
+        if (this.conf.lastActive != null && this.t[this.conf.lastActive]) {
+            this.t[this.conf.lastActive].conf.active = false;
+            if (this.conf.contZone) {
+                this.t[this.conf.lastActive].cell.cell.style.visibility = "hidden";
+                this.t[this.conf.lastActive].cell.cell.style.top = "-5000px";
+                this.t[this.conf.lastActive].cell.cell.style.zIndex = 0;
+            }
+            this.t[this.conf.lastActive].tab.className = this._tabCss(this.conf.lastActive);
+            this.conf.lastActive = null;
+        }
+    }
+    _isTabActive(id) {
+        return (id == this.conf.lastActive && this.conf.lastActive != null);
+    }
+    getActiveTab() {
+        return this.conf.lastActive;
+    }
+    goToNextTab() {
+        var id = this._getNextVisible(this.conf.lastActive, true);
+        if (id != null) {
+            this._setTabActive(id);
+        }
+    }
+    goToPrevTab() {
+        var id = this._getPrevVisible(this.conf.lastActive, true);
+        if (id != null) {
+            this._setTabActive(id);
+        }
+    }
+    _enableTab(id, mode) {
+
+        // mode - set to true to select tab
+        if (!this.t[id] || this.t[id].conf.enabled) {
+            return;
+        }
+        this.t[id].conf.enabled = true;
+        this.t[id].tab.className = this._tabCss(id);
+        if (mode == true) {
+            this._setTabActive(id);
+        }
+    }
+    _disableTab(id, activateId) {
+
+        // old code have 2nd param in descr but not in script, will added (logic the same as for hideTab)
+        // activateId - if set to true, selection jump from current tab to nearest one, or you can specify tab id
+        if (!this.t[id] || !this.t[id].conf.enabled) {
+            return;
+        }
+        this.t[id].conf.enabled = false;
+        this.t[id].tab.className = this._tabCss(id);
+        if (activateId !== false && this.conf.lastActive == id) {
+            if (activateId == true) {
+                activateId = this._getNextVisible(id) || this._getPrevVisible(id);
+            }
+            this._setTabActive(activateId);
+        }
+    }
+    _isTabEnabled(id) {
+        return (this.t[id] != null && this.t[id].conf.enabled == true);
+    }
+    _setTabText(id, text, width) {
+        if (!this.t[id]) {
+            return;
+        }
+        var autowidth = false;
+        if (typeof(width) == "undefined" || width == null) {
+            width = this._getLabelWidth(text, this.t[id].conf.close);
+            autowidth = true;
+        }
+        this.t[id].tab.style.width = width + "px";
+        this.t[id].tab.childNodes[0].innerHTML = text;
+        this.t[id].conf.text = text;
+        this.t[id].conf.width = width;
+        this.t[id].conf.autowidth = autowidth;
+    }
+    _getTabText(id) {
+        if (!this.t[id]) {
+            return null;
+        }
+        return this.t[id].conf.text;
+    }
+    _removeTab(id, activateId, force) { // force = w/o effect, private?
+        if (!this.t[id]) {
+            return;
+        }
+        if (force != true && this.t[id].conf.remove != true) {
+            this.t[id].conf.remove = true;
+            this._hideTab(id, activateId);
+            return;
+        }
+        if (typeof(activateId) == "undefined") {
+            activateId = true;
+        }
+        var next = this._getNextVisible(id);
+        var prev = this._getPrevVisible(id);
+        if (this.t[id].conf.transEv == true) {
+            this.t[id].tab.removeEventListener(this.conf.transEv, this._doOnTrEnd, false);
+            this.t[id].conf.transEv = false;
+        }
+        for (var a in this.t[id].conf) {
+            this.t[id].conf[a] = null;
+        }
+        this.t[id].conf = null;
+        delete this.t[id].conf;
+        this.t[id].cell._unload();
+        this.t[id].cell = null;
+        this.t[id].tab.parentNode.removeChild(this.t[id].tab);
+        this.t[id].tab = null;
+        this.t[id] = null;
+        delete this.t[id];
+        this.conf.urls[id] = null;
+        delete this.conf.urls[id];
+        if (this.conf.lastActive == id) {
+            this.conf.lastActive = null;
+            if (activateId != false) {
+                var actvId = (activateId == true ? (next || prev || this._getFirstVisible()) : activateId);
+                if (actvId != null) {
+                    this._setTabActive(actvId);
+                }
+            }
+        } else if (force != true) {
+            this._adjustTabs();
+        }
+    }
+    clearAll() {
+        // remove all tabs
+        for (var a in this.t) {
+            this._removeTab(a, false, true);
+        }
+        this.tabsArea.childNodes[1].childNodes[0].style[this.conf.align] = "0px";
+    }
+    moveTab(id, index) {
+        if (!this.t[id] || index < 0) {
+            return;
+        }
+        index += 1; // firstChild is line
+        var p = this.tabsArea.childNodes[1].firstChild;
+        if (p.childNodes[index] != this.t[id].tab) {
+            p.removeChild(this.t[id].tab);
+            if (index >= p.childNodes.length) {
+                p.appendChild(this.t[id].tab);
+            } else {
+                p.insertBefore(this.t[id].tab, p.childNodes[index]);
+            }
+        }
+        p = null;
+    }
+    _getIndex(id) {
+        var i = -1;
+        var p = this.tabsArea.childNodes[1].firstChild;
+        for (var q = 1; q < p.childNodes.length; q++) {
+            if (p.childNodes[q]._tabId == id) {
+                i = q - 1;
+            } // firstChild is line
+        }
+        p = null;
+        return i;
+    }
+    getNumberOfTabs(mode) {
+        // mode - set to true for visible only (new)
+        var p = 0;
+        for (var a in this.t) {
+            p += (mode != true ? 1 : (this.t[a].conf.visible == true ? 1 : 0));
+        }
+        return p;
+    }
+    forEachCell(func) {
+        return this.forEachTab(func);
+    }
+    forEachTab(func) {
+        for (var a in this.t) {
+            func.apply(window, [this.t[a].cell]);
+        }
+    }
+    enableAutoReSize() {
+        this._initFSResize();
+    }
+    setArrowsMode(mode) {
+        mode = {
+            auto: "auto",
+            always: "always"
+        }[String(mode)];
+        if (mode == null || mode == this.conf.mode) {
+            return;
+        }
+        this.conf.arwMode = mode;
+        if (mode == "always") {
+            this.tabsArea.childNodes[0].className = "dhxtabbar_tabs_ar_left";
+            this.tabsArea.childNodes[2].className = "dhxtabbar_tabs_ar_right";
+        }
+        this.setSizes();
+    }
+    _checkArrows() {
+        var adj = false;
+        if (this.conf.arwMode == "auto") {
+            var w = 0;
+            for (var a in this.t) {
+                w += this.t[a].tab.offsetWidth;
+            }
+            var arLeft = this.tabsArea.childNodes[0];
+            var arRight = this.tabsArea.childNodes[2];
+            if (w > this.cont.offsetWidth) {
+                // show arows
+                if (arLeft.className.search(/dhxtabbar_tabs_ar_hidden/) >= 0) {
+                    arLeft.className = arLeft.className.replace(/\s{0,}dhxtabbar_tabs_ar_hidden/, "");
+                    arRight.className = arRight.className.replace(/\s{0,}dhxtabbar_tabs_ar_hidden/, "");
+                    adj = true;
+                }
+            } else {
+                // hide arrows
+                if (arLeft.className.search(/dhxtabbar_tabs_ar_hidden/) < 1) {
+                    arLeft.className += " dhxtabbar_tabs_ar_hidden";
+                    arRight.className += " dhxtabbar_tabs_ar_hidden";
+                    adj = true;
+                }
+            }
+            arLeft = arRight = null;
+        }
+        return adj;
+    }
+    _loadURLOnDemand(id) {
+        if (id != null && this.conf.urls[id] != null) {
+            this.cells(id).attachURL(this.conf.urls[id].href, this.conf.urls[id].ajax);
+            this.conf.urls[id] = null;
+        }
+    }
+}
 class dhtmlXTabBarCell extends dhtmlXCellObject {
     constructor(id, tabbar) {
         super(id, "_tabbar");
@@ -1123,6 +1128,7 @@ class dhtmlXTabBarCell extends dhtmlXCellObject {
         });
     }
 }
+
 dhtmlXCellObject.prototype.attachTabbar = function (conf) {
     this.callEvent("_onBeforeContentAttach", ["tabbar"]);
     // 3.6 init - attachTabbar(mode)
@@ -1196,4 +1202,3 @@ dhtmlXCellObject.prototype.attachTabbar = function (conf) {
     this.callEvent("_onContentAttach", []);
     return this.dataObj;
 };
-
