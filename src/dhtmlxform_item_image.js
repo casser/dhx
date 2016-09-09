@@ -7,9 +7,7 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 */
 
 dhtmlXForm.prototype.items.image = {
-	
 	_dimFix: true,
-	
 	render: function(item, data) {
 		
 		item._type = "image";
@@ -73,7 +71,6 @@ dhtmlXForm.prototype.items.image = {
 		return this;
 		
 	},
-	
 	destruct: function(item) {
 		// custom functionality
 		var t = item.childNodes[item._ll?1:0].childNodes[0];
@@ -86,11 +83,9 @@ dhtmlXForm.prototype.items.image = {
 		this.d2(item);
 		item = null;
 	},
-	
 	doAttachEvents: function() {
 		
 	},
-	
 	setValue: function(item, value) {
 		item._value = (value==null?"":value);
 		
@@ -125,11 +120,9 @@ dhtmlXForm.prototype.items.image = {
 		
 		currentImg = null;
 	},
-	
 	getValue: function(item) {
 		return item._value;
 	},
-	
 	doOnUpload: function(item) {
 		if (item._is_uploading == true) {
 			
@@ -153,7 +146,6 @@ dhtmlXForm.prototype.items.image = {
 			
 		}
 	},
-	
 	adjustImage: function(item) {
 		var i = item.childNodes[item._ll?1:0].childNodes[0].firstChild; // image
 		var w = Math.min(item._dim.mw, item._dim.w);
@@ -164,7 +156,6 @@ dhtmlXForm.prototype.items.image = {
 		i.style.marginTop = Math.max(0, Math.round(item._dim.mh/2-h/2))+"px";
 		i = item = null;
 	}
-	
 };
 
 (function(){

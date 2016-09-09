@@ -7,9 +7,7 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 */
 
 dhtmlXForm.prototype.items.editor = {
-	
 	editor: {},
-	
 	render: function(item, data) {
 		
 		var ta = (!isNaN(data.rows));
@@ -68,8 +66,6 @@ dhtmlXForm.prototype.items.editor = {
 		return this;
 		
 	},
-	
-	// destructor for editor needed
 	doOnBlur: function(item, editor) {
 		var t = editor.getContent();
 		if (item._value != t) {
@@ -85,40 +81,33 @@ dhtmlXForm.prototype.items.editor = {
 			item.callEvent("onChange",[item._idd, t]);
 		}
 	},
-	
 	setValue: function(item, value) {
 		if (item._value == value) return;
 		item._value = value;
 		this.editor[item._editor_id].setContent(item._value);
 	},
-	
 	getValue: function(item) {
 		item._value = this.editor[item._editor_id].getContent();
 		return item._value;
 	},
-	
 	enable: function(item) {
 		if (this.isEnabled(item) != true) {
 			this.editor[item._editor_id].setReadonly(false);
 			this.doEn(item);
 		}
 	},
-	
 	disable: function(item) {
 		if (this.isEnabled(item) == true) {
 			this.editor[item._editor_id].setReadonly(true);
 			this.doDis(item);
 		}
 	},
-	
 	setReadonly: function(item, mode) {
 		this.editor[item._editor_id].setReadonly(mode);
 	},
-	
 	getEditor: function(item) {
 		return (this.editor[item._editor_id]||null);
 	},
-	
 	destruct: function(item) {
 		
 		// custom editor functionality
@@ -133,11 +122,9 @@ dhtmlXForm.prototype.items.editor = {
 		item = null;
 		
 	},
-	
 	setFocus: function(item) {
 		this.editor[item._editor_id]._focus();
 	}
-	
 };
 
 (function(){

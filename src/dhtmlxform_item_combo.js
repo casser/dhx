@@ -7,7 +7,6 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 */
 
 dhtmlXForm.prototype.items.combo = {
-	
 	render: function(item, data) {
 		
 		item._type = "combo";
@@ -77,7 +76,6 @@ dhtmlXForm.prototype.items.combo = {
 		
 		return this;
 	},
-	
 	destruct: function(item) {
 		
 		// unload combo
@@ -93,7 +91,6 @@ dhtmlXForm.prototype.items.combo = {
 		item = null;
 		
 	},
-	
 	doAttachEvents: function(item) {
 		
 		var that = this;
@@ -103,11 +100,9 @@ dhtmlXForm.prototype.items.combo = {
 			that.doValidate(this.DOMParent.parentNode.parentNode);
 		}
 	},
-	
 	doValidate: function(item) {
 		if (item.getForm().hot_validate) this._validate(item);
 	},
-	
 	doOnChange: function(combo) {
 		var item = combo.base.parentNode.parentNode.parentNode;
 		if (item._apiChange) return;
@@ -126,7 +121,6 @@ dhtmlXForm.prototype.items.combo = {
 		}
 		item._autoCheck();
 	},
-	
 	doLoadOptsConnector: function(item, url) {
 		var that = this;
 		var i = item;
@@ -144,23 +138,19 @@ dhtmlXForm.prototype.items.combo = {
 			that = i = null;
 		});
 	},
-	
 	enable: function(item) {
 		if (String(item.className).search("disabled") >= 0) item.className = String(item.className).replace(/disabled/gi,"");
 		item._enabled = true;
 		item._combo.enable();
 	},
-	
 	disable: function(item) {
 		if (String(item.className).search("disabled") < 0) item.className += " disabled";
 		item._enabled = false;
 		item._combo.disable();
 	},
-	
 	getCombo: function(item) {
 		return item._combo;
 	},
-	
 	setValue: function(item, val) {
 		if (item._connector_working) { // attemp to set value while optins not yet loaded (connector used)
 			item._connector_value = val;
@@ -171,34 +161,27 @@ dhtmlXForm.prototype.items.combo = {
 		item._combo._currentComboValue = item._combo.getActualValue();
 		item._apiChange = false;
 	},
-	
 	getValue: function(item) {
 		return item._combo.getActualValue();
 	},
-	
 	setWidth: function(item, width) {
 		item.childNodes[item._ll?1:0].childNodes[0].style.width = width+"px";
 	},
-	
 	setReadonly: function(item, state) {
 		if (!item._combo) return;
 		item._combo_ro = state;
 		item._combo.readonly(item._combo_ro);
 	},
-
 	isReadonly: function(item, state) {
 		return item._combo_ro||false;
 	},
-	
 	setFocus: function(item) {
 		if (item._enabled) item._combo.setFocus();
 	},
-	
 	_setCss: function(item, skin, fontSize) {
 		// update font-size for input and list-options div
 		item._combo.setFontSize(fontSize, fontSize);
 	}
-	
 };
 
 (function(){

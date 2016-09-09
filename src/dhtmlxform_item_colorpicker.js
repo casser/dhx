@@ -7,9 +7,7 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 */
 
 dhtmlXForm.prototype.items.colorpicker = {
-	
 	colorpicker: {}, // colorpicker instances
-	
 	render: function(item, data) {
 		
 		var t = this;
@@ -70,11 +68,9 @@ dhtmlXForm.prototype.items.colorpicker = {
 		return this;
 		
 	},
-	
 	getColorPicker: function(item) {
 		return this.colorpicker[item._idd];
 	},
-	
 	destruct: function(item) {
 		
 		// unload color picker instance
@@ -89,11 +85,9 @@ dhtmlXForm.prototype.items.colorpicker = {
 		this.d2(item);
 		item = null;
 	},
-	
 	setSkin: function(item, skin) {
 		this.colorpicker[item._idd].setSkin(skin);
 	}
-	
 };
 
 

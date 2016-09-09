@@ -7,7 +7,6 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 */
 
 dhtmlXForm.prototype.items.container = {
-	
 	render: function(item, data) {
 		
 		item._type = "container";
@@ -19,37 +18,30 @@ dhtmlXForm.prototype.items.container = {
 		return this;
 		
 	},
-	
 	getContainer: function(item) {
 		return item.childNodes[item._ll?1:0].childNodes[0];
 	},
-	
 	enable: function(item) {
 		item._enabled = true;
 		if (String(item.className).search("disabled") >= 0) item.className = String(item.className).replace(/disabled/gi,"");
 		//
 		item.callEvent("onEnable",[item._idd]);
 	},
-	
 	disable: function(item) {
 		item._enabled = false;
 		if (String(item.className).search("disabled") < 0) item.className += " disabled";
 		//
 		item.callEvent("onDisable",[item._idd]);
 	},
-	
 	doAttachEvents: function(){
 		
 	},
-	
 	setValue: function(){
 		
 	},
-	
 	getValue: function(){
 		return null;
 	}
-	
 };
 
 dhtmlXForm.prototype.getContainer = function(name) {

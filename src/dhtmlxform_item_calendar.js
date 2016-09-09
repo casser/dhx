@@ -7,7 +7,6 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 */
 
 dhtmlXForm.prototype.items.calendar = {
-	
 	render: function(item, data) {
 		
 		var t = this;
@@ -110,15 +109,12 @@ dhtmlXForm.prototype.items.calendar = {
 		return this;
 		
 	},
-	
 	getCalendar: function(item) {
 		return item._c;
 	},
-	
 	setSkin: function(item, skin) {
 		item._c.setSkin(skin);
 	},
-	
 	setValue: function(item, value, cUpd) {
 		if (!value || value == null || typeof(value) == "undefined" || value == "") {
 			item._value = null;
@@ -129,20 +125,17 @@ dhtmlXForm.prototype.items.calendar = {
 		}
 		if (cUpd !== false) item._c.setDate(item._value);
 	},
-	
 	getValue: function(item, asString) {
 		var d = item._tempValue||item._c.getDate();
 		if (asString===true && d == null) return "";
 		return (asString===true?item._c._dateToStr(d,item._f0||item._c._dateFormat):d);
 	},
-	
 	setDateFormat: function(item, dateFormat, serverDateFormat) {
 		item._f = dateFormat;
 		item._f0 = (serverDateFormat||item._f);
 		item._c.setDateFormat(item._f);
 		this.setValue(item, this.getValue(item));
 	},
-	
 	destruct: function(item) {
 		
 		// unload calendar instance
@@ -165,11 +158,9 @@ dhtmlXForm.prototype.items.calendar = {
 		this.d2(item);
 		item = null;
 	},
-	
 	checkEnteredValue: function(item) {
 		this.setValue(item, item._c.getDate());
 	}
-	
 };
 
 (function(){

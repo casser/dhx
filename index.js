@@ -158,7 +158,9 @@ class App {
                     {value: "3", text: "Manage Articles"}
                 ]},
                 {type: "calendar", dateFormat: "%Y-%m-%d %H:%i", name: "start_date", label: "Start Date", value:"2011-06-20 14:38", enableTime: true, calendarPosition: "right"},
-                {type: "calendar", name: "end_date", label: "End Date", dateFormat: "%Y-%m-%d", serverDateFormat: "%d.%m.%Y", value: "20.06.2011", calendarPosition: "right"}
+                {type: "calendar", name: "end_date", label: "End Date", dateFormat: "%Y-%m-%d", serverDateFormat: "%d.%m.%Y", value: "20.06.2011", calendarPosition: "right"},
+                {type: "upload", name: "upload", label: "Upload"}
+
             ]},
             {type: "newcolumn"},
             {type: "block", inputWidth: "auto", offsetTop: 12, list: [
