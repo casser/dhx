@@ -6,7 +6,33 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<link rel="stylesheet" type="text/css" href="../../../codebase/fonts/font_roboto/roboto.css"/>
 	<link rel="stylesheet" type="text/css" href="../../../codebase/dhtmlx.css"/>
-	<script src="../../../codebase/dhtmlx.js"></script>
+	<script src="../../../src/dhtmlxcommon.js"></script>
+	<script src="../../../src/dhtmlxcore.js"></script>
+	<script src="../../../src/dhtmlxcontainer.js"></script>
+	<script src="../../../src/dhtmlxlayout.js"></script>
+	<script src="../../../src/dhtmlxgrid.js"></script>
+	<script src="../../../src/dhtmlxtreeview.js"></script>
+	<script src="../../../src/dhtmlxtabbar.js"></script>
+	<script src="../../../src/dhtmlxeditor.js"></script>
+	<script src="../../../src/dhtmlxtoolbar.js"></script>
+	<script src="../../../src/dhtmlxribbon.js"></script>
+	<script src="../../../src/dhtmlxmenu.js"></script>
+	<script src="../../../src/dhtmlxpopup.js"></script>
+	<script src="../../../src/dhtmlxdataview.js"></script>
+	<script src="../../../src/dhtmlxlist.js"></script>
+	<script src="../../../src/dhtmlxcalendar.js"></script>
+	<script src="../../../src/dhtmlxcombo.js"></script>
+	<script src="../../../src/dhtmlxform.js"></script>
+	<script src="../../../src/dhtmlxform_dyn.js"></script>
+	<script src="../../../src/dhtmlxform_item_upload.js"></script>
+	<script src="../../../src/dhtmlxaccordion.js"></script>
+	<script src="../../../src/dhtmlxcarousel.js"></script>
+	<script src="../../../src/dhtmlxchart.js"></script>
+	<script src="../../../src/dhtmlxwindows.js"></script>
+	<script src="../../../src/dhtmlxwindows_dnd.js"></script>
+	<script src="../../../src/dhtmlxwindows_menu.js"></script>
+	<script src="../../../src/dhtmlxwindows_resize.js"></script>
+	<script src="../../../src/dhtmlxslider.js"></script>
 	<style>
 		/* custom cehckbox css */
 		/* copy css from chanekbox, change style name and bg-image */
@@ -31,20 +57,17 @@
 			myCombo2.load("../common/data2.json");
 			myCombo2.enableFilteringMode(true);
 		}
-		
+		class MyCheckBox  extends XComboCheckbox{
+			constructor(){
+				super();
+				this.image_css = "dhxcombo_checkbox my_css_#state#";
+			}
+		}
 		// you can just change images, but here we will show how to create custom item based on checkbox,
 		// then you will able to use both checkboxes and custom checkboxes together on same page
 		// most functionality will inherited from default checkbox item
-		dhtmlXCombo.prototype.modes.my_checkbox = {
-			// just change css pref a bit, all other code will correct
-			// #state# will replaced with "1" for checked and "0" for not checked
-			image_css: "dhxcombo_checkbox my_css_#state#"
-		};
-		
-		// copy other code from default checkbox
-		dhtmlXComboExtend("my_checkbox", "checkbox");
-		
-		// setChecked/getChecked already exist, no more actions
+		dhtmlXCombo.prototype.modes.my_checkbox = new MyCheckBox();
+
 		
 	</script>
 

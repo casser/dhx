@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<link rel="stylesheet" type="text/css" href="../../../codebase/fonts/font_roboto/roboto.css"/>
 	<link rel="stylesheet" type="text/css" href="../../../codebase/dhtmlx.css"/>
-	<script src="../../../codebase/dhtmlx.js"></script>
+
 	<style>
 		div#winVP {
 			position: relative;
@@ -15,17 +15,16 @@
 			margin: 10px;
 		}
 	</style>
-	<script>
-		var dhxWins, w1, myAcc;
-		
-		function doOnLoad(){
-			dhxWins = new dhtmlXWindows();
+<body>
+	<div id="winVP"></div>
+	<script src="../../../src/loader.js">
+		Loader.load('/dhtmlx/dhtmlx.js').then(()=>{
+			var dhxWins = new dhtmlXWindows();
 			dhxWins.attachViewportTo("winVP");
-			w1 = dhxWins.createWindow("w1", 20, 30, 400, 280);
+			var w1 = dhxWins.createWindow("w1", 20, 30, 400, 280);
 			w1.setText("dhtmlxAccordion");
 			w1.button("close").disable();
-			//
-			myAcc = w1.attachAccordion({
+			var myAcc = w1.attachAccordion({
 				icons_path: "../common/icons/",
 				items: [
 					{ id: "a1", text: "Main Page", icon: "flag_red.png" },
@@ -33,11 +32,7 @@
 					{ id: "a3", text: "Feedback", icon: "flag_blue.png" }
 				]
 			});
-			
-		}
+		})
 	</script>
-<html>
-<body onload="doOnLoad();">
-	<div id="winVP"></div>
 </body>
 </html>
