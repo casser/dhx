@@ -62,9 +62,9 @@ dhtmlXForm.prototype.items.calendar = {
 		item._c._nullInInput = true; // allow null value from input
 		item._c.enableListener(item.childNodes[item._ll?1:0].childNodes[0]);
 		if (item._f != null) item._c.setDateFormat(item._f);
-		if (!window.dhx4.s2b(data.enableTime)) item._c.hideTime();
-		if (window.dhx4.s2b(data.enableTodayButton)) item._c.showToday();
-		if (window.dhx4.s2b(data.showWeekNumbers)) item._c.showWeekNumbers();
+		if (!dhx4.s2b(data.enableTime)) item._c.hideTime();
+		if (dhx4.s2b(data.enableTodayButton)) item._c.showToday();
+		if (dhx4.s2b(data.showWeekNumbers)) item._c.showWeekNumbers();
 		if (!isNaN(data.weekStart)) item._c.setWeekStartDay(data.weekStart);
 		if (typeof(data.calendarPosition) != "undefined") item._c.setPosition(data.calendarPosition);
 		if (data.minutesInterval != null) item._c.setMinutesInterval(data.minutesInterval);

@@ -13,7 +13,7 @@ class dhtmlXMenuObject {
         var that = this;
         // iframe
         this.conf = {
-            skin: (skin || window.dhx4.skin || (typeof(dhtmlx) != "undefined" ? dhtmlx.skin : null) || window.dhx4.skinDetect("dhxmenu") || "material"),
+            skin: (skin || dhx4.skin || (typeof(dhtmlx) != "undefined" ? dhtmlx.skin : null) || dhx4.skinDetect("dhxmenu") || "material"),
             mode: "web",
             align: "left",
             is_touched: false,
@@ -24,7 +24,7 @@ class dhtmlXMenuObject {
             icons_path: "",
             icons_css: false, // use css for icons or direct img links, added in 5.0
             arrow_ff_fix: (navigator.userAgent.indexOf("MSIE") >= 0 && document.compatMode == "BackCompat"), // border fixer for FF for arrows polygons
-            live_id: window.dhx4.newId(),
+            live_id: dhx4.newId(),
             tags: {
                 root: "menu",
                 item: "item",
@@ -256,7 +256,7 @@ class dhtmlXMenuObject {
             if (this.idPull["polygon_" + id] != null) {
                 // clear z-index
                 if (this.idPull["polygon_" + id]._zId != null) {
-                    window.dhx4.zim.clear(this.idPull["polygon_" + id]._zId);
+                    dhx4.zim.clear(this.idPull["polygon_" + id]._zId);
                 }
                 //
                 if (typeof(this._menuEffect) != "undefined" && this._menuEffect !== false) {
@@ -313,9 +313,9 @@ class dhtmlXMenuObject {
                 var arrowDown = null;
                 // show polygon
                 if (this.idPull[pId]._zId == null) {
-                    this.idPull[pId]._zId = window.dhx4.newId();
+                    this.idPull[pId]._zId = dhx4.newId();
                 }
-                this.idPull[pId]._zInd = window.dhx4.zim.reserve(this.idPull[pId]._zId);
+                this.idPull[pId]._zInd = dhx4.zim.reserve(this.idPull[pId]._zId);
                 this.idPull[pId].style.visibility = "hidden";
                 this.idPull[pId].style.left = "0px";
                 this.idPull[pId].style.top = "0px";
@@ -374,8 +374,8 @@ class dhtmlXMenuObject {
                     var parPoly = this.idPull[this.idPrefix + this.topId];
                 }
                 // define position
-                var srcX = (this.idPull[id].tagName != null ? window.dhx4.absLeft(this.idPull[id]) : this.idPull[id][0]);
-                var srcY = (this.idPull[id].tagName != null ? window.dhx4.absTop(this.idPull[id]) : this.idPull[id][1]);
+                var srcX = (this.idPull[id].tagName != null ? dhx4.absLeft(this.idPull[id]) : this.idPull[id][0]);
+                var srcY = (this.idPull[id].tagName != null ? dhx4.absTop(this.idPull[id]) : this.idPull[id][1]);
                 var srcW = (this.idPull[id].tagName != null ? this.idPull[id].offsetWidth : 0);
                 var srcH = (this.idPull[id].tagName != null ? this.idPull[id].offsetHeight : 0);
                 var x = 0;
@@ -701,11 +701,11 @@ class dhtmlXMenuObject {
         /* attach body events */
         this._bodyClick = function (e) {
             e = e || event;
-            if (e.button == 2 || (window.dhx4.isOpera && e.ctrlKey == true)) {
+            if (e.button == 2 || (dhx4.isOpera && e.ctrlKey == true)) {
                 return;
             }
             if (that.conf.context) {
-                if (that.conf.ctx_autohide && (!window.dhx4.isOpera || (that._isContextMenuVisible() && window.dhx4.isOpera))) {
+                if (that.conf.ctx_autohide && (!dhx4.isOpera || (that._isContextMenuVisible() && dhx4.isOpera))) {
                     that._hideContextMenu();
                 }
             } else {
@@ -745,7 +745,7 @@ class dhtmlXMenuObject {
             document.body.attachEvent("oncontextmenu", this._bodyContext);
         }
         this.unload = function () {
-            window.dhx4._eventable(this, "clear");
+            dhx4._eventable(this, "clear");
             // remove menu from global store
             dhtmlXMenuObject.prototype.liveInst[this.conf.live_id] = null;
             try {
@@ -794,14 +794,14 @@ class dhtmlXMenuObject {
         }
         // register instance
         dhtmlXMenuObject.prototype.liveInst[this.conf.live_id] = this;
-        window.dhx4._enableDataLoading(this, "_initObj", "_xmlToJson", this.conf.tags.root, {struct: true});
-        window.dhx4._eventable(this);
+        dhx4._enableDataLoading(this, "_initObj", "_xmlToJson", this.conf.tags.root, {struct: true});
+        dhx4._eventable(this);
         // autoload
-        if (window.dhx4.s2b(this.conf.autoload.context) == true) {
+        if (dhx4.s2b(this.conf.autoload.context) == true) {
             this.renderAsContextMenu();
         }
         if (this.conf.autoload.dynamic != null) {
-            this.enableDynamicLoading(this.conf.autoload.dynamic, window.dhx4.s2b(this.conf.autoload.dynamic_icon));
+            this.enableDynamicLoading(this.conf.autoload.dynamic, dhx4.s2b(this.conf.autoload.dynamic_icon));
         } else if (this.conf.autoload.items != null) {
             this.loadStruct(this.conf.autoload.items, this.conf.autoload.onload);
         } else if (this.conf.autoload.json != null) {
@@ -1025,7 +1025,7 @@ class dhtmlXMenuObject {
 	};
 	_autoDetectVisibleArea() {
 		if (this.conf.v_enabled) return;
-		var d = window.dhx4.screenDim();
+		var d = dhx4.screenDim();
 		this.conf.v.x1 = d.left;
 		this.conf.v.x2 = d.right;
 		this.conf.v.y1 = d.top;
@@ -1302,7 +1302,7 @@ class dhtmlXMenuObject {
 		this.idPull[s.id] = s;
 		if (this.sxDacProc != null) {
 			this.idPull["sxDac_" + parentId] = new this.sxDacProc(s, s.className);
-			if (window.dhx4.isIE) {
+			if (dhx4.isIE) {
 				this.idPull["sxDac_" + parentId]._setSpeed(this.dacSpeedIE);
 				this.idPull["sxDac_" + parentId]._setCustomCycle(this.dacCyclesIE);
 			} else {
@@ -1527,9 +1527,9 @@ class dhtmlXMenuObject {
 
 
 			// en/dis
-			if (typeof(items[q].enabled) != "undefined" && window.dhx4.s2b(items[q].enabled) == false) {
+			if (typeof(items[q].enabled) != "undefined" && dhx4.s2b(items[q].enabled) == false) {
 				items[q].state = "disabled";
-			} else if (typeof(items[q].disabled) != "undefined" && window.dhx4.s2b(items[q].disabled) == true) {
+			} else if (typeof(items[q].disabled) != "undefined" && dhx4.s2b(items[q].disabled) == true) {
 				items[q].state = "disabled";
 			}
 
@@ -1541,12 +1541,12 @@ class dhtmlXMenuObject {
 
 			// checkbox
 			if (items[q].type == "checkbox") {
-				items[q].checked = window.dhx4.s2b(items[q].checked);
+				items[q].checked = dhx4.s2b(items[q].checked);
 				items[q].imgen = items[q].imgdis = "chbx_"+(items[q].checked?"1":"0"); // set classname
 			}
 			// radio
 			if (items[q].type == "radio") {
-				items[q].checked = window.dhx4.s2b(items[q].checked);
+				items[q].checked = dhx4.s2b(items[q].checked);
 				items[q].imgen = items[q].imgdis = "rdbt_"+(items[q].checked?"1":"0");
 				// group
 				if (typeof(items[q].group) == "undefined" || items[q].group == null) items[q].group = this._genStr(24);
@@ -1647,9 +1647,9 @@ class dhtmlXMenuObject {
 				}
 				// en/dis
 				item.state = "enabled";
-				if (r.getAttribute("enabled") != null && window.dhx4.s2b(r.getAttribute("enabled")) == false) {
+				if (r.getAttribute("enabled") != null && dhx4.s2b(r.getAttribute("enabled")) == false) {
 					item.state = "disabled";
-				} else if (r.getAttribute("disabled") != null && window.dhx4.s2b(r.getAttribute("disabled")) == true) {
+				} else if (r.getAttribute("disabled") != null && dhx4.s2b(r.getAttribute("disabled")) == true) {
 					item.state = "disabled";
 				}
 
@@ -1892,7 +1892,7 @@ class dhtmlXMenuObject {
 		if (zoneExists == true) return false;
 		this.conf.ctx_zones[zoneId] = zone;
 		var that = this;
-		if (window.dhx4.isOpera) {
+		if (dhx4.isOpera) {
 			this.operaContext = function(e){ that._doOnContextMenuOpera(e, that); }
 			zone.addEventListener("mouseup", this.operaContext, false);
 			//
@@ -1935,7 +1935,7 @@ class dhtmlXMenuObject {
 		if (!this.isContextZone(zoneId)) return false;
 		if (zoneId == document.body) zoneId = "document.body."+this.idPrefix;
 		var zone = this.conf.ctx_zones[zoneId];
-		if (window.dhx4.isOpera) {
+		if (dhx4.isOpera) {
 			zone.removeEventListener("mouseup", this.operaContext, false);
 		} else {
 			zone.oncontextmenu = (zone._oldContextMenuHandler!=null?zone._oldContextMenuHandler:null);
@@ -1977,8 +1977,8 @@ class dhtmlXMenuObject {
 		this._clearAndHide();
 		this._hideContextMenu();
 
-        var mx = window.dhx4.absLeft(e.target)+e.offsetX;
-        var my = window.dhx4.absTop(e.target)+e.offsetY;
+        var mx = dhx4.absLeft(e.target)+e.offsetX;
+        var my = dhx4.absTop(e.target)+e.offsetY;
 
 		if (this.checkEvent("onBeforeContextMenu")) {
 			if (this.callEvent("onBeforeContextMenu", [cZone.id,e])) {

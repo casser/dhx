@@ -46,7 +46,7 @@ class dhtmlXForm {
                 }
             });
         };
-        this.skin = (skin || window.dhx4.skin || (typeof(dhtmlx) != "undefined" ? dhtmlx.skin : null) || window.dhx4.skinDetect("dhx_form") || "material");
+        this.skin = (skin || dhx4.skin || (typeof(dhtmlx) != "undefined" ? dhtmlx.skin : null) || dhx4.skinDetect("dhx_form") || "material");
         this.separator = ",";
         this.live_validate = false;
         this._type = "checkbox";
@@ -292,7 +292,7 @@ class dhtmlXForm {
                 data.labelHeight = this.idef.labelHeight;
             }
             if (typeof(data.wrap) != "undefined") {
-                data.wrap = window.dhx4.s2b(data.wrap);
+                data.wrap = dhx4.s2b(data.wrap);
             }
             data.labelAlign = (this.align_css[data.labelAlign] ? this.align_css[data.labelAlign] : this.align_css[this.idef.labelAlign]);
             data.inputWidth = (data.width ? data.width : (data.inputWidth ? data.inputWidth : this.idef.inputWidth));
@@ -324,25 +324,25 @@ class dhtmlXForm {
             };
             // convert r/o
             if (typeof(data.readonly) == "string") {
-                data.readonly = window.dhx4.s2b(data.readonly);
+                data.readonly = dhx4.s2b(data.readonly);
             }
             if (typeof(data.autoStart) == "string") {
-                data.autoStart = window.dhx4.s2b(data.autoStart);
+                data.autoStart = dhx4.s2b(data.autoStart);
             }
             if (typeof(data.autoRemove) == "string") {
-                data.autoRemove = window.dhx4.s2b(data.autoRemove);
+                data.autoRemove = dhx4.s2b(data.autoRemove);
             }
             if (typeof(data.titleScreen) == "string") {
-                data.titleScreen = window.dhx4.s2b(data.titleScreen);
+                data.titleScreen = dhx4.s2b(data.titleScreen);
             }
             if (typeof(data.info) == "string") {
-                data.info = window.dhx4.s2b(data.info);
+                data.info = dhx4.s2b(data.info);
             }
             if (typeof(data.hidden) == "string") {
-                data.hidden = window.dhx4.s2b(data.hidden);
+                data.hidden = dhx4.s2b(data.hidden);
             }
             if (typeof(data.checked) == "string") {
-                data.checked = window.dhx4.s2b(data.checked);
+                data.checked = dhx4.s2b(data.checked);
             }
             // userdata
             if (typeof(data.userdata) != "undefined") {
@@ -360,7 +360,7 @@ class dhtmlXForm {
             }
             if (typeof(data.required) != "undefined") {
                 if (typeof(data.required) == "string") {
-                    data.required = window.dhx4.s2b(data.required);
+                    data.required = dhx4.s2b(data.required);
                 }
                 tr._required = (data.required == true);
             }
@@ -394,7 +394,7 @@ class dhtmlXForm {
                         id = id[0].split("=")[1];
                     }
                 }
-                if (this.callEvent("onBeforeDataLoad", [id, window.dhx4._copyObj(data.data)]) === true) {
+                if (this.callEvent("onBeforeDataLoad", [id, dhx4._copyObj(data.data)]) === true) {
                     this.formId = id;
                     this._last_load_data = data;
                     this.setFormData(data.data);
@@ -435,8 +435,8 @@ class dhtmlXForm {
                 obj.label = obj.label || "";
                 //obj.value = obj.value||"";
                 obj.value = obj.value;
-                obj.checked = window.dhx4.s2b(obj.checked);
-                obj.disabled = window.dhx4.s2b(obj.disabled);
+                obj.checked = dhx4.s2b(obj.checked);
+                obj.disabled = dhx4.s2b(obj.disabled);
                 obj.name = obj.name || this._genStr(12);
                 obj.options = obj.options || [];
                 obj.rows = obj.rows || "none";
@@ -1025,8 +1025,8 @@ class dhtmlXForm {
             this.resetValidateCss();
         };
         this.unload = function () {
-            window.dhx4._enableDataLoading(this, null, null, null, "clear");
-            window.dhx4._eventable(this, "clear");
+            dhx4._enableDataLoading(this, null, null, null, "clear");
+            dhx4._eventable(this, "clear");
             for (var a in this.objPull) {
                 this._removeItem(String(a).replace(this.idPrefix, ""));
             }
@@ -1174,11 +1174,11 @@ class dhtmlXForm {
             // return false if format incorrect and true if it successfuly applied
             return this.doWithItem(id, "setNumberFormat", format, g_sep, d_sep);
         };
-        window.dhx4._enableDataLoading(this, "_initObj", "_xmlToObject", "items", {
+        dhx4._enableDataLoading(this, "_initObj", "_xmlToObject", "items", {
             struct: true,
             data: true
         });
-        window.dhx4._eventable(this);
+        dhx4._eventable(this);
         this.attachEvent("_onButtonClick", function (name, cmd) {
             this.callEvent("onButtonClick", [name, cmd]);
         });
@@ -1495,9 +1495,9 @@ class dhtmlXForm {
             }
         };
         if (mode == "get") {
-            window.dhx4.ajax.get(url + (url.indexOf("?") == -1 ? "?" : "&") + data.join("&"), afterload);
+            dhx4.ajax.get(url + (url.indexOf("?") == -1 ? "?" : "&") + data.join("&"), afterload);
         } else {
-            window.dhx4.ajax.post(url, data.join("&"), afterload);
+            dhx4.ajax.post(url, data.join("&"), afterload);
         }
     };
 
@@ -1828,7 +1828,7 @@ class dhtmlXFormCheckbox {
         if (typeof(data.tooltip) != "undefined") {
             t.title = data.tooltip;
         }
-        t.innerHTML = "<div class='dhxform_label_nav_link' " + "onfocus='if(this.parentNode.parentNode._updateImgNode)this.parentNode.parentNode._updateImgNode(this.parentNode.parentNode,true);this.parentNode.parentNode._doOnFocus(this.parentNode.parentNode);' " + "onblur='if(this.parentNode.parentNode._updateImgNode)this.parentNode.parentNode._updateImgNode(this.parentNode.parentNode,false);this.parentNode.parentNode._doOnBlur(this.parentNode.parentNode);' " + "onkeypress='var e=event||window.arguments[0];if(e.keyCode==32||e.charCode==32){e.cancelBubble=true;if(e.preventDefault)e.preventDefault();else e.returnValue=false;_dhxForm_doClick(this,\"mousedown\");return false;}' " + "onkeyup='var e=event||window.arguments[0];this.parentNode.parentNode._doOnKeyUpDown(\"onKeyUp\",e);' " + "onkeydown='var e=event||window.arguments[0];this.parentNode.parentNode._doOnKeyUpDown(\"onKeyDown\",e);' " + (window.dhx4.isIPad ? "ontouchstart='var e=event;e.preventDefault();_dhxForm_doClick(this,\"mousedown\");' " : "") + "role='link' tabindex='0'>" + data.label + (data.info ? "<span class='dhxform_info'>[?]</span>" : "") + (item._required ? "<span class='dhxform_item_required'>*</span>" : "") + '</div>';
+        t.innerHTML = "<div class='dhxform_label_nav_link' " + "onfocus='if(this.parentNode.parentNode._updateImgNode)this.parentNode.parentNode._updateImgNode(this.parentNode.parentNode,true);this.parentNode.parentNode._doOnFocus(this.parentNode.parentNode);' " + "onblur='if(this.parentNode.parentNode._updateImgNode)this.parentNode.parentNode._updateImgNode(this.parentNode.parentNode,false);this.parentNode.parentNode._doOnBlur(this.parentNode.parentNode);' " + "onkeypress='var e=event||window.arguments[0];if(e.keyCode==32||e.charCode==32){e.cancelBubble=true;if(e.preventDefault)e.preventDefault();else e.returnValue=false;_dhxForm_doClick(this,\"mousedown\");return false;}' " + "onkeyup='var e=event||window.arguments[0];this.parentNode.parentNode._doOnKeyUpDown(\"onKeyUp\",e);' " + "onkeydown='var e=event||window.arguments[0];this.parentNode.parentNode._doOnKeyUpDown(\"onKeyDown\",e);' " + (dhx4.isIPad ? "ontouchstart='var e=event;e.preventDefault();_dhxForm_doClick(this,\"mousedown\");' " : "") + "role='link' tabindex='0'>" + data.label + (data.info ? "<span class='dhxform_info'>[?]</span>" : "") + (item._required ? "<span class='dhxform_item_required'>*</span>" : "") + '</div>';
         if (!isNaN(data.labelWidth)) {
             t.firstChild.style.width = parseInt(data.labelWidth) + "px";
         }
@@ -1870,11 +1870,11 @@ class dhtmlXFormCheckbox {
             };
         }
         if (el == "SELECT" && data.type == "select" && item.getForm().skin == "material") {
-            if (window.dhx4.isOpera || window.dhx4.isChrome) {
+            if (dhx4.isOpera || dhx4.isChrome) {
                 t.className += " dhxform_arrow_fix_webkit";
-            } else if (window.dhx4.isEdge) {
+            } else if (dhx4.isEdge) {
                 t.className += " dhxform_arrow_fix_edge";
-            } else if (window.dhx4.isFirefox) {
+            } else if (dhx4.isFirefox) {
                 t.className += " dhxform_fix_ff";
             }
         }
@@ -1992,7 +1992,7 @@ class dhtmlXFormCheckbox {
     doAttachEvents(item) {
         var that = this;
         // image click
-        item.childNodes[item._ll ? 1 : 0][window.dhx4.isIPad ? "ontouchstart" : "onmousedown"] = function (e) {
+        item.childNodes[item._ll ? 1 : 0][dhx4.isIPad ? "ontouchstart" : "onmousedown"] = function (e) {
             e = e || event;
             if (e.preventDefault) {
                 e.preventDefault();
@@ -2010,7 +2010,7 @@ class dhtmlXFormCheckbox {
             that.doClick(this.parentNode);
         };
         // label click
-        item.childNodes[item._ll ? 0 : 1].childNodes[0][window.dhx4.isIPad ? "ontouchstart" : "onmousedown"] = function (e) {
+        item.childNodes[item._ll ? 0 : 1].childNodes[0][dhx4.isIPad ? "ontouchstart" : "onmousedown"] = function (e) {
             e = e || event;
             if (e.preventDefault) {
                 e.preventDefault();
@@ -2356,7 +2356,7 @@ class dhtmlXFormRadio {
         if (typeof(data.tooltip) != "undefined") {
             t.title = data.tooltip;
         }
-        t.innerHTML = "<div class='dhxform_label_nav_link' " + "onfocus='if(this.parentNode.parentNode._updateImgNode)this.parentNode.parentNode._updateImgNode(this.parentNode.parentNode,true);this.parentNode.parentNode._doOnFocus(this.parentNode.parentNode);' " + "onblur='if(this.parentNode.parentNode._updateImgNode)this.parentNode.parentNode._updateImgNode(this.parentNode.parentNode,false);this.parentNode.parentNode._doOnBlur(this.parentNode.parentNode);' " + "onkeypress='var e=event||window.arguments[0];if(e.keyCode==32||e.charCode==32){e.cancelBubble=true;if(e.preventDefault)e.preventDefault();else e.returnValue=false;_dhxForm_doClick(this,\"mousedown\");return false;}' " + "onkeyup='var e=event||window.arguments[0];this.parentNode.parentNode._doOnKeyUpDown(\"onKeyUp\",e);' " + "onkeydown='var e=event||window.arguments[0];this.parentNode.parentNode._doOnKeyUpDown(\"onKeyDown\",e);' " + (window.dhx4.isIPad ? "ontouchstart='var e=event;e.preventDefault();_dhxForm_doClick(this,\"mousedown\");' " : "") + "role='link' tabindex='0'>" + data.label + (data.info ? "<span class='dhxform_info'>[?]</span>" : "") + (item._required ? "<span class='dhxform_item_required'>*</span>" : "") + '</div>';
+        t.innerHTML = "<div class='dhxform_label_nav_link' " + "onfocus='if(this.parentNode.parentNode._updateImgNode)this.parentNode.parentNode._updateImgNode(this.parentNode.parentNode,true);this.parentNode.parentNode._doOnFocus(this.parentNode.parentNode);' " + "onblur='if(this.parentNode.parentNode._updateImgNode)this.parentNode.parentNode._updateImgNode(this.parentNode.parentNode,false);this.parentNode.parentNode._doOnBlur(this.parentNode.parentNode);' " + "onkeypress='var e=event||window.arguments[0];if(e.keyCode==32||e.charCode==32){e.cancelBubble=true;if(e.preventDefault)e.preventDefault();else e.returnValue=false;_dhxForm_doClick(this,\"mousedown\");return false;}' " + "onkeyup='var e=event||window.arguments[0];this.parentNode.parentNode._doOnKeyUpDown(\"onKeyUp\",e);' " + "onkeydown='var e=event||window.arguments[0];this.parentNode.parentNode._doOnKeyUpDown(\"onKeyDown\",e);' " + (dhx4.isIPad ? "ontouchstart='var e=event;e.preventDefault();_dhxForm_doClick(this,\"mousedown\");' " : "") + "role='link' tabindex='0'>" + data.label + (data.info ? "<span class='dhxform_info'>[?]</span>" : "") + (item._required ? "<span class='dhxform_item_required'>*</span>" : "") + '</div>';
         if (!isNaN(data.labelWidth)) {
             t.firstChild.style.width = parseInt(data.labelWidth) + "px";
         }
@@ -2398,11 +2398,11 @@ class dhtmlXFormRadio {
             };
         }
         if (el == "SELECT" && data.type == "select" && item.getForm().skin == "material") {
-            if (window.dhx4.isOpera || window.dhx4.isChrome) {
+            if (dhx4.isOpera || dhx4.isChrome) {
                 t.className += " dhxform_arrow_fix_webkit";
-            } else if (window.dhx4.isEdge) {
+            } else if (dhx4.isEdge) {
                 t.className += " dhxform_arrow_fix_edge";
-            } else if (window.dhx4.isFirefox) {
+            } else if (dhx4.isFirefox) {
                 t.className += " dhxform_fix_ff";
             }
         }
@@ -2520,7 +2520,7 @@ class dhtmlXFormRadio {
     doAttachEvents(item) {
         var that = this;
         // image click
-        item.childNodes[item._ll ? 1 : 0][window.dhx4.isIPad ? "ontouchstart" : "onmousedown"] = function (e) {
+        item.childNodes[item._ll ? 1 : 0][dhx4.isIPad ? "ontouchstart" : "onmousedown"] = function (e) {
             e = e || event;
             if (e.preventDefault) {
                 e.preventDefault();
@@ -2538,7 +2538,7 @@ class dhtmlXFormRadio {
             that.doClick(this.parentNode);
         };
         // label click
-        item.childNodes[item._ll ? 0 : 1].childNodes[0][window.dhx4.isIPad ? "ontouchstart" : "onmousedown"] = function (e) {
+        item.childNodes[item._ll ? 0 : 1].childNodes[0][dhx4.isIPad ? "ontouchstart" : "onmousedown"] = function (e) {
             e = e || event;
             if (e.preventDefault) {
                 e.preventDefault();
@@ -2790,13 +2790,13 @@ class dhtmlXFormSelect {
             }
             t.options.add(opt);
             // selected
-            if (typeof(opts[q].selected) != "undefined" && window.dhx4.s2b(opts[q].selected) == true) {
+            if (typeof(opts[q].selected) != "undefined" && dhx4.s2b(opts[q].selected) == true) {
                 opt.selected = true;
                 item._value = opts[q].value;
                 k = true;
             }
             // cehcked (combo only)
-            if (typeof(opts[q].checked) != "undefined" && window.dhx4.s2b(opts[q].checked) == true) {
+            if (typeof(opts[q].checked) != "undefined" && dhx4.s2b(opts[q].checked) == true) {
                 opt.setAttribute("checked", "1");
             }
             // images (combo only)
@@ -2825,7 +2825,7 @@ class dhtmlXFormSelect {
     doLoadOptsConnector(item, url) {
         var that = this;
         item._connector_working = true;
-        window.dhx4.ajax.get(url, function (r) {
+        dhx4.ajax.get(url, function (r) {
             r = r.xmlDoc.responseXML;
             if (r == null) {
                 return;
@@ -2993,11 +2993,11 @@ class dhtmlXFormSelect {
             };
         }
         if (el == "SELECT" && data.type == "select" && item.getForm().skin == "material") {
-            if (window.dhx4.isOpera || window.dhx4.isChrome) {
+            if (dhx4.isOpera || dhx4.isChrome) {
                 t.className += " dhxform_arrow_fix_webkit";
-            } else if (window.dhx4.isEdge) {
+            } else if (dhx4.isEdge) {
                 t.className += " dhxform_arrow_fix_edge";
-            } else if (window.dhx4.isFirefox) {
+            } else if (dhx4.isFirefox) {
                 t.className += " dhxform_fix_ff";
             }
         }
@@ -3502,11 +3502,11 @@ class dhtmlXFormCombo {
             };
         }
         if (el == "SELECT" && data.type == "select" && item.getForm().skin == "material") {
-            if (window.dhx4.isOpera || window.dhx4.isChrome) {
+            if (dhx4.isOpera || dhx4.isChrome) {
                 t.className += " dhxform_arrow_fix_webkit";
-            } else if (window.dhx4.isEdge) {
+            } else if (dhx4.isEdge) {
                 t.className += " dhxform_arrow_fix_edge";
-            } else if (window.dhx4.isFirefox) {
+            } else if (dhx4.isFirefox) {
                 t.className += " dhxform_fix_ff";
             }
         }
@@ -3589,13 +3589,13 @@ class dhtmlXFormCombo {
             }
             t.options.add(opt);
             // selected
-            if (typeof(opts[q].selected) != "undefined" && window.dhx4.s2b(opts[q].selected) == true) {
+            if (typeof(opts[q].selected) != "undefined" && dhx4.s2b(opts[q].selected) == true) {
                 opt.selected = true;
                 item._value = opts[q].value;
                 k = true;
             }
             // cehcked (combo only)
-            if (typeof(opts[q].checked) != "undefined" && window.dhx4.s2b(opts[q].checked) == true) {
+            if (typeof(opts[q].checked) != "undefined" && dhx4.s2b(opts[q].checked) == true) {
                 opt.setAttribute("checked", "1");
             }
             // images (combo only)
@@ -3733,10 +3733,10 @@ class dhtmlXFormInput {
         var form = item.getForm();
         var in_focus = (form._ccActive == true && form._formLS != null && form._formLS[item._idd] != null);
         form = null;
-        if (!in_focus && item._df != null && value == window.dhx4.template._getFmtValue(item._value, item._df)) {
+        if (!in_focus && item._df != null && value == dhx4.template._getFmtValue(item._value, item._df)) {
             return;
         } // if item not in focus
-        if (!foc && item._df != null && item._value == value && value == window.dhx4.template._getFmtValue(value, item._df)) {
+        if (!foc && item._df != null && item._value == value && value == dhx4.template._getFmtValue(value, item._df)) {
             return;
         }
         var t = this;
@@ -3774,7 +3774,7 @@ class dhtmlXFormInput {
         var k = item.childNodes[item._ll ? 1 : 0].childNodes[0];
         // check if formatting available
         if (item._df != null) {
-            v = window.dhx4.template._getFmtValue(v, item._df);
+            v = dhx4.template._getFmtValue(v, item._df);
         }
         if (k.value != v) {
             k.value = v;
@@ -3828,7 +3828,7 @@ class dhtmlXFormInput {
         if (typeof(format) != "string") {
             return;
         }
-        var fmt = window.dhx4.template._parseFmt(format, g_sep, d_sep);
+        var fmt = dhx4.template._parseFmt(format, g_sep, d_sep);
         if (fmt == false) {
             return false;
         } else {
@@ -3938,11 +3938,11 @@ class dhtmlXFormInput {
             };
         }
         if (el == "SELECT" && data.type == "select" && item.getForm().skin == "material") {
-            if (window.dhx4.isOpera || window.dhx4.isChrome) {
+            if (dhx4.isOpera || dhx4.isChrome) {
                 t.className += " dhxform_arrow_fix_webkit";
-            } else if (window.dhx4.isEdge) {
+            } else if (dhx4.isEdge) {
                 t.className += " dhxform_arrow_fix_edge";
-            } else if (window.dhx4.isFirefox) {
+            } else if (dhx4.isFirefox) {
                 t.className += " dhxform_fix_ff";
             }
         }
@@ -4219,11 +4219,11 @@ class dhtmlXFormFile {
             };
         }
         if (el == "SELECT" && data.type == "select" && item.getForm().skin == "material") {
-            if (window.dhx4.isOpera || window.dhx4.isChrome) {
+            if (dhx4.isOpera || dhx4.isChrome) {
                 t.className += " dhxform_arrow_fix_webkit";
-            } else if (window.dhx4.isEdge) {
+            } else if (dhx4.isEdge) {
                 t.className += " dhxform_arrow_fix_edge";
-            } else if (window.dhx4.isFirefox) {
+            } else if (dhx4.isFirefox) {
                 t.className += " dhxform_fix_ff";
             }
         }
@@ -4794,7 +4794,7 @@ class dhtmlXFormFieldset {
     render(item, data) {
         item._type = "fs";
         if (typeof(parseInt(data.inputWidth)) == "number") {
-            // if (window.dhx4.isFirefox||window.dhx4.isOpera) data.inputWidth -= 12;
+            // if (dhx4.isFirefox||dhx4.isOpera) data.inputWidth -= 12;
             // chrome-11/ie9 - ok
         }
         item._width = data.width;
@@ -5084,11 +5084,11 @@ class dhtmlXFormTemplate {
             };
         }
         if (el == "SELECT" && data.type == "select" && item.getForm().skin == "material") {
-            if (window.dhx4.isOpera || window.dhx4.isChrome) {
+            if (dhx4.isOpera || dhx4.isChrome) {
                 t.className += " dhxform_arrow_fix_webkit";
-            } else if (window.dhx4.isEdge) {
+            } else if (dhx4.isEdge) {
                 t.className += " dhxform_arrow_fix_edge";
-            } else if (window.dhx4.isFirefox) {
+            } else if (dhx4.isFirefox) {
                 t.className += " dhxform_fix_ff";
             }
         }
@@ -5291,13 +5291,13 @@ class dhtmlXFormCalendar {
         if (item._f != null) {
             item._c.setDateFormat(item._f);
         }
-        if (!window.dhx4.s2b(data.enableTime)) {
+        if (!dhx4.s2b(data.enableTime)) {
             item._c.hideTime();
         }
-        if (window.dhx4.s2b(data.enableTodayButton)) {
+        if (dhx4.s2b(data.enableTodayButton)) {
             item._c.showToday();
         }
-        if (window.dhx4.s2b(data.showWeekNumbers)) {
+        if (dhx4.s2b(data.showWeekNumbers)) {
             item._c.showWeekNumbers();
         }
         if (!isNaN(data.weekStart)) {
@@ -5525,11 +5525,11 @@ class dhtmlXFormCalendar {
             };
         }
         if (el == "SELECT" && data.type == "select" && item.getForm().skin == "material") {
-            if (window.dhx4.isOpera || window.dhx4.isChrome) {
+            if (dhx4.isOpera || dhx4.isChrome) {
                 t.className += " dhxform_arrow_fix_webkit";
-            } else if (window.dhx4.isEdge) {
+            } else if (dhx4.isEdge) {
                 t.className += " dhxform_arrow_fix_edge";
-            } else if (window.dhx4.isFirefox) {
+            } else if (dhx4.isFirefox) {
                 t.className += " dhxform_fix_ff";
             }
         }
@@ -5920,11 +5920,11 @@ class dhtmlXFormEditor {
             };
         }
         if (el == "SELECT" && data.type == "select" && item.getForm().skin == "material") {
-            if (window.dhx4.isOpera || window.dhx4.isChrome) {
+            if (dhx4.isOpera || dhx4.isChrome) {
                 t.className += " dhxform_arrow_fix_webkit";
-            } else if (window.dhx4.isEdge) {
+            } else if (dhx4.isEdge) {
                 t.className += " dhxform_arrow_fix_edge";
-            } else if (window.dhx4.isFirefox) {
+            } else if (dhx4.isFirefox) {
                 t.className += " dhxform_fix_ff";
             }
         }
@@ -6092,7 +6092,7 @@ class dhtmlXFormColorpicker extends dhtmlXFormInput {
         item.childNodes[item._ll ? 1 : 0].childNodes[0].value = item._value;
         var conf = {
             input: item.childNodes[item._ll ? 1 : 0].childNodes[0],
-            custom_colors: (window.dhx4.s2b(data.enableCustomColors) == true),
+            custom_colors: (dhx4.s2b(data.enableCustomColors) == true),
             skin: item.getForm().skin
         };
         this.colorpicker[item._idd] = new dhtmlXColorPicker(conf);
@@ -6220,7 +6220,7 @@ class dhtmlXFormImage extends dhtmlXFormInput {
     render(item, data) {
         item._type = "image";
         item._enabled = true;
-        item._fr_name = "dhxform_image_" + window.dhx4.newId();
+        item._fr_name = "dhxform_image_" + dhx4.newId();
         item._url = (typeof(data.url) == "undefined" || data.url == null ? "" : data.url);
         if (data.inputWidth == "auto") {
             data.inputWidth = 120;
@@ -6292,7 +6292,7 @@ class dhtmlXFormImage extends dhtmlXFormInput {
 
     setValue(item, value) {
         item._value = (value == null ? "" : value);
-        var u = item._url + (item._url.indexOf("?") >= 0 ? "&" : "?") + "action=loadImage" + "&itemId=" + encodeURIComponent(item._idd) + "&itemValue=" + encodeURIComponent(item._value) + window.dhx4.ajax._dhxr("&");
+        var u = item._url + (item._url.indexOf("?") >= 0 ? "&" : "?") + "action=loadImage" + "&itemId=" + encodeURIComponent(item._idd) + "&itemValue=" + encodeURIComponent(item._value) + dhx4.ajax._dhxr("&");
         var currentImg = item.childNodes[item._ll ? 1 : 0].childNodes[0].firstChild;
         if (currentImg.nextSibling.tagName.toLowerCase() == "img") {
             currentImg.nextSibling.src = u; // new img created and still loaded from prev setValue() call
@@ -6558,7 +6558,7 @@ XCellObject.prototype.attachForm = function (data) {
     obj.style.width = "100%";
     obj.style.height = "100%";
     obj.style.position = "relative";
-    if (window.dhtmlx && dhtmlx.$customScroll) {
+    if (dhtmlx && dhtmlx.$customScroll) {
         dhtmlx.CustomScroll.enable(obj);
     } else {
         obj.style.overflow = "auto";

@@ -163,7 +163,7 @@ function dhtmlXGridObject(id) {
      *   @topic: 0,6
      */
     this.setSkin = function (name) {
-        this._srdh = window.dhx4.readFromCss("dhxgrid_rh_" + name) + 4;
+        this._srdh = dhx4.readFromCss("dhxgrid_rh_" + name) + 4;
         this.skin_name = name;
         if (this._imgURL) {
             this.setImagePath(this._imgURL);
@@ -200,7 +200,7 @@ function dhtmlXGridObject(id) {
     if (dhx4.isIE) {
         this.preventIECaching(true);
     }
-    if (window.dhtmlDragAndDropObject) {
+    if (dhtmlDragAndDropObject) {
         this.dragger = new dhtmlDragAndDropObject();
     }
     this._doOnScroll = function (e, mode) {
@@ -245,7 +245,7 @@ function dhtmlXGridObject(id) {
             return;
         }
         if (!this.skin_name) {
-            this.setSkin(window.dhx4.skin || (typeof(dhtmlx) != "undefined" ? dhtmlx.skin : null) || window.dhx4.skinDetect("dhxgrid") || "material");
+            this.setSkin(dhx4.skin || (typeof(dhtmlx) != "undefined" ? dhtmlx.skin : null) || dhx4.skinDetect("dhxgrid") || "material");
         }
         this.editStop();
         /*TEMPORARY STATES*/
@@ -2914,7 +2914,7 @@ function dhtmlXGridObject(id) {
         e = e || event;
         e.cancelBubble = true;
         this.firstChild.grid.setActive(true);
-        window.dhx4.callEvent("_onGridClick", [e, this.firstChild.grid]);
+        dhx4.callEvent("_onGridClick", [e, this.firstChild.grid]);
     };
     this.obj.onclick = function (e) {
         if (this.grid._doClick(e || window.event) !== false) {
@@ -2926,7 +2926,7 @@ function dhtmlXGridObject(id) {
         }
         e = e || event;
         e.cancelBubble = true;
-        window.dhx4.callEvent("_onGridClick", [e, this.grid]);
+        dhx4.callEvent("_onGridClick", [e, this.grid]);
     };
     //#context_menu:06042008{
     if (dhx4.isMacOS) {
@@ -7132,15 +7132,15 @@ XCellObject.prototype.attachGrid = function () {
     this.dataObj = new dhtmlXGridObject(obj);
     this.dataObj.setSkin(this.conf.skin);
     // fix for grid atatched to tabbar for safari on ios 5.1.7
-    if (typeof(window.dhtmlXTabBarCell) == "function" && this instanceof window.dhtmlXTabBarCell && navigator.userAgent.match(/7[\.\d]* mobile/gi) != null && navigator.userAgent.match(/AppleWebKit/gi) != null) {
+    if (typeof(dhtmlXTabBarCell) == "function" && this instanceof dhtmlXTabBarCell && navigator.userAgent.match(/7[\.\d]* mobile/gi) != null && navigator.userAgent.match(/AppleWebKit/gi) != null) {
         this.dataObj.objBox.style.webkitOverflowScrolling = "auto";
     }
     // fix layout cell for material
-    if (this.conf.skin == "material" && typeof(window.dhtmlXLayoutCell) == "function" && this instanceof window.dhtmlXLayoutCell) {
+    if (this.conf.skin == "material" && typeof(dhtmlXLayoutCell) == "function" && this instanceof dhtmlXLayoutCell) {
         this.cell.childNodes[this.conf.idx.cont].style.overflow = "hidden";
     }
     // keep border for window and remove for other
-    if (this.conf.skin == "dhx_skyblue" && typeof(window.dhtmlXWindowsCell) == "function" && this instanceof window.dhtmlXWindowsCell) {
+    if (this.conf.skin == "dhx_skyblue" && typeof(dhtmlXWindowsCell) == "function" && this instanceof dhtmlXWindowsCell) {
         this.dataObj.entBox.style.border = "1px solid #a4bed4";
         this.dataObj._sizeFix = 0;
     } else {

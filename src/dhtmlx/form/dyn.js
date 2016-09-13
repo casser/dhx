@@ -185,7 +185,7 @@ dhtmlXForm.prototype.setRequired = function(id, value, state) {
 	var item = this._getItemNode(id);
 	if (!item) return;
 	
-	state = window.dhx4.s2b(state);
+	state = dhx4.s2b(state);
 	item._required = (state==true);
 	
 	// validation
@@ -353,7 +353,7 @@ dhtmlXForm.prototype.reloadOptions = function(name, data) {
 			this.doWithItem(name, "doLoadOptsConnector", data);
 		} else if (data instanceof Array) {
 			var toSelect = null;
-			for (var q=0; q<data.length; q++) if (window.dhx4.s2b(data[q].selected)) toSelect = data[q].value;
+			for (var q=0; q<data.length; q++) if (dhx4.s2b(data[q].selected)) toSelect = data[q].value;
 			combo.addOption(data);
 			if (toSelect != null) this.setItemValue(name, toSelect);
 			combo = null;

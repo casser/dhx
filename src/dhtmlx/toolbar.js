@@ -17,7 +17,7 @@ class dhtmlXToolbarObject {
 		var main_self = this;
 
 		this.conf = {
-			skin: (skin||window.dhx4.skin||(typeof(dhtmlx)!="undefined"?dhtmlx.skin:null)||window.dhx4.skinDetect("dhxtoolbar")||"material"),
+			skin: (skin||dhx4.skin||(typeof(dhtmlx)!="undefined"?dhtmlx.skin:null)||dhx4.skinDetect("dhxtoolbar")||"material"),
 			align: "left",
 			align_autostart: "left",
 			icons_path: "",
@@ -80,8 +80,8 @@ class dhtmlXToolbarObject {
 		this.idPrefix = this._genStr(12);
 		//
 
-		window.dhx4._enableDataLoading(this, "_initObj", "_xmlToJson", "toolbar", {struct:true});
-		window.dhx4._eventable(this);
+		dhx4._enableDataLoading(this, "_initObj", "_xmlToJson", "toolbar", {struct:true});
+		dhx4._eventable(this);
 		//
 		// return obj if exists by tagname
 		this._getObj = function(obj, tag) {
@@ -176,7 +176,7 @@ class dhtmlXToolbarObject {
 			// hide opened polygon if any
 			if (item.polygon != null) {
 				if (item.polygon.style.display != "none") {
-					window.dhx4.zim.clear(item.polygon._idd);
+					dhx4.zim.clear(item.polygon._idd);
 					item.polygon.style.display = "none";
 					if (item.polygon._ie6cover) item.polygon._ie6cover.style.display = "none";
 					// fix border
@@ -208,7 +208,7 @@ class dhtmlXToolbarObject {
 							item.arw.className = String(item.obj.renderAs).replace("btn","arw");
 							main_self.anyUsed = null;
 							main_self.conf.touch_id = null;
-							window.dhx4.zim.clear(item.polygon._idd);
+							dhx4.zim.clear(item.polygon._idd);
 							item.polygon.style.display = "none";
 							if (item.polygon._ie6cover) item.polygon._ie6cover.style.display = "none";
 							// fix border
@@ -360,7 +360,7 @@ class dhtmlXToolbarObject {
     }
     _addItem(itemData, pos) {
         if (typeof(itemData.text) == "string") {
-            itemData.text = window.dhx4.trim(itemData.text);
+            itemData.text = dhx4.trim(itemData.text);
             if (itemData.text.length == 0) itemData.text = null;
         }
         this._addItemToStorage(itemData, pos);
@@ -509,7 +509,7 @@ class dhtmlXToolbarObject {
 
         if ({button:1, buttonTwoState:1}[t] == 1) {
 
-            if (window.dhx4.isIE) p.obj.onselectstart = null;
+            if (dhx4.isIE) p.obj.onselectstart = null;
             this._evs.clear.apply(p, [p.obj.evs, p.obj]);
 
             for (var a in p.obj) if (typeof(p.obj[a]) == "function") p.obj[a] = null;
@@ -535,7 +535,7 @@ class dhtmlXToolbarObject {
             p.polygon.onselectstart = null;
             document.body.removeChild(p.polygon);
 
-            if (window.dhx4.isIE) {
+            if (dhx4.isIE) {
                 p.obj.onselectstart = null;
                 p.arw.onselectstart = null;
             }
@@ -587,7 +587,7 @@ class dhtmlXToolbarObject {
 
         if (t == "slider") {
 
-            if (window.dhx4.isIPad) {
+            if (dhx4.isIPad) {
                 document.removeEventListener("touchmove", pen._doOnMouseMoveStart, false);
                 document.removeEventListener("touchend", pen._doOnMouseMoveEnd, false);
             } else {
@@ -730,8 +730,8 @@ class dhtmlXToolbarObject {
         this.cont.className = "";
         this.cont = null;
 
-        window.dhx4._enableDataLoading(this, null, null, null, "clear");
-        window.dhx4._eventable(this, "clear");
+        dhx4._enableDataLoading(this, null, null, null, "clear");
+        dhx4._eventable(this, "clear");
 
         this.tX1 = null;
         this.tX2 = null;
@@ -851,7 +851,7 @@ class dhtmlXToolbarObject {
         this.conf = null;
     };
     _autoDetectVisibleArea() {
-        var d = window.dhx4.screenDim();
+        var d = dhx4.screenDim();
         this.tX1 = d.left;
         this.tX2 = d.right;
         this.tY1 = d.top;
@@ -877,7 +877,7 @@ class dhtmlXToolbarObject {
                 var t = null;
                 for (var q=0; q<node.childNodes.length; q++) {
                     if (t == null && node.childNodes[q].tagName == "itemText") {
-                        t = window.dhx4._xmlNodeValue(node.childNodes[q]);
+                        t = dhx4._xmlNodeValue(node.childNodes[q]);
                         break;
                     }
                 }
@@ -982,13 +982,13 @@ class dhtmlXToolbarObject {
             }
 
             if (type == "buttonTwoState") {
-                if (typeof(data.selected) == "undefined" && typeof(data.pressed) != "undefined" && window.dhx4.s2b(data.pressed)) {
+                if (typeof(data.selected) == "undefined" && typeof(data.pressed) != "undefined" && dhx4.s2b(data.pressed)) {
                     data.selected = true;
                 }
             }
 
             // common
-            if (typeof(data.enabled) == "undefined" && typeof(data.disabled) != "undefined" && window.dhx4.s2b(data.disabled)) {
+            if (typeof(data.enabled) == "undefined" && typeof(data.disabled) != "undefined" && dhx4.s2b(data.disabled)) {
                 data.enabled = false;
             }
             if (data.imgDis == null && data.img_disabled != null) {
@@ -1297,7 +1297,7 @@ class XToolbarButtonObject {
         // add object
         that.base.appendChild(this.obj);
 
-        if (window.dhx4.isIE) {
+        if (dhx4.isIE) {
             this.obj.onselectstart = function(e) {
                 e = e||event;
                 if (e.preventDefault) e.preventDefault(); else e.returnValue = false;
@@ -1419,8 +1419,8 @@ class XToolbarButtonSelectObject {
             this.renderSelect = false;
             if (!data.text||data.text.length==0) data.text = "&nbsp;"
         } else {
-            this.openAll = (window.dhx4.s2b(data.openAll)==true);
-            this.renderSelect = (data.renderSelect == null ? true : window.dhx4.s2b(data.renderSelect));
+            this.openAll = (dhx4.s2b(data.openAll)==true);
+            this.renderSelect = (data.renderSelect == null ? true : dhx4.s2b(data.renderSelect));
         }
         this.maxOpen = (!isNaN(data.maxOpen?data.maxOpen:"")?data.maxOpen:null);
 
@@ -1475,7 +1475,7 @@ class XToolbarButtonSelectObject {
 
         var self = this;
 
-        if (window.dhx4.isIE) {
+        if (dhx4.isIE) {
             this.arw.onselectstart = this.obj.onselectstart = function(e) {
                 e = e||event;
                 if (e.preventDefault) e.preventDefault(); else e.returnValue = false;
@@ -1589,7 +1589,7 @@ class XToolbarButtonSelectObject {
                         item.obj.className = "dhx_toolbar_btn dhxtoolbar_btn_def";
                         item.arw.className = "dhx_toolbar_arw dhxtoolbar_btn_def";
                         item.obj.over = false;
-                        window.dhx4.zim.clear(item.polygon._idd);
+                        dhx4.zim.clear(item.polygon._idd);
                         item.polygon.style.display = "none";
                         if (item.polygon._ie6cover) item.polygon._ie6cover.style.display = "none";
                         // fix border
@@ -1602,7 +1602,7 @@ class XToolbarButtonSelectObject {
             // show
             this.polygon.style.top = "0px";
             this.polygon.style.visibility = "hidden";
-            this.polygon.style.zIndex = window.dhx4.zim.reserve(this.polygon._idd);
+            this.polygon.style.zIndex = dhx4.zim.reserve(this.polygon._idd);
             this.polygon.style.display = "";
             // fix border
             if (that.conf.skin == "dhx_terrace") that._improveTerraceButtonSelect(this.id, false);
@@ -1611,7 +1611,7 @@ class XToolbarButtonSelectObject {
             // detect overlay by Y axis
             that._autoDetectVisibleArea();
             // calculate top position
-            var newTop = window.dhx4.absTop(this.obj)+this.obj.offsetHeight+that.conf.sel_ofs_y;
+            var newTop = dhx4.absTop(this.obj)+this.obj.offsetHeight+that.conf.sel_ofs_y;
             var newH = this.polygon.offsetHeight;
             if (newTop + newH > that.tY2) {
                 // if maxOpen mode enabled, check if at bottom at least one item can be shown
@@ -1620,19 +1620,19 @@ class XToolbarButtonSelectObject {
                 if (k0 >= 1) {
                     this._fixMaxOpenHeight(k0);
                 } else {
-                    newTop = window.dhx4.absTop(this.obj)-newH-that.conf.sel_ofs_y;
+                    newTop = dhx4.absTop(this.obj)-newH-that.conf.sel_ofs_y;
                     if (newTop < 0) newTop = 0;
                 }
             }
             this.polygon.style.top = newTop+"px";
             // calculate left position
             if (that.rtl) {
-                this.polygon.style.left = window.dhx4.absLeft(this.obj)+this.obj.offsetWidth-this.polygon.offsetWidth+that.conf.sel_ofs_x+"px";
+                this.polygon.style.left = dhx4.absLeft(this.obj)+this.obj.offsetWidth-this.polygon.offsetWidth+that.conf.sel_ofs_x+"px";
             } else {
                 var x1 = document.body.scrollLeft;
                 var x2 = x1+(window.innerWidth||document.body.clientWidth);
-                var newLeft = window.dhx4.absLeft(this.obj)+that.conf.sel_ofs_x;
-                if (newLeft+this.polygon.offsetWidth > x2) newLeft = window.dhx4.absLeft(this.arw)+this.arw.offsetWidth-this.polygon.offsetWidth;
+                var newLeft = dhx4.absLeft(this.obj)+that.conf.sel_ofs_x;
+                if (newLeft+this.polygon.offsetWidth > x2) newLeft = dhx4.absLeft(this.arw)+this.arw.offsetWidth-this.polygon.offsetWidth;
                 this.polygon.style.left = Math.max(newLeft,5)+"px";
             }
             this.polygon.style.visibility = "visible";
@@ -1649,7 +1649,7 @@ class XToolbarButtonSelectObject {
         }
 
         this._hidePoly = function(callEvent) {
-            window.dhx4.zim.clear(this.polygon._idd);
+            dhx4.zim.clear(this.polygon._idd);
             this.polygon.style.display = "none";
             if (this.polygon._ie6cover) this.polygon._ie6cover.style.display = "none";
             // fix border
@@ -1713,9 +1713,9 @@ class XToolbarButtonSelectObject {
 
             var en = true;
             if (typeof(data.enabled) != "undefined") {
-                en = window.dhx4.s2b(data.enabled);
+                en = dhx4.s2b(data.enabled);
             } else if (typeof(data.disabled) != "undefined") {
-                en = window.dhx4.s2b(data.disabled);
+                en = dhx4.s2b(data.disabled);
             }
 
             this.obj = {};
@@ -1796,13 +1796,13 @@ class XToolbarButtonSelectObject {
                 self.obj.over = false;
 
                 if (this._etype != null && this._etype.match(/touch/) == null) {
-                    window.dhx4.zim.clear(self.polygon._idd);
+                    dhx4.zim.clear(self.polygon._idd);
                     self.polygon.style.display = "none";
                     if (self.polygon._ie6cover) self.polygon._ie6cover.style.display = "none";
                 } else {
                     var p = self.polygon;
                     window.setTimeout(function(){
-                        window.dhx4.zim.clear(p._idd);
+                        dhx4.zim.clear(p._idd);
                         p.style.display = "none";
                         p = null;
                     }, 500);
@@ -1834,7 +1834,7 @@ class XToolbarButtonSelectObject {
         this.polygon.onselectstart = function(e) { e = e||event; if (e.preventDefault) e.preventDefault(); else e.returnValue = false; }
         this.polygon.onmousedown = function(e) { e = e||event; e.cancelBubble = true; }
         this.polygon.style.overflowY = "auto";
-        this.polygon._idd = window.dhx4.newId();
+        this.polygon._idd = dhx4.newId();
 
         this.polygon.ontouchstart = function(e){
             e = e||event;
@@ -2181,7 +2181,7 @@ class XToolbarButtonInputObject {
             return this.obj.firstChild;
         }
 
-        if (typeof(data.enabled) != "undefined" && window.dhx4.s2b(data.enabled) == false) {
+        if (typeof(data.enabled) != "undefined" && dhx4.s2b(data.enabled) == false) {
             this.disableItem();
         }
 
@@ -2213,7 +2213,7 @@ class XToolbarButtonTwoStateObject {
         // add object
         that.base.appendChild(this.obj);
 
-        if (window.dhx4.isIE) {
+        if (dhx4.isIE) {
             this.obj.onselectstart = function(e) {
                 e = e||event;
                 if (e.preventDefault) e.preventDefault(); else e.returnValue = false;
@@ -2370,7 +2370,7 @@ class XToolbarSliderObject {
         this.label.className = "dhx_toolbar_slider_label_"+that.conf.skin+(that.rtl?"_rtl":"");
         this.label.style.display = "none";
         this.label.tip = (data.toolTip||"%v");
-        this.label._zi = window.dhx4.newId();
+        this.label._zi = dhx4.newId();
         document.body.appendChild(this.label);
         var label = this.label;
 
@@ -2401,10 +2401,10 @@ class XToolbarSliderObject {
 
         this.pen.initXY = 0;
         this.pen.allowMove = false;
-        this.pen[window.dhx4.isIPad?"ontouchstart":"onmousedown"] = function(e) {
+        this.pen[dhx4.isIPad?"ontouchstart":"onmousedown"] = function(e) {
             if (self.state == false) return;
             e = e||event;
-            this.initXY = (window.dhx4.isIPad?e.touches[0].clientX:e.clientX); //e.clientX;
+            this.initXY = (dhx4.isIPad?e.touches[0].clientX:e.clientX); //e.clientX;
             this.newValueNow = this.valueNow;
             this.allowMove = true;
             this.className = "dhxtoolbar_sl_pen dhxtoolbar_over";
@@ -2412,10 +2412,10 @@ class XToolbarSliderObject {
                 label.style.visibility = "hidden";
                 label.style.display = "";
                 label.innerHTML = label.tip.replace("%v", this.valueNow);
-                label.style.left = Math.round(window.dhx4.absLeft(this)+this.offsetWidth/2-label.offsetWidth/2)+"px";
-                label.style.top = window.dhx4.absTop(this)-label.offsetHeight-3+"px";
+                label.style.left = Math.round(dhx4.absLeft(this)+this.offsetWidth/2-label.offsetWidth/2)+"px";
+                label.style.top = dhx4.absTop(this)-label.offsetHeight-3+"px";
                 label.style.visibility = "";
-                label.style.zIndex = window.dhx4.zim.reserve(label._zi);
+                label.style.zIndex = dhx4.zim.reserve(label._zi);
             }
         }
 
@@ -2423,12 +2423,12 @@ class XToolbarSliderObject {
             // optimized for destructor
             e=e||event;
             if (!pen.allowMove) return;
-            var ecx = (window.dhx4.isIPad?e.touches[0].clientX:e.clientX);
+            var ecx = (dhx4.isIPad?e.touches[0].clientX:e.clientX);
             var ofst = ecx - pen.initXY;
 
             // mouse goes out to left/right from pen
-            if (ecx < window.dhx4.absLeft(pen)+Math.round(pen.offsetWidth/2) && pen.nowX == pen.minX) return;
-            if (ecx > window.dhx4.absLeft(pen)+Math.round(pen.offsetWidth/2) && pen.nowX == pen.maxX) return;
+            if (ecx < dhx4.absLeft(pen)+Math.round(pen.offsetWidth/2) && pen.nowX == pen.minX) return;
+            if (ecx > dhx4.absLeft(pen)+Math.round(pen.offsetWidth/2) && pen.nowX == pen.maxX) return;
 
             pen.newNowX = pen.nowX + ofst;
 
@@ -2440,8 +2440,8 @@ class XToolbarSliderObject {
             pen.newValueNow = Math.round((pen.valueMax-pen.valueMin)*(pen.newNowX-pen.minX)/(pen.maxX-pen.minX)+pen.valueMin);
             if (label.tip != "") {
                 label.innerHTML = label.tip.replace(/%v/gi, pen.newValueNow);
-                label.style.left = Math.round(window.dhx4.absLeft(pen)+pen.offsetWidth/2-label.offsetWidth/2)+"px";
-                label.style.top = window.dhx4.absTop(pen)-label.offsetHeight-3+"px";
+                label.style.left = Math.round(dhx4.absLeft(pen)+pen.offsetWidth/2-label.offsetWidth/2)+"px";
+                label.style.top = dhx4.absTop(pen)-label.offsetHeight-3+"px";
             }
             e.cancelBubble = true;
             if (e.preventDefault) e.preventDefault(); else e.returnValue = false;
@@ -2455,12 +2455,12 @@ class XToolbarSliderObject {
             pen.valueNow = pen.newValueNow;
             if (label.tip != "") {
                 label.style.display = "none";
-                window.dhx4.zim.clear(label._zi);
+                dhx4.zim.clear(label._zi);
             }
             that.callEvent("onValueChange", [self.obj.idd.replace(that.idPrefix, ""), pen.valueNow]);
         }
 
-        if (window.dhx4.isIPad) {
+        if (dhx4.isIPad) {
             document.addEventListener("touchmove", pen._doOnMouseMoveStart, false);
             document.addEventListener("touchend", pen._doOnMouseMoveEnd, false);
         } else {

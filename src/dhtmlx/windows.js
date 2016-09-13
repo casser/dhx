@@ -21,12 +21,12 @@ class dhtmlXWindows{
 		params = null;
 
 		this.conf = {
-			skin: window.dhx4.skin||(typeof(dhtmlx)!="undefined"?dhtmlx.skin:null)||window.dhx4.skinDetect("dhxwins")||"material",
+			skin: dhx4.skin||(typeof(dhtmlx)!="undefined"?dhtmlx.skin:null)||dhx4.skinDetect("dhxwins")||"material",
 			// viewport conf
 			vp_pos_ofs: 20, // windows-veieport overlay (left, right, bottom) and 0 for top
 			vp_custom: false,
 			vp_of_auto: (conf.vp_overflow=="auto"), // overflow for body from layout init
-			vp_of_id: window.dhx4.newId(),
+			vp_of_id: dhx4.newId(),
 			// window dinmension offset
 			ofs_w: null,
 			ofs_h: null,
@@ -43,7 +43,7 @@ class dhtmlXWindows{
 			fr_cover: false // iframe+select issue, ie6 only
 		};
 
-		var transData = window.dhx4.transDetect();
+		var transData = dhx4.transDetect();
 		this.conf.tr = {
 			prop: transData.transProp, // false if not available
 			ev: transData.transEv,
@@ -80,21 +80,21 @@ class dhtmlXWindows{
 				r.top = y;
 				r.width = width;
 				r.height = height;
-				if (typeof(r.id) == "undefined" || r.id == null) r.id = window.dhx4.newId();
-				while (this.w[r.id] != null) r.id = window.dhx4.newId();
+				if (typeof(r.id) == "undefined" || r.id == null) r.id = dhx4.newId();
+				while (this.w[r.id] != null) r.id = dhx4.newId();
 			}
 
 			if (r.left == null) r.left = 0;
 			if (r.top == null) r.top = 0;
 
-			r.move = (r.move != null && window.dhx4.s2b(r.move) == false ? false : (r.deny_move != null && window.dhx4.s2b(r.deny_move) == true ? false : true));
-			r.park = (r.park != null && window.dhx4.s2b(r.park) == false ? false : (r.deny_park != null && window.dhx4.s2b(r.deny_park) == true ? false : true));
-			r.resize = (r.resize != null && window.dhx4.s2b(r.resize) == false ? false : (r.deny_resize != null && window.dhx4.s2b(r.deny_resize) == true ? false : true));
-			r.keep_in_viewport = (r.keep_in_viewport != null && window.dhx4.s2b(r.keep_in_viewport));
-			r.modal = (r.modal != null && window.dhx4.s2b(r.modal));
-			r.center = (r.center != null && window.dhx4.s2b(r.center));
+			r.move = (r.move != null && dhx4.s2b(r.move) == false ? false : (r.deny_move != null && dhx4.s2b(r.deny_move) == true ? false : true));
+			r.park = (r.park != null && dhx4.s2b(r.park) == false ? false : (r.deny_park != null && dhx4.s2b(r.deny_park) == true ? false : true));
+			r.resize = (r.resize != null && dhx4.s2b(r.resize) == false ? false : (r.deny_resize != null && dhx4.s2b(r.deny_resize) == true ? false : true));
+			r.keep_in_viewport = (r.keep_in_viewport != null && dhx4.s2b(r.keep_in_viewport));
+			r.modal = (r.modal != null && dhx4.s2b(r.modal));
+			r.center = (r.center != null && dhx4.s2b(r.center));
 			r.text = (r.text != null ? r.text:(r.caption!=null?r.caption:"dhtmlxWindow"));
-			r.header = (!(r.header != null && window.dhx4.s2b(r.header) == false));
+			r.header = (!(r.header != null && dhx4.s2b(r.header) == false));
 
 			var t = document.createElement("DIV");
 			t.className = "dhxwin_active";
@@ -142,7 +142,7 @@ class dhtmlXWindows{
 				fr_cover: fr_cover,
 				b: {},
 				conf: {
-					z_id: window.dhx4.newId(),
+					z_id: dhx4.newId(),
 					actv: false,
 					modal: false,
 					maxed: false,
@@ -179,7 +179,7 @@ class dhtmlXWindows{
 			}
 			this._winAdjustTitle(r.id);
 
-			this.w[r.id].win.style.zIndex = window.dhx4.zim.reserve(this.w[r.id].conf.z_id);
+			this.w[r.id].win.style.zIndex = dhx4.zim.reserve(this.w[r.id].conf.z_id);
 
 			var cell = new dhtmlXWindowsCell(r.id, this);
 			this.w[r.id].win.insertBefore(cell.cell, fr_cover);
@@ -284,7 +284,7 @@ class dhtmlXWindows{
 			if (this.cm != null && typeof(this._unloadContextMenu) == "function") this._unloadContextMenu();
 
 			// events
-			window.dhx4._eventable(this, "clear");
+			dhx4._eventable(this, "clear");
 
 			// viewport
 			this.attachViewportTo(null);
@@ -301,7 +301,7 @@ class dhtmlXWindows{
 
 		}
 
-		window.dhx4._eventable(this);
+		dhx4._eventable(this);
 
 		this.attachEvent("_winMouseDown", this._winMouseDownHandler);
 
@@ -391,7 +391,7 @@ class dhtmlXWindows{
 				var w = this.w[a];
 				if (inList[a] == null && w.conf[propName] === propValue && w.conf.visible == true) {
 					if (id != a) {
-						window.dhx4.zim.clear(w.conf.z_id);
+						dhx4.zim.clear(w.conf.z_id);
 						st.push([a, Number(w.win.style.zIndex)]);
 						inList[a] = true;
 					}
@@ -405,7 +405,7 @@ class dhtmlXWindows{
 			// check windows which is specified to be active
 			if (id != null && this.w[id].conf[propName] === propValue && inList[id] == null) {
 				// clear zim
-				window.dhx4.zim.clear(this.w[id].conf.z_id);
+				dhx4.zim.clear(this.w[id].conf.z_id);
 				var k = [[id, Number(this.w[id].win.style.zIndex)]];
 				st = k.concat(st);
 				inList[id] = true;
@@ -420,7 +420,7 @@ class dhtmlXWindows{
 			var a = all[q][0];
 			var w = this.w[a];
 
-			w.win.style.zIndex = window.dhx4.zim.reserve(w.conf.z_id);
+			w.win.style.zIndex = dhx4.zim.reserve(w.conf.z_id);
 
 			// adjust modal cover z-index
 			if (w.conf.modal && this.mcover != null) {
@@ -454,7 +454,7 @@ class dhtmlXWindows{
 			}
 		}
 		if (id == null) {
-			this._vpPull[window.dhx4.newId()] = {vp: this.vp, count: 1};
+			this._vpPull[dhx4.newId()] = {vp: this.vp, count: 1};
 		}
 		if (this.vp == document.body && this.conf.vp_of_auto == true) {
 			// if window inited on behalf on layout, clear overflow from body to enable scroll)
@@ -814,7 +814,7 @@ class dhtmlXWindows{
 		if (w.conf.modal) this._winSetModal(id, false);
 
 		// z-index clear
-		window.dhx4.zim.clear(w.conf.z_id);
+		dhx4.zim.clear(w.conf.z_id);
 
 		// context menu
 		if (this.cm != null && this.cm.icon[id] != null) {
@@ -1474,7 +1474,7 @@ class dhtmlXWindows{
 						menu.hideContextMenu();
 					} else {
 						this._hideContextMenu();
-						menu.showContextMenu(window.dhx4.absLeft(icon), window.dhx4.absTop(icon)+icon.offsetHeight);
+						menu.showContextMenu(dhx4.absLeft(icon), dhx4.absTop(icon)+icon.offsetHeight);
 						this.conf.opened_menu = data.id;
 					}
 					menu = icon = null;
@@ -1496,7 +1496,7 @@ class dhtmlXWindows{
 						menu.hideContextMenu();
 					} else {
 						this._hideContextMenu();
-						menu.showContextMenu(window.dhx4.absLeft(button), window.dhx4.absTop(button)+button.offsetHeight);
+						menu.showContextMenu(dhx4.absLeft(button), dhx4.absTop(button)+button.offsetHeight);
 						this.conf.opened_menu = data.id;
 					}
 					menu = button = null;
@@ -1604,7 +1604,7 @@ class dhtmlXWindowsCell extends XCellObject{
 				this._unloadResize();
 			}
 
-			window.dhx4._eventable(this.cell, "clear");
+			dhx4._eventable(this.cell, "clear");
 
 			this.cell._winId = null;
 			this.wins = null;
@@ -1698,7 +1698,7 @@ class dhtmlXWindowsCell extends XCellObject{
 
 		// personal window events,
 		// dhxWins.window(id).attachEvent()
-		window.dhx4._eventable(this.cell);
+		dhx4._eventable(this.cell);
 
 		// adjustParentSize (for form)
 		var that = this;
@@ -1777,7 +1777,7 @@ class dhtmlXWindowsCell extends XCellObject{
 		return (this.wins.w[this._idd].conf.allow_park == true);
 	};
 	show(makeActive) {
-		this.wins._winShow(this._idd, window.dhx4.s2b(makeActive));
+		this.wins._winShow(this._idd, dhx4.s2b(makeActive));
 	};
 	hide() {
 		this.wins._winHide(this._idd);
@@ -1841,7 +1841,7 @@ class dhtmlXWindowsCell extends XCellObject{
 		return d;
 	};
 	keepInViewport(mode) {
-		this.wins.w[this._idd].conf.keep_in_vp = window.dhx4.s2b(mode);
+		this.wins.w[this._idd].conf.keep_in_vp = dhx4.s2b(mode);
 	};
 	center() {
 
@@ -1857,11 +1857,11 @@ class dhtmlXWindowsCell extends XCellObject{
 	centerOnScreen() {
 
 		var w = this.wins.w[this._idd];
-		var dim = window.dhx4.screenDim();
+		var dim = dhx4.screenDim();
 
 		// viewport correction
-		var vx = window.dhx4.absLeft(this.wins.vp);
-		var vy = window.dhx4.absTop(this.wins.vp);
+		var vx = dhx4.absLeft(this.wins.vp);
+		var vy = dhx4.absTop(this.wins.vp);
 		var k = this.wins.vp.parentNode;
 		while (k != null) {
 			if (k.scrollLeft) vx = vx-k.scrollLeft;
@@ -1881,7 +1881,7 @@ class dhtmlXWindowsCell extends XCellObject{
 	};
 	bringToBottom() {
 		var actv = (this.wins.w[this._idd].conf.actv?null:this.wins.conf.last_active);
-		window.dhx4.zim.clear(this.wins.w[this._idd].conf.z_id);
+		dhx4.zim.clear(this.wins.w[this._idd].conf.z_id);
 		this.wins.w[this._idd].win.style.zIndex = 0;
 		this.wins._winMakeActive(actv, true);
 	};
@@ -1924,7 +1924,7 @@ class dhtmlXWindowsCell extends XCellObject{
 		w = null;
 	};
 	setModal(modal) {
-		this.wins._winSetModal(this._idd, window.dhx4.s2b(modal));
+		this.wins._winSetModal(this._idd, dhx4.s2b(modal));
 	};
 	isModal() {
 		return (this.wins.w[this._idd].conf.modal==true);
@@ -1943,7 +1943,7 @@ class dhtmlXWindowsCell extends XCellObject{
 	};
 	setToFullScreen(mode) {
 
-		mode = window.dhx4.s2b(mode);
+		mode = dhx4.s2b(mode);
 
 		var w = this.wins.w[this._idd];
 
@@ -2044,8 +2044,8 @@ class dhtmlXWindowsCell extends XCellObject{
 			x += (document.documentElement.scrollLeft||document.body.scrollLeft||0);
 			y += (document.documentElement.scrollTop||document.body.scrollTop||0);
 
-			var x0 = window.dhx4.absLeft(cont);
-			var y0 = window.dhx4.absTop(cont);
+			var x0 = dhx4.absLeft(cont);
+			var y0 = dhx4.absTop(cont);
 
 			var mode = "";
 			if (x <= x0+r.b_width) { // left
@@ -2345,7 +2345,7 @@ class dhtmlXWindowsCell extends XCellObject{
 	};
 }
 
-window.dhtmlXWindowsButton = function(wins, winId, name, title, custom) {
+dhtmlXWindowsButton = function(wins, winId, name, title, custom) {
 
 	this.conf = {
 		wins: wins,

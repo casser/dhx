@@ -23,7 +23,7 @@ dhtmlXForm.prototype.items.colorpicker = {
 		
 		var conf = {
 			input: item.childNodes[item._ll?1:0].childNodes[0],
-			custom_colors: (window.dhx4.s2b(data.enableCustomColors) == true),
+			custom_colors: (dhx4.s2b(data.enableCustomColors) == true),
 			skin: item.getForm().skin
 		};
 		

@@ -378,7 +378,7 @@ dhtmlXGridObject.prototype._filters_ready=function(fl,code){
 			this.filters=[];
 	});
 	/*
-	if (window.dhtmlXCombo)
+	if (dhtmlXCombo)
 		this.attachEvent("onScroll",dhtmlXCombo.prototype.closeAll);
 	*/
 	this.attachEvent("onSetSizes", this._filters_resize_combo);

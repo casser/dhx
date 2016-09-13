@@ -654,7 +654,7 @@ dhtmlx.AtomDataLoader = {
         } else
             this.data.driver = dhtmlx.DataDriver[this._settings.datatype || "xml"];
         //load data by async ajax call
-        if (window.dhx4) {
+        if (dhx4) {
             dhx4.ajax.get(url, dhtmlx.bind(function (x) {
                 var loader = x.xmlDoc;
                 var text = loader.responseText;

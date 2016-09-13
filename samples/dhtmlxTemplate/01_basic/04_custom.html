@@ -55,11 +55,11 @@
 				b: "Too many cooks spoil the broth",
 				c: "Better an egg today than a hen tomorrow"
 			};
-			window.dhx4.template.font_color = function(text, color) {
+			dhx4.template.font_color = function(text, color) {
 				return "<span style='color:"+color+";'>"+text+"</span>";
 			};
 			var parentObj = document.getElementById("previewData");
-			parentObj.innerHTML = window.dhx4.template(parentObj.innerHTML, data);
+			parentObj.innerHTML = dhx4.template(parentObj.innerHTML, data);
 		}
 	</script>
 </head>

@@ -67,7 +67,7 @@ class dhtmlXCarousel extends XCellTop {
             }
         }
         this.conf = {
-            skin: (conf.skin || window.dhx4.skin || (typeof(dhtmlx) != "undefined" ? dhtmlx.skin : null) || window.dhx4.skinDetect("dhxcarousel") || "material"),
+            skin: (conf.skin || dhx4.skin || (typeof(dhtmlx) != "undefined" ? dhtmlx.skin : null) || dhx4.skinDetect("dhxcarousel") || "material"),
             css: "dhxcarousel", // css prefix for topcell mtb
             // misc
             items_count: 0,
@@ -78,22 +78,22 @@ class dhtmlXCarousel extends XCellTop {
             ofs_item: Number(conf.offset_item) || 1,
             ofs_left: Number(conf.offset_left) || 0,
             ofs_top: Number(conf.offset_top) || 0, // controls
-            buttons: (typeof(conf.buttons) == "undefined" ? true : window.dhx4.s2b(conf.buttons)), // show left/right arrows
+            buttons: (typeof(conf.buttons) == "undefined" ? true : dhx4.s2b(conf.buttons)), // show left/right arrows
             drops: false, // show rectangle for each cell
             // keys and touch events
-            keys: (typeof(conf.keys) == "undefined" ? true : window.dhx4.s2b(conf.keys)), // enable crtl+left/right
+            keys: (typeof(conf.keys) == "undefined" ? true : dhx4.s2b(conf.keys)), // enable crtl+left/right
             key_data: {
                 left: 37,
                 right: 39
             },
-            touch_scroll: (typeof(conf.touch_scroll) != "undefined" ? window.dhx4.s2b(conf.touch_scroll) : true), // scroll cells with touch
+            touch_scroll: (typeof(conf.touch_scroll) != "undefined" ? dhx4.s2b(conf.touch_scroll) : true), // scroll cells with touch
             // arrows
             arw: ["&#9668;", "&#9658;"]
         };
         this.conf.autowidth = (this.conf.item_width == "auto");
         this.conf.autoheight = (this.conf.item_height == "auto");
         // check for transition support
-        var k = window.dhx4.transDetect();
+        var k = dhx4.transDetect();
         this.conf.transProp = k.transProp;
         this.conf.transEv = k.transEv;
         // load effect
@@ -147,10 +147,10 @@ class dhtmlXCarousel extends XCellTop {
             }
             // insert new
 			if (id == null) {
-				id = String(window.dhx4.newId());
+				id = String(dhx4.newId());
 			}
 			while (this.cdata[id] != null) {
-				id = String(window.dhx4.newId());
+				id = String(dhx4.newId());
 			}
             var cell = new dhtmlXCarouselCell(id, this);
             if (this.area.childNodes[index] != null) {
@@ -297,7 +297,7 @@ class dhtmlXCarousel extends XCellTop {
 			this.setSizes();
         }
         this.enableHotKeys = function (mode) {
-            this.conf.keys = window.dhx4.s2b(mode);
+            this.conf.keys = dhx4.s2b(mode);
         }
         this.goFirst = function () {
 			if (this.conf.selected == 0) {
@@ -346,7 +346,7 @@ class dhtmlXCarousel extends XCellTop {
             // celltop
             this._unloadTop();
             // events
-            window.dhx4._eventable(this, "clear");
+            dhx4._eventable(this, "clear");
             // the rest
 			for (var a in this) {
 				this[a] = null;
@@ -354,7 +354,7 @@ class dhtmlXCarousel extends XCellTop {
 			that = null;
         }
         // events
-        window.dhx4._eventable(this);
+        dhx4._eventable(this);
         this._callMainEvent = function (name, args) {
             this.callEvent(name, args);
         };
@@ -578,7 +578,7 @@ class dhtmlXCarousel extends XCellTop {
     };
     _flip_init() {
         var t = (this.conf.transProp == false ? false : this.ef.flip_conf);
-        if (t !== false && window.dhx4.isSafari == true && t.anim_flip.match("webkit") == null) { // Safari 5.1.7
+        if (t !== false && dhx4.isSafari == true && t.anim_flip.match("webkit") == null) { // Safari 5.1.7
             t.anim_flip = t.anim_flip.replace(/transform/, "-webkit-transform");
             t.anim_flip_trstyle = "webkitTransform";
         }
@@ -819,7 +819,7 @@ XCellObject.prototype.attachCarousel = function (conf) {
     obj.style.position = "relative";
     obj.style.overflow = "hidden";
     this._attachObject(obj);
-    if (typeof(window.dhtmlXSideBarCell) == "function" && this instanceof window.dhtmlXSideBarCell) {
+    if (typeof(dhtmlXSideBarCell) == "function" && this instanceof dhtmlXSideBarCell) {
         if (this.conf.skin == "dhx_terrace") {
             obj._ofs = {
                 t: -1,

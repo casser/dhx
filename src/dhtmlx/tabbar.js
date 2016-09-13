@@ -3,7 +3,7 @@ class dhtmlXTabBar extends XCellTop {
         super();
         var that = this;
         this.conf = {
-            skin: (window.dhx4.skin || (typeof(dhtmlx) != "undefined" ? dhtmlx.skin : null) || window.dhx4.skinDetect("dhxtabbar") || "material"),
+            skin: (dhx4.skin || (typeof(dhtmlx) != "undefined" ? dhtmlx.skin : null) || dhx4.skinDetect("dhxtabbar") || "material"),
             css: "dhxtabbar", // css prefix for topcell mtb
             lastActive: null,
             closeButton: false,
@@ -47,10 +47,10 @@ class dhtmlXTabBar extends XCellTop {
                 this.conf.align = (conf.align == "right" ? "right" : "left");
             }
             if (typeof(conf.close_button) != "undefined") {
-                this.conf.closeButton = window.dhx4.s2b(conf.close_button);
+                this.conf.closeButton = dhx4.s2b(conf.close_button);
             }
             if (typeof(conf.content_zone) != "undefined") {
-                this.conf.contZone = window.dhx4.s2b(conf.content_zone);
+                this.conf.contZone = dhx4.s2b(conf.content_zone);
             }
             if (typeof(conf.xml) != "undefined") {
                 this.conf.autoload.xml = conf.xml;
@@ -150,8 +150,8 @@ class dhtmlXTabBar extends XCellTop {
             // true - show_closeButton
             // false - do not show (ignoring enableTabCloseButton)
             // not set - depending on enableTabCloseButton
-            close = (typeof(close) == "undefined" ? (this.conf.closeButton == true) : window.dhx4.s2b(close));
-            active = window.dhx4.s2b(active);
+            close = (typeof(close) == "undefined" ? (this.conf.closeButton == true) : dhx4.s2b(close));
+            active = dhx4.s2b(active);
             var tab = document.createElement("DIV");
             tab.className = "dhxtabbar_tab";
             tab.innerHTML = "<div class='dhxtabbar_tab_text" + (close ? " dhxtabbar_tab_text_close" : "") + "'>" + text + "</div>" + (close ? "<div class='dhxtabbar_tab_close'></div>" : "");
@@ -259,7 +259,7 @@ class dhtmlXTabBar extends XCellTop {
             document.body.appendChild(this.tabsTextTest);
             this.tabsTextTest.innerHTML = text;
             var w = this.tabsTextTest.offsetWidth;
-            if (window.dhx4.isIE && w == 0) {
+            if (dhx4.isIE && w == 0) {
                 w = this.tabsTextTest.offsetWidth;
             } // strange IE bug
             // some extra width
@@ -572,7 +572,7 @@ class dhtmlXTabBar extends XCellTop {
             t = null;
         }
         this.enableTabCloseButton = function (mode) {
-            this.conf.closeButton = window.dhx4.s2b(mode);
+            this.conf.closeButton = dhx4.s2b(mode);
         }
         this.unload = function () {
             this.conf.unloading = true;
@@ -585,7 +585,7 @@ class dhtmlXTabBar extends XCellTop {
                 this.tabsTextTest = null;
             }
             // clear data loading
-            window.dhx4._enableDataLoading(this, null, null, null, "clear");
+            dhx4._enableDataLoading(this, null, null, null, "clear");
             this.tabsArea.childNodes[0].onclick = null;
             this.tabsArea.childNodes[2].onclick = null;
             this.tabsArea.onclick = null;
@@ -596,7 +596,7 @@ class dhtmlXTabBar extends XCellTop {
             this.tabsMode = null;
             this._unloadTop();
             // clear events
-            window.dhx4._eventable(this, "clear");
+            dhx4._eventable(this, "clear");
             for (var a in this) {
                 this[a] = null;
             }
@@ -659,9 +659,9 @@ class dhtmlXTabBar extends XCellTop {
                     this.setSkin(data.settings.skin);
                 }
                 if (data.settings.close_button != null) { // added in 4.6
-                    this.enableTabCloseButton(window.dhx4.s2b(data.settings.close_button));
+                    this.enableTabCloseButton(dhx4.s2b(data.settings.close_button));
                 } else if (data.settings.closeButton != null) { // deprecated from 4.6
-                    this.enableTabCloseButton(window.dhx4.s2b(data.settings.closeButton));
+                    this.enableTabCloseButton(dhx4.s2b(data.settings.closeButton));
                 }
                 if (data.settings.align != null) {
                     this.setAlign(data.settings.align);
@@ -679,14 +679,14 @@ class dhtmlXTabBar extends XCellTop {
                 for (var q = 0; q < data.tabs.length; q++) {
                     var t = data.tabs[q];
                     if (typeof(t.id) == "undefined") {
-                        t.id = window.dhx4.newId();
+                        t.id = dhx4.newId();
                     }
                     if (!isNaN(parseInt(t.width))) {
                         t.width = parseInt(t.width);
                     } else {
                         t.width = null;
                     }
-                    this.addTab(t.id, t.text || t.label || "", t.width, t.index, window.dhx4.s2b(t.selected) || window.dhx4.s2b(t.active), t.close);
+                    this.addTab(t.id, t.text || t.label || "", t.width, t.index, dhx4.s2b(t.selected) || dhx4.s2b(t.active), t.close);
                     if (t.content != null) {
                         this.cells(t.id).attachHTMLString(t.content);
                     } else if (t.href != null) {
@@ -699,9 +699,9 @@ class dhtmlXTabBar extends XCellTop {
                             this.cells(t.id).attachURL(t.href, viaAjax);
                         }
                     }
-                    if (typeof(t.enabled) != "undefined" && window.dhx4.s2b(t.enabled) == false) {
+                    if (typeof(t.enabled) != "undefined" && dhx4.s2b(t.enabled) == false) {
                         this.tabs(t.id).disable();
-                    } else if (typeof(t.disabled) != "undefined" && window.dhx4.s2b(t.disabled) == true) {
+                    } else if (typeof(t.disabled) != "undefined" && dhx4.s2b(t.disabled) == true) {
                         this.tabs(t.id).disable();
                     }
                 }
@@ -768,7 +768,7 @@ class dhtmlXTabBar extends XCellTop {
         }
         dhx4._enableDataLoading(this, "_initObj", "_xmlToObj", "tabbar", {struct: true});
         // check for transition support
-        var k = window.dhx4.transDetect();
+        var k = dhx4.transDetect();
         this.conf.transProp = k.transProp;
         this.conf.transEv = k.transEv;
         this.conf.transValueWidth = "width " + this.conf.transSpeed;
@@ -780,7 +780,7 @@ class dhtmlXTabBar extends XCellTop {
         this._callMainEvent = function (name, args) {
             return this.callEvent(name, args);
         }
-        window.dhx4._eventable(this);
+        dhx4._eventable(this);
         if (this.conf.autoload.json != null) {
             this.loadStruct(this.conf.autoload.json, this.conf.autoload.onload);
         } else if (this.conf.autoload.xml != null) {
@@ -1143,7 +1143,7 @@ XCellObject.prototype.attachTabbar = function (conf) {
     obj.style.position = "relative";
     obj.style.overflow = "hidden";
     // acc, move tabbar 1px-up to hide top borders
-    if (typeof(window.dhtmlXAccordionCell) == "function" && this instanceof window.dhtmlXAccordionCell) {
+    if (typeof(dhtmlXAccordionCell) == "function" && this instanceof dhtmlXAccordionCell) {
         if (this.conf.skin == "material") {
             obj._ofs = {
                 t: -1,
@@ -1155,7 +1155,7 @@ XCellObject.prototype.attachTabbar = function (conf) {
             obj._ofs = {t: -1};
         }
     }
-    if (typeof(window.dhtmlXTabBarCell) == "function" && this instanceof window.dhtmlXTabBarCell) {
+    if (typeof(dhtmlXTabBarCell) == "function" && this instanceof dhtmlXTabBarCell) {
         if (this.conf.skin == "dhx_skyblue") {
             obj._ofs = {
                 t: -1,
@@ -1174,7 +1174,7 @@ XCellObject.prototype.attachTabbar = function (conf) {
         }
     }
     // sidebar, move tabbar 1px-left
-    if (typeof(window.dhtmlXSideBarCell) == "function" && this instanceof window.dhtmlXSideBarCell) {
+    if (typeof(dhtmlXSideBarCell) == "function" && this instanceof dhtmlXSideBarCell) {
         obj._ofs = {l: -1};
         if (this.conf.skin == "dhx_web" && this.sidebar.conf.autohide == true) {
             obj._ofs.l = 0;
@@ -1189,7 +1189,7 @@ XCellObject.prototype.attachTabbar = function (conf) {
         }
     }
     // carousel
-    if (typeof(window.dhtmlXCarouselCell) == "function" && this instanceof window.dhtmlXCarouselCell) {
+    if (typeof(dhtmlXCarouselCell) == "function" && this instanceof dhtmlXCarouselCell) {
         this._hideBorders();
     }
     this._attachObject(obj);

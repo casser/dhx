@@ -60,7 +60,7 @@ class dhtmlXSlider {
                 this.conf.size = this.base.offsetWidth;
             }
         }
-        var skin = this.conf.skin || window.dhx4.skin || (typeof(dhtmlx) != "undefined" ? dhtmlx.skin : null) || window.dhx4.skinDetect("dhxslider") || "material";
+        var skin = this.conf.skin || dhx4.skin || (typeof(dhtmlx) != "undefined" ? dhtmlx.skin : null) || dhx4.skinDetect("dhxslider") || "material";
         this.setSkin(skin);
         this.base.innerHTML = "<div class='dhxsl_container'>" + "<div class='dhxsl_track'>" + (this.conf.bg == true ? "<div class='dhxsl_track_bg'></div>" : "") + "</div>" + "<div class='dhxsl_runner'></div>" + (this.conf.range == true ? "<div class='dhxsl_runner'></div>" : "") + "</div>";
         this._nodes = {

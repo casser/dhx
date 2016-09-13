@@ -142,7 +142,7 @@
 			]
 		};
 		
-		window.dhx4.template.pair = function(text, key) {
+		dhx4.template.pair = function(text, key) {
 			var r = "";
 			if (key != null) r += "<span class='tpl_param'>"+labels[lang][key]+":</span> ";
 			return r+"<span class='tpl_value'>"+text+"</span>";
@@ -175,7 +175,7 @@
 		function showBooks(tpl) {
 			if (tpl == null) tpl = tpl_loaded; else tpl_loaded = tpl;
 			var html = "";
-			for (var q=0; q<books[lang].length; q++) html += window.dhx4.template(tpl, books[lang][q]);
+			for (var q=0; q<books[lang].length; q++) html += dhx4.template(tpl, books[lang][q]);
 			document.getElementById("my_books_here").innerHTML = html;
 		}
 		

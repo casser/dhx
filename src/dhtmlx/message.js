@@ -6,8 +6,8 @@ License: content of this file is covered by GPL. Usage outside GPL terms is proh
 Copyright UAB Dinamenta http://www.dhtmlx.com
 */
 
-if(!window.dhtmlx)
-	window.dhtmlx = {};
+if(!dhtmlx)
+	dhtmlx = {};
 
 (function(){
 	var _dhx_msg_cfg = null;

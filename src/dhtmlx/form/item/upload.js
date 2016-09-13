@@ -99,7 +99,7 @@ class dhtmlXFileUploaderHtml5 {
 
 		this.f.onchange = function() {
 			that._parseFilesInInput(this.files);
-			if (window.dhx4.isOpera) that._addFileInput(); else this.value = "";
+			if (dhx4.isOpera) that._addFileInput(); else this.value = "";
 		}
 	}
 	_doUploadFile(id) {
@@ -133,7 +133,7 @@ class dhtmlXFileUploaderHtml5 {
 		var form = new FormData();
 		form.append("file", this._files[id].file);
 
-		this._loader.open("POST", this._url+(String(this._url).indexOf("?")<0?"?":"&")+"mode=html5"+window.dhx4.ajax._dhxr("&"), true);
+		this._loader.open("POST", this._url+(String(this._url).indexOf("?")<0?"?":"&")+"mode=html5"+dhx4.ajax._dhxr("&"), true);
 		this._loader.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 		this._loader.send(form);
 
@@ -147,7 +147,7 @@ class dhtmlXFileUploaderHtml5 {
 	}
 	_addFileToQueue(f) {
 		if (!this._beforeAddFileToList(f.name, f.size)) return;
-		var id = (f._idd||window.dhx4.newId());
+		var id = (f._idd||dhx4.newId());
 		this._files[id] = {file: f, name: f.name, size: f.size, state: "added"};
 		this._addFileToList(id, f.name, f.size, "added", 0);
 		if (this._autoStart && !this._uploading) this._uploadStart(true);
@@ -227,7 +227,7 @@ class dhtmlXFileUploaderHtml4{
 	_addForm() {
 
 	var that = this;
-	var id = window.dhx4.newId();
+	var id = dhx4.newId();
 
 	if (!this.k) {
 
@@ -235,7 +235,7 @@ class dhtmlXFileUploaderHtml4{
 		this.k.className = "dhx_file_form_cont";
 		this.buttons["browse"].appendChild(this.k);
 
-		this.fr_name = "dhx_file_"+window.dhx4.newId();
+		this.fr_name = "dhx_file_"+dhx4.newId();
 		this.k.innerHTML = '<iframe name="'+this.fr_name+'" style="height:0px;width:0px;" frameBorder="0"></iframe>';
 
 		this.fr = this.k.firstChild;
@@ -253,7 +253,7 @@ class dhtmlXFileUploaderHtml4{
 	}
 
 	var f = document.createElement("DIV");
-	f.innerHTML = "<form method='POST' enctype='multipart/form-data' target='"+this.fr_name+"' class='dhx_file_form' name='dhx_file_form_"+window.dhx4.newId()+"'>"+
+	f.innerHTML = "<form method='POST' enctype='multipart/form-data' target='"+this.fr_name+"' class='dhx_file_form' name='dhx_file_form_"+dhx4.newId()+"'>"+
 		"<input type='hidden' name='mode' value='html4'>"+
 		"<input type='hidden' name='uid' value='"+id+"'>"+
 		"<input type='file' name='file' class='dhx_file_input'>"+
@@ -333,7 +333,7 @@ class dhtmlXFileUploaderHtml4{
 }
 	_uploadStop() {
 	if (!this._uploading) return;
-	this.fr.contentWindow.location.href = (this._url)+(this._url.indexOf("?")<0?"?":"&")+"mode=html4&action=cancel"+window.dhx4.ajax._dhxr("&");
+	this.fr.contentWindow.location.href = (this._url)+(this._url.indexOf("?")<0?"?":"&")+"mode=html4&action=cancel"+dhx4.ajax._dhxr("&");
 }
 	_unloadEngine() {
 
@@ -371,19 +371,19 @@ class dhtmlXFileUploaderFlash{
 	}
 	_initEngine() {
 
-	if (window.dhtmlXSWFObjectsPull == null) {
-		window.dhtmlXSWFObjectsPull = {
+	if (dhtmlXSWFObjectsPull == null) {
+		dhtmlXSWFObjectsPull = {
 			items: {},
 			callEvent: function(id, name, params) {
-				return window.dhtmlXSWFObjectsPull.items[id].uploader[name].apply(window.dhtmlXSWFObjectsPull.items[id].uploader,params);
+				return dhtmlXSWFObjectsPull.items[id].uploader[name].apply(dhtmlXSWFObjectsPull.items[id].uploader,params);
 			}
 		};
 	}
 
 	var that = this;
 
-	this._swf_obj_id = "dhtmlXFileUploaderSWFObject_"+window.dhx4.newId();
-	this._swf_file_url = this._swf_file_url+window.dhx4.ajax._dhxr(this._swf_file_url);
+	this._swf_obj_id = "dhtmlXFileUploaderSWFObject_"+dhx4.newId();
+	this._swf_file_url = this._swf_file_url+dhx4.ajax._dhxr(this._swf_file_url);
 	this.buttons["browse"].innerHTML = "<div id='"+this._swf_obj_id+"' style='width:100%;height:100%;'></div>";
 	swfobject.embedSWF(this._swf_file_url, this._swf_obj_id, "100%", "100%", "9", null, {ID:this._swf_obj_id,enableLogs:this._swf_logs}, {wmode:"transparent"});
 
@@ -392,19 +392,19 @@ class dhtmlXFileUploaderFlash{
 
 	this._progress_type = "percentage";
 
-	window.dhtmlXSWFObjectsPull.items[this._swf_obj_id] = {id: this._swf_obj_id, uploader: this};
+	dhtmlXSWFObjectsPull.items[this._swf_obj_id] = {id: this._swf_obj_id, uploader: this};
 }
 	_beforeAddFileToQueue(name, size) {
 	return (this.callEvent("onBeforeFileAdd", [name, size])===true);
 }
 	_addFileToQueue(id, name, size) {
-	if (window.dhx4.isIE) {
+	if (dhx4.isIE) {
 		// focus+hide fix for IE
 		var k = document.createElement("INPUT");
 		k.type = "TEXT";
 		k.style.position = "absolute";
 		k.style.left = "0px";
-		k.style.top = window.dhx4.absTop(this.buttons["browse"])+"px";
+		k.style.top = dhx4.absTop(this.buttons["browse"])+"px";
 		k.style.width = "10px";
 		document.body.appendChild(k);
 		k.focus();
@@ -455,11 +455,11 @@ class dhtmlXFileUploaderFlash{
 
 	// remove instance from global storage
 
-	if (window.dhtmlXSWFObjectsPull.items[this._swf_obj_id]) {
-		window.dhtmlXSWFObjectsPull.items[this._swf_obj_id].id = null;
-		window.dhtmlXSWFObjectsPull.items[this._swf_obj_id].uploader = null;
-		window.dhtmlXSWFObjectsPull.items[this._swf_obj_id] = null
-		delete window.dhtmlXSWFObjectsPull.items[this._swf_obj_id];
+	if (dhtmlXSWFObjectsPull.items[this._swf_obj_id]) {
+		dhtmlXSWFObjectsPull.items[this._swf_obj_id].id = null;
+		dhtmlXSWFObjectsPull.items[this._swf_obj_id].uploader = null;
+		dhtmlXSWFObjectsPull.items[this._swf_obj_id] = null
+		delete dhtmlXSWFObjectsPull.items[this._swf_obj_id];
 	}
 
 	this._swf_obj_id = null;
@@ -481,19 +481,19 @@ class dhtmlXFileUploaderSl{
 
 	if (typeof(this._sl_v) == "undefined") this._sl_v = this.getSLVersion();
 
-	if (!window.dhtmlXFileUploaderSLObjects) {
-		window.dhtmlXFileUploaderSLObjects = {
+	if (!dhtmlXFileUploaderSLObjects) {
+		dhtmlXFileUploaderSLObjects = {
 			items: {},
 			callEvent: function(id, name, params) {
 				//console.log(arguments)
-				window.dhtmlXFileUploaderSLObjects.items[id].uploader[name].apply(window.dhtmlXFileUploaderSLObjects.items[id].uploader,params);
+				dhtmlXFileUploaderSLObjects.items[id].uploader[name].apply(dhtmlXFileUploaderSLObjects.items[id].uploader,params);
 			}
 		};
 	}
 
 	//var that = this;
 
-	this._sl_obj_id = "dhtmlXFileUploaderSLObject_"+window.dhx4.newId();
+	this._sl_obj_id = "dhtmlXFileUploaderSLObject_"+dhx4.newId();
 
 	if (this._sl_v != false) {
 		this._titleText = "Engine successfuly inited<br>Silverlight version: "+this._sl_v[0]+"."+this._sl_v[1];
@@ -514,7 +514,7 @@ class dhtmlXFileUploaderSl{
 
 	this._progress_type = "percentage";
 
-	window.dhtmlXFileUploaderSLObjects.items[this._sl_obj_id] = {id: this._sl_obj_id, uploader: this};
+	dhtmlXFileUploaderSLObjects.items[this._sl_obj_id] = {id: this._sl_obj_id, uploader: this};
 }
 	_addFileToQueue(id, name, size) {
 	this._files[id] = {name: name, size: size, state: "added"};
@@ -549,7 +549,7 @@ class dhtmlXFileUploaderSl{
 	var p = this._sl_upload_url.split("?");
 	p = (p[1]!=null?"&"+p[1]:"");
 	//
-	document.getElementById(this._sl_obj_id).Content.a.upload(id, this._sl_upload_url, p+"&mode=sl"+window.dhx4.ajax._dhxr("&")); // leading "&" required!
+	document.getElementById(this._sl_obj_id).Content.a.upload(id, this._sl_upload_url, p+"&mode=sl"+dhx4.ajax._dhxr("&")); // leading "&" required!
 }
 	_uploadStop(id) {
 	this._uploading = false;
@@ -559,11 +559,11 @@ class dhtmlXFileUploaderSl{
 
 	// remove instance from global storage
 
-	if (window.dhtmlXFileUploaderSLObjects.items[this._sl_obj_id]) {
-		window.dhtmlXFileUploaderSLObjects.items[this._sl_obj_id].id = null;
-		window.dhtmlXFileUploaderSLObjects.items[this._sl_obj_id].uploader = null;
-		window.dhtmlXFileUploaderSLObjects.items[this._sl_obj_id] = null
-		delete window.dhtmlXFileUploaderSLObjects.items[this._sl_obj_id];
+	if (dhtmlXFileUploaderSLObjects.items[this._sl_obj_id]) {
+		dhtmlXFileUploaderSLObjects.items[this._sl_obj_id].id = null;
+		dhtmlXFileUploaderSLObjects.items[this._sl_obj_id].uploader = null;
+		dhtmlXFileUploaderSLObjects.items[this._sl_obj_id] = null
+		delete dhtmlXFileUploaderSLObjects.items[this._sl_obj_id];
 	}
 
 	this._sl_obj_id = null;
@@ -1018,7 +1018,7 @@ class dhtmlXFileUploader{
 	}
 	getSLVersion() {
 		var v = false;
-		if (window.dhx4.isIE) {
+		if (dhx4.isIE) {
 			try {
 				var t = new ActiveXObject('AgControl.AgControl');
 				if (t != null) {

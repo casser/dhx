@@ -63,7 +63,7 @@
 			myTreeView = new dhtmlXTreeView("tree_here");
 			// load
 			var loadTime = new Date().getTime();
-			window.dhx4.ajax.get("../common/treeview_10000.json", function(r){
+			dhx4.ajax.get("../common/treeview_10000.json", function(r){
 				loadTime = String((new Date().getTime()-loadTime)/1000)+" sec";
 				writeLog("10,000+ items json file loaded in "+loadTime);
 				// render

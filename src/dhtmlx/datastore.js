@@ -2324,7 +2324,7 @@
         dhx.extend(obj, dhx.BindSource);
         return obj;
     };
-    if (window.dhtmlXDataView)
+    if (dhtmlXDataView)
         dhtmlXDataView.prototype._initBindSource = function () {
             this.isVisible = function () {
                 if (!this.data.order.length && !this.data._filter_order && !this._settings.dataFeed) return false;
@@ -2338,7 +2338,7 @@
             this.unsync = dhx.BaseBind.unsync;
             dhx.ui.views[this._settings.id] = this;
         };
-    if (window.dhtmlXChart)
+    if (dhtmlXChart)
         dhtmlXChart.prototype._initBindSource = function () {
             this.isVisible = function () {
                 if (!this.data.order.length && !this.data._filtered_state && !this._settings.dataFeed) return false;
@@ -2388,7 +2388,7 @@
             return source.data.sync.apply(this.data, arguments); else
             return this.data.sync.apply(this.data, arguments);
     };
-    if (window.dhtmlXForm) {
+    if (dhtmlXForm) {
         dhtmlXForm.prototype.bind = function (target) {
             dhx.BaseBind.bind.apply(this, arguments);
             target.getBindData(this._settings.id);
@@ -2488,7 +2488,7 @@
         }
         Scheduler.$syncFactory(window.scheduler);
     }
-    if (window.dhtmlXCombo) {
+    if (dhtmlXCombo) {
         dhtmlXCombo.prototype.bind = function () {
             dhx.BaseBind.bind.apply(this, arguments);
         };
@@ -2555,7 +2555,7 @@
             this.render(true);
         };
     }
-    if (window.dhtmlXGridObject) {
+    if (dhtmlXGridObject) {
         dhtmlXGridObject.prototype.bind = function (source, rule, format) {
             dhx.BaseBind.bind.apply(this, arguments);
         };
@@ -2827,7 +2827,7 @@
             });
         };
     }
-    if (window.dhtmlXTreeObject) {
+    if (dhtmlXTreeObject) {
         dhtmlXTreeObject.prototype.bind = function () {
             dhx.BaseBind.bind.apply(this, arguments);
         };

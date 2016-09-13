@@ -11,7 +11,7 @@
 	<script>
 		var myForm, formData;
 		function doOnLoad() {
-			window.dhx4.ajax.get("php/dhtmlxform_item_upload.php?action=get_script_path", function(r){
+			dhx4.ajax.get("php/dhtmlxform_item_upload.php?action=get_script_path", function(r){
 				formData = [
 					{type: "fieldset", label: "Uploader", list:[
 						{

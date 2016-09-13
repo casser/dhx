@@ -275,7 +275,7 @@ class XCellObject {
             delete this.views[name];
         };
         /* views end */
-        window.dhx4._eventable(this);
+        dhx4._eventable(this);
         this._updateIdx();
         return this;
     }
@@ -367,7 +367,7 @@ class XCellObject {
         t1.className = this.conf.idx_data.pr1;
         // image/animation
         var t2 = document.createElement("DIV");
-        if (this.conf.skin == "material" && (window.dhx4.isFirefox || window.dhx4.isChrome || window.dhx4.isOpera || window.dhx4.isEdge)) {
+        if (this.conf.skin == "material" && (dhx4.isFirefox || dhx4.isChrome || dhx4.isOpera || dhx4.isEdge)) {
             t2.className = this.conf.idx_data.pr3;
             t2.innerHTML = '<svg class="dhx_cell_prsvg" viewBox="25 25 50 50"><circle class="dhx_cell_prcircle" cx="50" cy="50" r="20"/></svg>';
         } else {
@@ -485,7 +485,7 @@ class XCellObject {
         this.dataNodes = null;
         this.cell.parentNode.removeChild(this.cell);
         this.cell = null;
-        window.dhx4._eventable(this, "clear");
+        dhx4._eventable(this, "clear");
         // views
         for (var a in this.views) {
             this.unloadView(a);
@@ -499,7 +499,7 @@ class XCellObject {
     attachObject(obj, adjust) {
 
         // adjust - for windows only
-        if (window.dhx4.s2b(adjust) && !(typeof(dhtmlXWindowsCell) == "function" && this instanceof dhtmlXWindowsCell)) {
+        if (dhx4.s2b(adjust) && !(typeof(dhtmlXWindowsCell) == "function" && this instanceof dhtmlXWindowsCell)) {
             adjust = false;
         }
         if (typeof(obj) == "string") {
@@ -626,7 +626,7 @@ class XCellObject {
                 }
                 fr.src = "about:blank";
             } else {
-                fr.src = url + window.dhx4.ajax._dhxr(url);
+                fr.src = url + dhx4.ajax._dhxr(url);
             }
             fr = null;
         }
@@ -741,7 +741,7 @@ class XCellObject {
         if (this.dataNodes.sb) {
             return;
         }  // return this.dataNodes.sb?
-        if (conf != null && window.dhx4.s2b(conf.paging) == true) {
+        if (conf != null && dhx4.s2b(conf.paging) == true) {
             conf.height = null;
         } // will set by css
         if (this.conf.skin == "dhx_skyblue" && typeof(dhtmlXWindowsCell) == "function" && this instanceof dhtmlXWindowsCell) {
@@ -850,7 +850,7 @@ class XCellObject {
             f.action = this.conf.url_data.url;
             d.body.appendChild(f);
             var postData = {};
-            if (window.dhx4.ajax.cache != true) {
+            if (dhx4.ajax.cache != true) {
                 postData["dhxr" + new Date().getTime()] = "1";
             }
             for (var a in this.conf.url_data.post_data) {
@@ -1468,7 +1468,7 @@ class XCellTop {
         t1.className = "dhxcelltop_progress";
         this.base.appendChild(t1);
         var t2 = document.createElement("DIV");
-        if (this.conf.skin == "material" && (window.dhx4.isFirefox || window.dhx4.isChrome || window.dhx4.isOpera || window.dhx4.isEdge)) {
+        if (this.conf.skin == "material" && (dhx4.isFirefox || dhx4.isChrome || dhx4.isOpera || dhx4.isEdge)) {
             t2.className = "dhxcelltop_progress_svg";
             t2.innerHTML = '<svg class="dhx_cell_prsvg" viewBox="25 25 50 50"><circle class="dhx_cell_prcircle" cx="50" cy="50" r="20"/></svg>';
         } else {

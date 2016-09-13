@@ -22,7 +22,7 @@ class dhtmlXCombo {
 		}
 		var defImg = selectId.getAttribute("defaultImage");
         var defImgDis = selectId.getAttribute("defaultImageDis");
-		if (window.dhx4.s2b(defImgDis) == true) {
+		if (dhx4.s2b(defImgDis) == true) {
 			defImgDis = true;
 		}
 		if (defImg != null || defImgDis != null) {
@@ -68,7 +68,7 @@ class dhtmlXCombo {
             opts_count_min: 3, // min count of visible items (when near screen edge)
             opts_width: null,
             item_h: null,
-            list_zi_id: window.dhx4.newId(), // "dhxcombo_list_"+window.dhx4.newId(), // z-index id
+            list_zi_id: dhx4.newId(), // "dhxcombo_list_"+dhx4.newId(), // z-index id
             allow_free_text: true,
             allow_empty_value: true, // allow empty value in combo (when free_text not allowed)
             free_text_empty: false, // when free text not allowed and incorrect value entered restore last selected value or reset to empty
@@ -151,7 +151,7 @@ class dhtmlXCombo {
             "<div class='dhxcombo_select_button'><div class='dhxcombo_select_img'></div></div>" + (this.conf.combo_image ? "<div class='dhxcombo_top_image'>" + this.modes[this.conf.opts_type].getTopImage(null, this.conf.enabled) + "</div>" : "");
         this.cont.appendChild(this.base);
         this.list = document.createElement("DIV");
-        this.list._listId = window.dhx4.newId(); // used when combo attached to popup
+        this.list._listId = dhx4.newId(); // used when combo attached to popup
         this.list.style.display = "none";
         document.body.insertBefore(this.list, document.body.firstChild);
         // auto-subload logic
@@ -173,7 +173,7 @@ class dhtmlXCombo {
             this.list.attachEvent("onscroll", this._doOnListScroll);
         }
         // apply skin
-        this.setSkin(skin || window.dhx4.skin || (typeof(dhtmlx) != "undefined" ? dhtmlx.skin : null) || window.dhx4.skinDetect("dhxcombo") || "material");
+        this.setSkin(skin || dhx4.skin || (typeof(dhtmlx) != "undefined" ? dhtmlx.skin : null) || dhx4.skinDetect("dhxcombo") || "material");
         this._updateTopImage = function (id) {
 			if (!this.conf.combo_image) {
 				return;
@@ -265,10 +265,10 @@ class dhtmlXCombo {
                             }
                             callBack = null;
                         }
-                        if (window.dhx4.ajax.method == "post") {
-                            window.dhx4.ajax.post(that.conf.f_url, params, callBack);
-                        } else if (window.dhx4.ajax.method == "get") {
-                            window.dhx4.ajax.get(that.conf.f_url + (String(that.conf.f_url).indexOf("?") >= 0 ? "&" : "?") + params, callBack);
+                        if (dhx4.ajax.method == "post") {
+                            dhx4.ajax.post(that.conf.f_url, params, callBack);
+                        } else if (dhx4.ajax.method == "get") {
+                            dhx4.ajax.get(that.conf.f_url + (String(that.conf.f_url).indexOf("?") >= 0 ? "&" : "?") + params, callBack);
                         }
                     }, 200);
                 }
@@ -373,7 +373,7 @@ class dhtmlXCombo {
             };
             var root = (selectToObj == true ? data : data.getElementsByTagName("complete"));
             if (root.length > 0) {
-				if (window.dhx4.s2b(root[0].getAttribute("add")) == true) {
+				if (dhx4.s2b(root[0].getAttribute("add")) == true) {
 					t.add = true;
 				}
 				var nodes = root[0].childNodes;
@@ -390,7 +390,7 @@ class dhtmlXCombo {
                                     // default values
                                     var k = n.tagName;
                                     if (typeof(this.conf.template[k]) != "undefined") {
-                                        template[k] = window.dhx4._xmlNodeValue(n);
+                                        template[k] = dhx4._xmlNodeValue(n);
                                     }
                                     // columns if any
                                     if (k == "columns") {
@@ -418,7 +418,7 @@ class dhtmlXCombo {
                                                 }) {
                                                     var h = col.getElementsByTagName(a);
 													if (h[0] != null && h[0].firstChild != null) {
-														colData[a] = window.dhx4._xmlNodeValue(h[0]);
+														colData[a] = dhx4._xmlNodeValue(h[0]);
 													}
 												}
 												if (template.columns == null) {
@@ -440,13 +440,13 @@ class dhtmlXCombo {
                             if (selectToObj == true) {
                                 optSelected = (t.options.length == selectedIndex);
                             } else {
-                                optSelected = window.dhx4.s2b(nodes[q].getAttribute("selected"));
+                                optSelected = dhx4.s2b(nodes[q].getAttribute("selected"));
                             }
                             var opt = {
                                 value: nodes[q].getAttribute("value"),
-                                text: window.dhx4._xmlNodeValue(nodes[q]),
+                                text: dhx4._xmlNodeValue(nodes[q]),
                                 selected: optSelected,
-                                checked: window.dhx4.s2b(nodes[q].getAttribute("checked"))
+                                checked: dhx4.s2b(nodes[q].getAttribute("checked"))
                             };
                             // images
                             for (var a in {
@@ -467,7 +467,7 @@ class dhtmlXCombo {
                                     var n = nodes[q].childNodes[w];
                                     for (var e = 0; e < n.childNodes.length; e++) {
                                         if (n.childNodes[e].tagName != null) {
-                                            opt.text[n.childNodes[e].tagName] = window.dhx4._xmlNodeValue(n.childNodes[e]);
+                                            opt.text[n.childNodes[e].tagName] = dhx4._xmlNodeValue(n.childNodes[e]);
                                         }
                                     }
                                 }
@@ -480,8 +480,8 @@ class dhtmlXCombo {
             }
             return t;
         }
-        window.dhx4._enableDataLoading(this, "_initObj", "_xmlToObj", "complete", {data: true});
-        window.dhx4._eventable(this);
+        dhx4._enableDataLoading(this, "_initObj", "_xmlToObj", "complete", {data: true});
+        dhx4._eventable(this);
         this._getNearItem = function (item, dir) {
             // return nearest next/prev visible item or null
             var sid = null;
@@ -832,8 +832,8 @@ class dhtmlXCombo {
                 delete this.conf.evs_nodes[q].evs;
                 this.conf.evs_nodes[q] = null;
             }
-            window.dhx4._eventable(this, "clear");
-            window.dhx4._enableDataLoading(this, null, null, null, "clear");
+            dhx4._eventable(this, "clear");
+            dhx4._enableDataLoading(this, null, null, null, "clear");
             this._mcDetachHeader();
             // depr
             this.DOMelem_input = this.DOMelem_button = this.DOMlist = this.DOMelem = this.DOMParent = null;
@@ -870,7 +870,7 @@ class dhtmlXCombo {
             // filter
             if (apiObj.filter != null) {
                 if (typeof(apiObj.filter) == "string") {
-                    this.enableFilteringMode(true, apiObj.filter, window.dhx4.s2b(apiObj.filter_cache), window.dhx4.s2b(apiObj.filter_sub_load));
+                    this.enableFilteringMode(true, apiObj.filter, dhx4.s2b(apiObj.filter_cache), dhx4.s2b(apiObj.filter_sub_load));
                 } else {
                     this.enableFilteringMode(true);
                 }
@@ -906,7 +906,7 @@ class dhtmlXCombo {
     };
 
     readonly(mode) { // enable/disable readonly mode
-        if (window.dhx4.s2b(mode)) {
+        if (dhx4.s2b(mode)) {
             this.base.firstChild.setAttribute("readOnly", "true");
             this.conf.ro_mode = true;
         } else {
@@ -926,7 +926,7 @@ class dhtmlXCombo {
         for (var a in tpl) {
             if (typeof(this.conf.template[a]) != "undefined") {
                 if (a == "header") {
-                    this.conf.template[a] = window.dhx4.s2b(tpl[a]);
+                    this.conf.template[a] = dhx4.s2b(tpl[a]);
                 } else {
                     this.conf.template[a] = String(tpl[a]);
                 }
@@ -1119,7 +1119,7 @@ class dhtmlXCombo {
     };
 
     enable(mode) {
-        mode = (typeof(mode) == "undefined" ? true : window.dhx4.s2b(mode));
+        mode = (typeof(mode) == "undefined" ? true : dhx4.s2b(mode));
 		if (this.conf.enabled == mode) {
 			return;
 		}
@@ -1137,7 +1137,7 @@ class dhtmlXCombo {
     };
 
     disable(mode) {
-        mode = (typeof(mode) == "undefined" ? true : window.dhx4.s2b(mode));
+        mode = (typeof(mode) == "undefined" ? true : dhx4.s2b(mode));
         this.enable(!mode);
     };
 
@@ -1149,7 +1149,7 @@ class dhtmlXCombo {
 		if (typeof(mode) == "undefined") {
 			mode = true;
 		} else {
-			mode = window.dhx4.s2b(mode);
+			mode = dhx4.s2b(mode);
 		}
 		this.base.style.display = (mode == true ? "" : "none");
     };
@@ -1184,8 +1184,8 @@ class dhtmlXCombo {
             this.conf.f_mode = (mode == true ? "start" : "between");
             if (url != null) {
                 this.conf.f_url = url;
-                this.conf.f_cache = window.dhx4.s2b(cache);
-                this.conf.f_dyn = window.dhx4.s2b(dyn);
+                this.conf.f_cache = dhx4.s2b(cache);
+                this.conf.f_dyn = dhx4.s2b(dyn);
             } else {
                 this.conf.f_url = null;
                 this.conf.f_cache = false;
@@ -1245,7 +1245,7 @@ class dhtmlXCombo {
 		if (typeof(mode) == "undefined") {
 			mode = true;
 		} else {
-			mode = window.dhx4.s2b(mode);
+			mode = dhx4.s2b(mode);
 		}
 		this.conf.f_ac = mode;
     };
@@ -1254,24 +1254,24 @@ class dhtmlXCombo {
 		if (typeof(mode) == "undefined") {
 			mode = true;
 		} else {
-			mode = window.dhx4.s2b(mode);
+			mode = dhx4.s2b(mode);
 		}
 		this.enableAutocomplete(!mode);
     };
 
     allowFreeText(mode, resetToEmpty) { // new in 4.0
-        this.conf.allow_free_text = (typeof(mode) == "undefined" ? true : window.dhx4.s2b(mode));
-        this.conf.free_text_empty = (typeof(resetToEmpty) == "undefined" ? false : window.dhx4.s2b(resetToEmpty)); // 4.5.1
+        this.conf.allow_free_text = (typeof(mode) == "undefined" ? true : dhx4.s2b(mode));
+        this.conf.free_text_empty = (typeof(resetToEmpty) == "undefined" ? false : dhx4.s2b(resetToEmpty)); // 4.5.1
     };
 
     _checkForMatch(forceClear) {
         // check if text matched to any opt_text for opt_hover while user entered text
-        var k = window.dhx4.trim(this.base.firstChild.value).toLowerCase();
+        var k = dhx4.trim(this.base.firstChild.value).toLowerCase();
         var id = null;
         var item = this.list.firstChild;
         while (item != null) {
             if (item.style.display == "" && item._optId != null) {
-                var text = window.dhx4.trim(this.t[item._optId].obj.getText(item, true)).toLowerCase();
+                var text = dhx4.trim(this.t[item._optId].obj.getText(item, true)).toLowerCase();
                 if (k == text) {
                     id = item._optId;
                     item = null;
@@ -1312,7 +1312,7 @@ class dhtmlXCombo {
 
     _selectRange(from, to) {
 		if (this.conf.combo_focus == true) {
-			window.dhx4.selectTextRange(this.base.firstChild, from, to);
+			dhx4.selectTextRange(this.base.firstChild, from, to);
 		}
 	};
 
@@ -1337,7 +1337,7 @@ class dhtmlXCombo {
             this._checkListHeight();
             return;
         }
-        this.list.style.zIndex = window.dhx4.zim.reserve(this.conf.list_zi_id); // get new z-index
+        this.list.style.zIndex = dhx4.zim.reserve(this.conf.list_zi_id); // get new z-index
 		if (this.hdr != null && this.conf.template.header == true) {
 			this.hdr.style.zIndex = Number(this.list.style.zIndex) + 1;
 		}
@@ -1350,8 +1350,8 @@ class dhtmlXCombo {
         // position
         var h0 = (this.hdr != null && this.conf.template.header == true ? this.hdr.offsetHeight : 0);
         this.list.style.width = Math.max(this.conf.opts_width || this.conf.col_w || 0, this.conf.combo_width) + "px";
-        this.list.style.top = window.dhx4.absTop(this.base) + h0 + this.base.offsetHeight - 1 + "px";
-        this.list.style.left = window.dhx4.absLeft(this.base) + "px";
+        this.list.style.top = dhx4.absTop(this.base) + h0 + this.base.offsetHeight - 1 + "px";
+        this.list.style.left = dhx4.absLeft(this.base) + "px";
         if (this.hdr != null && this.conf.template.header == true) {
             this.hdr.style.width = this.list.style.width;
             this.hdr.style.left = this.list.style.left;
@@ -1371,7 +1371,7 @@ class dhtmlXCombo {
 		if (!this._isListVisible()) {
 			return;
 		}
-		window.dhx4.zim.clear(this.conf.list_zi_id); // clear z-index
+		dhx4.zim.clear(this.conf.list_zi_id); // clear z-index
         this.list.style.display = "none";
 		if (this.hdr != null && this.conf.template.header == true) {
 			this.hdr.style.display = "none";
@@ -1408,8 +1408,8 @@ class dhtmlXCombo {
             }
             item = null;
         }
-        var s = window.dhx4.screenDim();
-        var by = window.dhx4.absTop(this.base);
+        var s = dhx4.screenDim();
+        var by = dhx4.absTop(this.base);
         var bh = this.base.offsetHeight;
         var hh = (this.hdr != null && this.conf.template.header == true ? this.hdr.offsetHeight : 0); // header_height
         var onTop = Math.max(0, Math.floor((by + hh - s.top) / this.conf.item_h));
@@ -1502,10 +1502,10 @@ class dhtmlXCombo {
 				}
                 callBack = t = null;
             }
-            if (window.dhx4.ajax.method == "post") {
-                window.dhx4.ajax.post(this.conf.f_url, params, callBack);
-            } else if (window.dhx4.ajax.method == "get") {
-                window.dhx4.ajax.get(this.conf.f_url + (String(this.conf.f_url).indexOf("?") >= 0 ? "&" : "?") + params, callBack);
+            if (dhx4.ajax.method == "post") {
+                dhx4.ajax.post(this.conf.f_url, params, callBack);
+            } else if (dhx4.ajax.method == "get") {
+                dhx4.ajax.get(this.conf.f_url + (String(this.conf.f_url).indexOf("?") >= 0 ? "&" : "?") + params, callBack);
             }
         }
     };
@@ -1535,7 +1535,7 @@ class dhtmlXCombo {
                 css: css,
                 img: img
             });
-			if (toSelect == null && window.dhx4.s2b(selected) == true) {
+			if (toSelect == null && dhx4.s2b(selected) == true) {
 				toSelect = id;
 			}
 		} else {
@@ -1551,12 +1551,12 @@ class dhtmlXCombo {
                         css: value[q][2],
                         img: value[q][3]
                     });
-					if (toSelect == null && window.dhx4.s2b(value[q][4]) == true) {
+					if (toSelect == null && dhx4.s2b(value[q][4]) == true) {
 						toSelect = id;
 					}
 				} else {
                     var id = this._renderOption(value[q]);
-					if (toSelect == null && window.dhx4.s2b(value[q].selected) == true) {
+					if (toSelect == null && dhx4.s2b(value[q].selected) == true) {
 						toSelect = id;
 					}
 				}
@@ -1597,7 +1597,7 @@ class dhtmlXCombo {
     };
 
     clearAll(hideList) { // remove all options
-        hideList = (typeof(hideList) == "undefined" ? true : window.dhx4.s2b(hideList));
+        hideList = (typeof(hideList) == "undefined" ? true : dhx4.s2b(hideList));
 		for (var a in this.t) {
 			this._removeOption(a);
 		}
@@ -1614,7 +1614,7 @@ class dhtmlXCombo {
 	};
 
     _renderOption(data) {
-        var id = window.dhx4.newId();
+        var id = dhx4.newId();
         var item = document.createElement("DIV");
         item._optId = id;
         item._tpl = this.conf.template;
@@ -1631,7 +1631,7 @@ class dhtmlXCombo {
         data.img_def = this.conf.img_def;
         data.img_def_dis = this.conf.img_def_dis;
         this.list.appendChild(item);
-        var v = (this._isListVisible() && window.dhx4.isFirefox == true);
+        var v = (this._isListVisible() && dhx4.isFirefox == true);
         if (v == true) {
             var k = this.list.scrollTop;
             this.list.scrollTop -= 1;
@@ -1992,15 +1992,15 @@ class XComboOption {
     }
     setText(item, text) {
         item._conf.text = text;
-        var t = (typeof(text) == "object" ? window.dhx4.template(item._tpl.option, this.replaceHtml(item._conf.text), true) : window.dhx4.trim(this.replaceHtml(item._conf.text) || ""));
+        var t = (typeof(text) == "object" ? dhx4.template(item._tpl.option, this.replaceHtml(item._conf.text), true) : dhx4.trim(this.replaceHtml(item._conf.text) || ""));
         item.lastChild.innerHTML = (t.length == 0 ? "&nbsp;" : t);
     }
     getText(item, asStringInput, asStringOption) {
-		if (window.dhx4.s2b(asStringInput) && typeof(item._conf.text) == "object") {
-			return window.dhx4.template(item._tpl.input, item._conf.text, true);
+		if (dhx4.s2b(asStringInput) && typeof(item._conf.text) == "object") {
+			return dhx4.template(item._tpl.input, item._conf.text, true);
 		}
-		if (window.dhx4.s2b(asStringOption) && typeof(item._conf.text) == "object") {
-			return window.dhx4.template(item._tpl.option, item._conf.text, true);
+		if (dhx4.s2b(asStringOption) && typeof(item._conf.text) == "object") {
+			return dhx4.template(item._tpl.option, item._conf.text, true);
 		}
         return item._conf.text;
     }
@@ -2063,7 +2063,7 @@ class XComboCheckbox extends XComboOption {
         item._conf = {
             value: data.value,
             css: "",
-            checked: window.dhx4.s2b(data.checked)
+            checked: dhx4.s2b(data.checked)
         };
         item.className = "dhxcombo_option";
         if (data.multicol == true) {
@@ -2080,7 +2080,7 @@ class XComboCheckbox extends XComboOption {
         return this;
     }
     setChecked (item, state) {
-        item._conf.checked = window.dhx4.s2b(state);
+        item._conf.checked = dhx4.s2b(state);
         var css = String(this.image_css).replace("#state#", (item._conf.checked ? "1" : "0"));
         this._changeChbxCss(item.childNodes, css);
     }

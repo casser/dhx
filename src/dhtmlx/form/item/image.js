@@ -13,7 +13,7 @@ dhtmlXForm.prototype.items.image = {
 		item._type = "image";
 		item._enabled = true;
 		
-		item._fr_name = "dhxform_image_"+window.dhx4.newId();
+		item._fr_name = "dhxform_image_"+dhx4.newId();
 		item._url = (typeof(data.url)=="undefined"||data.url==null?"":data.url);
 		
 		if (data.inputWidth == "auto") data.inputWidth = 120;
@@ -93,7 +93,7 @@ dhtmlXForm.prototype.items.image = {
 			(item._url.indexOf("?")>=0?"&":"?")+"action=loadImage"+
 			"&itemId="+encodeURIComponent(item._idd)+
 			"&itemValue="+encodeURIComponent(item._value)+
-			window.dhx4.ajax._dhxr("&")
+			dhx4.ajax._dhxr("&")
 		
 		var currentImg = item.childNodes[item._ll?1:0].childNodes[0].firstChild;
 		

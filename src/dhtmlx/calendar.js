@@ -51,7 +51,7 @@ class dhtmlXCalendarObject {
                 inps[q] = (document.getElementById(inps[q]) || null);
             }
             if (inps[q] != null && inps[q].tagName && String(inps[q].tagName).toLowerCase() == "input") {
-                this.i[window.dhx4.newId()] = {input: inps[q]};
+                this.i[dhx4.newId()] = {input: inps[q]};
             } else {
                 if (!(inps[q] instanceof Array) && inps[q] instanceof Object && (inps[q].input != null || inps[q].button != null)) {
                     if (inps[q].input != null && typeof(inps[q].input) == "string") {
@@ -60,14 +60,14 @@ class dhtmlXCalendarObject {
                     if (inps[q].button != null && typeof(inps[q].button) == "string") {
                         inps[q].button = document.getElementById(inps[q].button);
                     }
-                    this.i[window.dhx4.newId()] = inps[q];
+                    this.i[dhx4.newId()] = inps[q];
                 }
             }
             inps[q] = null;
         }
         this.conf = {
-            skin: (skin || window.dhx4.skin || (typeof(dhtmlx) != "undefined" ? dhtmlx.skin : null) || window.dhx4.skinDetect("dhtmlxcalendar") || "material"),
-            zi: window.dhx4.newId(),
+            skin: (skin || dhx4.skin || (typeof(dhtmlx) != "undefined" ? dhtmlx.skin : null) || dhx4.skinDetect("dhtmlxcalendar") || "material"),
+            zi: dhx4.newId(),
             touch: true,
             time: true,
             today: false,
@@ -451,19 +451,19 @@ class dhtmlXCalendarObject {
         this._activeDate = new Date();
         this._activeDateCell = null;
         this.setDate = function (d) {
-            window.dhx4.temp_calendar = {tz: null};
+            dhx4.temp_calendar = {tz: null};
             this._nullDate = (typeof(d) == "undefined" || d === "" || !d);
             if (!(d instanceof Date)) {
                 d = this._strToDate(String(d || ""));
                 if (d == "Invalid Date") {
                     d = new Date();
                 } else {
-                    this.conf.tz = window.dhx4.temp_calendar.tz;
+                    this.conf.tz = dhx4.temp_calendar.tz;
                 }
-                window.dhx4.temp_calendar = null;
+                dhx4.temp_calendar = null;
             }
             if (this.conf.tz == null) {
-                this.conf.tz = window.dhx4.date2str(d, "%P");
+                this.conf.tz = dhx4.date2str(d, "%P");
             }
             var time = d.getTime();
             // out of range
@@ -481,9 +481,9 @@ class dhtmlXCalendarObject {
             }
             var t = new Date(this._activeDate.getTime());
             if (formated) {
-                window.dhx4.temp_calendar = {tz: this.conf.tz};
+                dhx4.temp_calendar = {tz: this.conf.tz};
                 var d = this._dateToStr(t);
-                window.dhx4.temp_calendar = null;
+                dhx4.temp_calendar = null;
                 return d;
             }
             return t;
@@ -530,7 +530,7 @@ class dhtmlXCalendarObject {
                         var time = d2.getTime();
                         var label_css = "dhtmlxcalendar_label";
                         if (this._tipData[time] != null) {
-                            if (this._tipData[time].usePopup && typeof(window.dhtmlXPopup) == "function") {
+                            if (this._tipData[time].usePopup && typeof(dhtmlXPopup) == "function") {
                                 this.contDates.childNodes[q].childNodes[w].removeAttribute("title");
                                 this._initTooltipPopup();
                             } else {
@@ -1398,10 +1398,10 @@ class dhtmlXCalendarObject {
                     this.base.className += " dhtmlxcalendar_in_input";
                 }
                 var i = (this.i[inpId].input || this.i[inpId].button);
-                var dim = window.dhx4.screenDim();
+                var dim = dhx4.screenDim();
                 var inp = {
-                    top: window.dhx4.absTop(i),
-                    left: window.dhx4.absLeft(i)
+                    top: dhx4.absTop(i),
+                    left: dhx4.absLeft(i)
                 };
                 if (this.pos == "right") {
                     this.base.style.left = inp.left + i.offsetWidth + "px";
@@ -1431,7 +1431,7 @@ class dhtmlXCalendarObject {
             }
             this._hideSelector();
             this.base.style.visibility = "visible";
-            this.base.style.zIndex = window.dhx4.zim.reserve(this.conf.zi);
+            this.base.style.zIndex = dhx4.zim.reserve(this.conf.zi);
             this._ifrSize();
             if (this._ifr) {
                 this._ifr.style.display = "";
@@ -1444,7 +1444,7 @@ class dhtmlXCalendarObject {
             }
             this._hideSelector();
             this.base.style.display = "none";
-            window.dhx4.zim.clear(this.conf.zi);
+            dhx4.zim.clear(this.conf.zi);
             if (this.base.className.indexOf("dhtmlxcalendar_in_input") >= 0) {
                 this.base.className = this.base.className.replace(/\s{0,}dhtmlxcalendar_in_input/gi, "");
             }
@@ -1794,8 +1794,8 @@ class dhtmlXCalendarObject {
                     var p = this.contDates.childNodes[q].childNodes[w];
                     if (p._date != null && p._date.getTime() == t) {
                         k = {
-                            x: window.dhx4.absLeft(p),
-                            y: window.dhx4.absTop(p),
+                            x: dhx4.absLeft(p),
+                            y: dhx4.absTop(p),
                             w: p.offsetWidth,
                             h: p.offsetHeight
                         };
@@ -1907,7 +1907,7 @@ class dhtmlXCalendarObject {
             window.attachEvent("onunload", that._doOnUnload);
         }
         this.attachObj = function (obj) {
-            var a = window.dhx4.newId();
+            var a = dhx4.newId();
             if (typeof(obj) == "string") {
                 // id
                 this.i[a] = {input: document.getElementById(obj)};
@@ -2079,7 +2079,7 @@ class dhtmlXCalendarObject {
             this._attachEventsToObject(a);
         }
         // events
-        window.dhx4._eventable(this);
+        dhx4._eventable(this);
         // event wrappers
         this._evOnArrowClick = function (args) {
             return this.callEvent("onArrowClick", args);
@@ -2136,7 +2136,7 @@ class dhtmlXCalendarObject {
             this._doOnInpClick = null;
             this._doOnInpKeyUp = null;
             /* clear events */
-            window.dhx4._eventable(this, "clear");
+            dhx4._eventable(this, "clear");
             /* months */
             this.contMonth.onselectstart = null;
             // li
@@ -2371,10 +2371,10 @@ class dhtmlXCalendarObject {
         };
     };
     _strToDate(val, format) {
-        return window.dhx4.str2date(val, format || this._dateFormat, this._dateStrings());
+        return dhx4.str2date(val, format || this._dateFormat, this._dateStrings());
     };
     _dateToStr(val, format) {
-        return window.dhx4.date2str(val, format || this._dateFormat, this._dateStrings());
+        return dhx4.date2str(val, format || this._dateFormat, this._dateStrings());
     };
 }
 
@@ -2433,7 +2433,7 @@ function dhtmlXDoubleCalendar(parentId) {
         return this.leftCalendar.getFormatedDate.apply(this.leftCalendar, arguments);
     }
     this.unload = function () {
-        window.dhx4._eventable(this, "clear");
+        dhx4._eventable(this, "clear");
         this.leftCalendar.unload();
         this.rightCalendar.unload();
         this.leftCalendar = this.rightCalendar = null;
@@ -2454,6 +2454,6 @@ function dhtmlXDoubleCalendar(parentId) {
     this._evOnBeforeChange = function (args) {
         return this.callEvent("onBeforeChange", args);
     }
-    window.dhx4._eventable(this);
+    dhx4._eventable(this);
     return this;
 }

@@ -107,13 +107,13 @@
 				// this will allow to separate items from several combos on page
 				if (typeof(item.parentNode._optRbGroup) == "undefined") {
 					// 1st creation, assign uniq id to parent
-					item.parentNode._optRbGroup = window.dhx4.newId();
+					item.parentNode._optRbGroup = dhx4.newId();
 					this.items[item.parentNode._optRbGroup] = {}; // storage for items from single combo
 				}
 				this.items[item.parentNode._optRbGroup][item._optId] = item;
 
 				// check only first item from group
-				var checked = window.dhx4.s2b(data.checked);
+				var checked = dhx4.s2b(data.checked);
 				if (checked) {
 					if (typeof(this.last_checked[item.parentNode._optRbGroup]) == "undefined") {
 						// first matched item, mark group
@@ -170,7 +170,7 @@
 
 			setChecked(item, state) {
 				// check/uncheck item code
-				item._conf.checked = window.dhx4.s2b(state);
+				item._conf.checked = dhx4.s2b(state);
 				item.firstChild.className = String(this.image_css).replace("#state#",(item._conf.checked?"1":"0"));
 
 				// is state==true - we need to turn "off" all other items from the same list

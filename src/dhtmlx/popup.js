@@ -4,16 +4,16 @@ class dhtmlXPopup {
 		this.conf = conf || {};
 		conf = null;
 		this.mode = (this.conf.mode || "bottom"); // popup position related to caller element
-		this.conf.zi = window.dhx4.newId();
+		this.conf.zi = dhx4.newId();
 		// enable/disable native context menu, enabled by default
-		this.conf.context = (this.conf.context == null ? true : window.dhx4.s2b(this.conf.context));
+		this.conf.context = (this.conf.context == null ? true : dhx4.s2b(this.conf.context));
 		// enable/disable full-fix for content in IE6 (depending on content fix mey be not required), disabled by default
-		this.conf.IE6_display_fix = (this.conf.IE6_display_fix == null ? false : window.dhx4.s2b(this.conf.IE6_display_fix));
+		this.conf.IE6_display_fix = (this.conf.IE6_display_fix == null ? false : dhx4.s2b(this.conf.IE6_display_fix));
 		// click/touch conf
 		this.conf.last_p_click = this.conf.last_body_click = null;
 		this.p = document.createElement("DIV");
 		this.p.style.display = "none";
-		this.p.innerHTML = "<div class='dhx_popup_area" + (window.dhx4.isIE ? " dhx_popup_area_ie" : "") + "'>" + "<table cellspacing='0' cellpadding='0' border='0' class='dhx_popup_table'><tbody></tbody></table>" + "</div>" + "<div class='dhx_popup_arrow dhx_popup_arrow_" + this.mode + "'></div>";
+		this.p.innerHTML = "<div class='dhx_popup_area" + (dhx4.isIE ? " dhx_popup_area_ie" : "") + "'>" + "<table cellspacing='0' cellpadding='0' border='0' class='dhx_popup_table'><tbody></tbody></table>" + "</div>" + "<div class='dhx_popup_arrow dhx_popup_arrow_" + this.mode + "'></div>";
 		document.body.appendChild(this.p);
 		this.p.oncontextmenu = function (e) {
 			if (that.conf.context == false) {
@@ -80,7 +80,7 @@ class dhtmlXPopup {
 				}
 			}
 		};
-		this.separator = "DHXSEP_" + window.dhx4.newId();
+		this.separator = "DHXSEP_" + dhx4.newId();
 		this.tpl = [];
 		this._setTemplate = function (t) {
 			this.tpl = t.split(",");
@@ -123,7 +123,7 @@ class dhtmlXPopup {
 			this.p.style.visibility = "hidden";
 			this.p.style.display = "";
 			this._setPos(p);
-			this.p.style.zIndex = window.dhx4.zim.reserve(this.conf.zi);
+			this.p.style.zIndex = dhx4.zim.reserve(this.conf.zi);
 			this.p.style.visibility = "visible";
 			this._lastId = id;
 			this.callEvent("onShow", [id]);
@@ -139,7 +139,7 @@ class dhtmlXPopup {
 				width: w,
 				height: h
 			};
-			var d = window.dhx4.screenDim();
+			var d = dhx4.screenDim();
 			var mode = state || this.mode;
 			if (typeof(state) == "undefined") {
 				state = false;
@@ -290,7 +290,7 @@ class dhtmlXPopup {
 		this.hide = function () {
 			if (this.p.style.display != "none") {
 				this.p.style.display = "none";
-				window.dhx4.zim.clear(this.conf.zi);
+				dhx4.zim.clear(this.conf.zi);
 				var id = this._lastId;
 				this._lastId = null;
 				this.callEvent("onHide", [id]);
@@ -327,9 +327,9 @@ class dhtmlXPopup {
 				var tr = document.createElement("TR");
 				if (data[q] != this.separator) {
 					if (typeof(data[q].id) == "undefined" || data[q].id == null) {
-						tr._idd = window.dhx4.newId();
+						tr._idd = dhx4.newId();
 						while (this.itemData[tr._idd] != null) {
-							tr._idd = window.dhx4.newId();
+							tr._idd = dhx4.newId();
 						}
 					} else {
 						tr._idd = data[q].id;
@@ -364,7 +364,7 @@ class dhtmlXPopup {
 		};
 		this._attachNode = function (mode, data) {
 			this.clear();
-			this._nodeId = "dhxpopup_node_" + window.dhx4.newId();
+			this._nodeId = "dhxpopup_node_" + dhx4.newId();
 			var r = this.p.firstChild.firstChild.firstChild; // table->tbody
 			var tr = document.createElement("TR");
 			tr.className = "dhxnode";
@@ -397,7 +397,7 @@ class dhtmlXPopup {
 				document.body.detachEvent("onkeyup", this._doOnKeyUp, false);
 				document.body.detachEvent("onunload", this._doOnUnload, false);
 			}
-			window.dhx4.detachEvent(this.conf.ev_grid_click);
+			dhx4.detachEvent(this.conf.ev_grid_click);
 			this.clear();
 			if (this.conf.toolbarEvent != null && this.conf.toolbar != null) {
 				if (this.conf.toolbar.detachEvent != null) {
@@ -422,7 +422,7 @@ class dhtmlXPopup {
 				this._sliderShow = this._sliderHide = null;
 				this.conf.slider = null;
 			}
-			window.dhx4._eventable(this, "clear");
+			dhx4._eventable(this, "clear");
 			this.p.onclick = this.p.ontouchstart = this.p.oncontextmenu = null;
 			this.p.parentNode.removeChild(this.p);
 			this.p = null;
@@ -434,7 +434,7 @@ class dhtmlXPopup {
 			}
 			that = null;
 		};
-		window.dhx4._eventable(this);
+		dhx4._eventable(this);
 		this._doOnClick = function (e) {
 			e = e || event;
 			// skip click if touch
@@ -483,7 +483,7 @@ class dhtmlXPopup {
 				}
 			}
 			// if popup has attached form - skin closing if list clicked (it attached to body)
-			if (typeof(window.dhtmlXForm) == "function" && that._nodeObj instanceof window.dhtmlXForm) {
+			if (typeof(dhtmlXForm) == "function" && that._nodeObj instanceof dhtmlXForm) {
 				var combos = {};
 				var p = 0;
 				var form = that._nodeObj;
@@ -541,7 +541,7 @@ class dhtmlXPopup {
 			document.body.attachEvent("onunload", this._doOnUnload, false);
 		}
 		// grid canceling some events, but trigger inner event
-		this.conf.ev_grid_click = window.dhx4.attachEvent("_onGridClick", function (ev, grid) {
+		this.conf.ev_grid_click = dhx4.attachEvent("_onGridClick", function (ev, grid) {
 			if (that._nodeObj != null && (that._nodeObj == grid || that._findGrid(that._nodeObj, grid) == true)) {
 				// clicked grid is inside popup, attached directly or to any nested control
 				// do not hide popup by this click
@@ -554,7 +554,7 @@ class dhtmlXPopup {
 		});
 		this._findGrid = function (obj, grid) {
 			var gridFound = false;
-			if (typeof(window.dhtmlXTabBar) == "function" && obj instanceof window.dhtmlXTabBar) {
+			if (typeof(dhtmlXTabBar) == "function" && obj instanceof dhtmlXTabBar) {
 				obj.forEachTab(function (tab) {
 					var nested = tab.getAttachedObject();
 					if (gridFound == false && nested != null) {
@@ -564,7 +564,7 @@ class dhtmlXPopup {
 				});
 			}
 			// check if attached to form's container
-			if (typeof(window.dhtmlXForm) == "function" && obj instanceof window.dhtmlXForm) {
+			if (typeof(dhtmlXForm) == "function" && obj instanceof dhtmlXForm) {
 				obj.forEachItem(function (id) {
 					if (gridFound != true && obj.getItemType(id) == "container" && grid.entBox == obj.getContainer(id)) {
 						gridFound = true;
@@ -610,8 +610,8 @@ class dhtmlXPopup {
 				dhtmlXToolbarObject.prototype._getItemDim = function (id) {
 					var t = this.objPull[this.idPrefix + id];
 					var p = {
-						left: window.dhx4.absLeft(t.obj),
-						top: window.dhx4.absTop(t.obj),
+						left: dhx4.absLeft(t.obj),
+						top: dhx4.absTop(t.obj),
 						width: t.obj.offsetWidth + (t.arw ? t.arw.offsetWidth : 0),
 						height: t.obj.offsetHeight
 					};
@@ -622,7 +622,7 @@ class dhtmlXPopup {
 			this.conf.toolbarEvent = this.conf.toolbar.attachEvent("onClick", this._doOnToolbarClick);
 		}
 		// auto-init, ribbon mode
-		if (typeof(window.dhtmlXRibbon) == "function" && this.conf.ribbon != null && this.conf.ribbon instanceof window.dhtmlXRibbon && this.conf.id != null) {
+		if (typeof(dhtmlXRibbon) == "function" && this.conf.ribbon != null && this.conf.ribbon instanceof dhtmlXRibbon && this.conf.id != null) {
 			if (!(this.conf.id instanceof Array)) {
 				this.conf.id = [this.conf.id];
 			}
@@ -642,8 +642,8 @@ class dhtmlXPopup {
 				dhtmlXRibbon.prototype._getItemDim = function (id) {
 					var t = this._items[id].base;
 					var p = {
-						left: window.dhx4.absLeft(t),
-						top: window.dhx4.absTop(t),
+						left: dhx4.absLeft(t),
+						top: dhx4.absTop(t),
 						width: t.offsetWidth,
 						height: t.offsetHeight
 					};
@@ -706,8 +706,8 @@ class dhtmlXPopup {
 							t = item.firstChild.firstChild.firstChild; // nested form's base
 						}
 						var p = {
-							left: window.dhx4.absLeft(t),
-							top: window.dhx4.absTop(t),
+							left: dhx4.absLeft(t),
+							top: dhx4.absTop(t),
 							width: t.offsetWidth,
 							height: t.offsetHeight
 						};
@@ -718,7 +718,7 @@ class dhtmlXPopup {
 			}
 		}
 		// auto-init, slider mode
-		if (typeof(window.dhtmlXSlider) == "function" && this.conf.slider != null && this.conf.slider instanceof window.dhtmlXSlider) {
+		if (typeof(dhtmlXSlider) == "function" && this.conf.slider != null && this.conf.slider instanceof dhtmlXSlider) {
 			if (!this.conf.mode) {
 				this.mode = "top";
 			} // default mode for slider
@@ -730,8 +730,8 @@ class dhtmlXPopup {
 				var t = that.conf.slider._r_actv;
 				if (t != null) {
 					var p = {
-						left: window.dhx4.absLeft(t),
-						top: window.dhx4.absTop(t),
+						left: dhx4.absLeft(t),
+						top: dhx4.absTop(t),
 						width: t.offsetWidth,
 						height: t.offsetHeight
 					};
@@ -747,7 +747,7 @@ class dhtmlXPopup {
 			this.conf.slider_events = [this.conf.slider.attachEvent("onMouseDown", this._sliderShow), this.conf.slider.attachEvent("onMouseUp", this._sliderHide), this.conf.slider.attachEvent("onChange", this._sliderShow)];
 		}
 		// define skin
-		this.setSkin(this.skinParent || this.conf.skin || window.dhx4.skin || (typeof(dhtmlx) != "undefined" ? dhtmlx.skin : null) || window.dhx4.skinDetect("dhx_popup") || "material");
+		this.setSkin(this.skinParent || this.conf.skin || dhx4.skin || (typeof(dhtmlx) != "undefined" ? dhtmlx.skin : null) || dhx4.skinDetect("dhx_popup") || "material");
 		return this;
 	}
     attachObject(obj) {
@@ -883,7 +883,7 @@ class dhtmlXPopup {
         if (data.conf.skin == null) data.conf.skin = this.conf.skin;
         this._nodeObj = new dhtmlXEditor(data.conf);
         var evId = this.attachEvent("onShow", function(){
-            if (this._nodeObj instanceof window.dhtmlXEditor) this._nodeObj.setSizes();
+            if (this._nodeObj instanceof dhtmlXEditor) this._nodeObj.setSizes();
         });
         if (this._nodeObjEv == null) this._nodeObjEv = [];
         this._nodeObjEv.push(evId);
@@ -918,7 +918,7 @@ class dhtmlXPopup {
         this._nodeObj.base.className += " dhxtreeview_with_border";
         //
         var evId = this.attachEvent("onShow", function(){
-            if (this._nodeObj instanceof window.dhtmlXTreeView) this._nodeObj.setSizes();
+            if (this._nodeObj instanceof dhtmlXTreeView) this._nodeObj.setSizes();
         });
         if (this._nodeObjEv == null) this._nodeObjEv = [];
         this._nodeObjEv.push(evId);

@@ -19,8 +19,8 @@ class dhtmlXTreeView {
 		}
 
 		this.conf = {
-			skin: (conf.skin||window.dhx4.skin||(typeof(dhtmlx)!="undefined"?dhtmlx.skin:null)||window.dhx4.skinDetect("dhxtreeview")||"material"),
-			tree_id: window.dhx4.newId(), // register tree in common pull
+			skin: (conf.skin||dhx4.skin||(typeof(dhtmlx)!="undefined"?dhtmlx.skin:null)||dhx4.skinDetect("dhxtreeview")||"material"),
+			tree_id: dhx4.newId(), // register tree in common pull
 			ofs: {w: 1, h: 0}, // skyblue only
 			adjust_base: false,
 			icons: this.icons[(typeof(conf.iconset) == "string" && this.icons[conf.iconset] != null && this.icons[conf.iconset].r == true ? conf.iconset : "tree_native")],
@@ -92,7 +92,7 @@ class dhtmlXTreeView {
 			t._itemId = id;
 			t._treeId = this.conf.tree_id;
 
-			if (window.dhx4.isIE == true) {
+			if (dhx4.isIE == true) {
 				t.onselectstart = function(e){
 					e = e||event;
 					if (e.preventDefault) e.preventDefault(); else e.returnValue = false;
@@ -107,8 +107,8 @@ class dhtmlXTreeView {
 				item: t,
 				level: level,
 				kids: false, // true/false if any kid
-				opened: window.dhx4.s2b(data.open),
-				userdata: window.dhx4._copyObj(data.userdata||{}),
+				opened: dhx4.s2b(data.open),
+				userdata: dhx4._copyObj(data.userdata||{}),
 				half_opened: false // true/false to change sign only, used for dyn.load
 			};
 
@@ -118,7 +118,7 @@ class dhtmlXTreeView {
 			t = null;
 
 			// pre-select
-			if (window.dhx4.s2b(data.select) == true) this._setSelected(id, true);
+			if (dhx4.s2b(data.select) == true) this._setSelected(id, true);
 
 			this.callEvent("_onItemInited", [id, data]);
 
@@ -132,7 +132,7 @@ class dhtmlXTreeView {
 		}
 
 		this._removeSingleItem = function(id) {
-			if (window.dhx4.isIE == true) this.items[id].item.onselectstart = null;
+			if (dhx4.isIE == true) this.items[id].item.onselectstart = null;
 			this.items[id].item.parentNode.removeChild(this.items[id].item);
 
 			for (var a in this.items[id]) {
@@ -349,7 +349,7 @@ class dhtmlXTreeView {
 		dhx4._eventable(this);
 
 		// transition
-		var k = window.dhx4.transDetect();
+		var k = dhx4.transDetect();
 		this.conf.transProp = k.transProp;
 		this.conf.transEv = k.transEv;
 		this.conf.transValueHeight = "height 0.15s";
@@ -358,7 +358,7 @@ class dhtmlXTreeView {
 		// macos multiselect
 		if (this.conf.is_mac == true) {
 			this._macOnKey = function(e) {
-				if (((window.dhx4.isSafari || window.dhx4.isChrome || window.dhx4.isOpera) && (e.keyCode == 91 || e.keyCode == 93)) || (window.dhx4.isFirefox && e.keyCode == 224)) {
+				if (((dhx4.isSafari || dhx4.isChrome || dhx4.isOpera) && (e.keyCode == 91 || e.keyCode == 93)) || (dhx4.isFirefox && e.keyCode == 224)) {
 					that.conf.mac_cmd_key = (e.type == "keydown");
 				}
 			}
@@ -398,7 +398,7 @@ class dhtmlXTreeView {
 
 			this.base.className = String(this.base.className).replace(new RegExp("\s{0,}dhxtreeview_"+(this.conf.skin||"")), "");
 
-			window.dhx4._eventable(this, "clear");
+			dhx4._eventable(this, "clear");
 
 			for (var a in this) this[a] = null;
 
@@ -531,7 +531,7 @@ class dhtmlXTreeView {
 
 		this.attachEvent("_onItemRendered", function(id, data){
 
-			this.items[id].checked = window.dhx4.s2b(data.checked);
+			this.items[id].checked = dhx4.s2b(data.checked);
 
 			var conf = (data.checkbox||"enabled,visible");
 			this.items[id].chbx_enabled = (conf.match(/disabled/)==null);
@@ -675,7 +675,7 @@ class dhtmlXTreeView {
 	};
 	_selectionInit(conf) { // init
 
-		this.conf.msel = window.dhx4.s2b(conf.multiselect);
+		this.conf.msel = dhx4.s2b(conf.multiselect);
 
 		this.attachEvent("_onTreeClick", function(e, flow){
 
@@ -799,7 +799,7 @@ class dhtmlXTreeView {
 		t = null;
 	};
 	_loadingInit(conf) {
-		window.dhx4._enableDataLoading(this, "_initObj", "_xmlToObj", "tree", {struct:true});
+		dhx4._enableDataLoading(this, "_initObj", "_xmlToObj", "tree", {struct:true});
 		this.conf.root_id = (typeof(conf.root_id)=="undefined" || conf.root_id==null ? "0" : conf.root_id); // top-level item
 		this._dhxdataload.onBeforeXLS = function(url) { // add tree_id for 1st load if any
 			if (this.conf.autoload.url == null) this.conf.autoload.url = url;
@@ -807,14 +807,14 @@ class dhtmlXTreeView {
 		}
 	};
 	_loadingUnload() {
-		window.dhx4._enableDataLoading(this, null, null, null, "clear");
+		dhx4._enableDataLoading(this, null, null, null, "clear");
 	};
 	_initObj(data, url, pId, fixArea) {
 
 		for (var q=0; q<data.length; q++) {
 
 			var id = data[q].id;
-			if (id == null) id = "dhxtreeview_id_"+window.dhx4.newId();
+			if (id == null) id = "dhxtreeview_id_"+dhx4.newId();
 
 			// add item if not exists, if already exists - refresh?
 			if (this.items[id] == null) this._addItem(id, pId, data[q]);
@@ -874,7 +874,7 @@ class dhtmlXTreeView {
 		return data;
 	};
 	enableDragAndDrop(mode) {
-		this.conf.enable_dnd = window.dhx4.s2b(mode);
+		this.conf.enable_dnd = dhx4.s2b(mode);
 	};
 	_dndInit(conf) { // init
 
@@ -896,8 +896,8 @@ class dhtmlXTreeView {
 
 			var t = e.target||e.srcElement;
 
-			var ofs_x = window.dhx4.absLeft(t)+(typeof(e.offsetX)=="undefined"?e.layerX:e.offsetX) - e.clientX;
-			var ofs_y = window.dhx4.absTop(t)+(typeof(e.offsetY)=="undefined"?e.layerY:e.offsetY) - e.clientY;
+			var ofs_x = dhx4.absLeft(t)+(typeof(e.offsetX)=="undefined"?e.layerX:e.offsetX) - e.clientX;
+			var ofs_y = dhx4.absTop(t)+(typeof(e.offsetY)=="undefined"?e.layerY:e.offsetY) - e.clientY;
 
 			while (t != null && t != that.cont) {
 				if ((t.className||"").match(/dhxtreeview_item/) != null && t._itemId != null) {
@@ -923,7 +923,7 @@ class dhtmlXTreeView {
 				y: e.clientY,
 				ofs_x: ofs_x,
 				ofs_y: ofs_y,
-				zi: window.dhx4.newId(),
+				zi: dhx4.newId(),
 				scroll: false,
 				scroll_ofs: 5, // offset for single loop
 				scroll_time: 30, // timeout
@@ -963,8 +963,8 @@ class dhtmlXTreeView {
 
 					// tree area to check if scroll should be performed
 					that.conf.dnd.cont = {
-						x1: window.dhx4.absLeft(that.base),
-						y1: window.dhx4.absTop(that.base)
+						x1: dhx4.absLeft(that.base),
+						y1: dhx4.absTop(that.base)
 					};
 					that.conf.dnd.cont.x2 = that.conf.dnd.cont.x1 + that.base.offsetWidth;
 					that.conf.dnd.cont.y2 = that.conf.dnd.cont.y1 + that.base.offsetHeight;
@@ -1212,7 +1212,7 @@ class dhtmlXTreeView {
 
 			}
 
-			window.dhx4.zim.clear(that.conf.dnd.zi);
+			dhx4.zim.clear(that.conf.dnd.zi);
 
 			that.conf.dnd = null;
 
@@ -1259,7 +1259,7 @@ class dhtmlXTreeView {
 		this._dndInitDraggedObj = function() {
 			this.conf.dnd.dragged = document.createElement("DIV");
 			this.conf.dnd.dragged.className = "dhxtreeview_dragged_obj_"+this.conf.skin;
-			this.conf.dnd.dragged.style.zIndex = window.dhx4.zim.reserve(this.conf.dnd.zi);
+			this.conf.dnd.dragged.style.zIndex = dhx4.zim.reserve(this.conf.dnd.zi);
 			document.body.appendChild(this.conf.dnd.dragged);
 			//
 			this.conf.dnd.dragged.innerHTML = this.getItemText(this.conf.dnd.id);
@@ -1398,7 +1398,7 @@ class dhtmlXTreeView {
 
 	};
 	enableContextMenu(mode) {
-		this.conf.ctx = window.dhx4.s2b(mode);
+		this.conf.ctx = dhx4.s2b(mode);
 	};
 	_ctxInit(conf) { // init
 
@@ -1413,8 +1413,8 @@ class dhtmlXTreeView {
 			if (t.tagName.toLowerCase() == "i") t = t.parentNode; // check if icon
 			var id = (t.parentNode._itemId||t.parentNode.parentNode._itemId);
 
-			var cx = window.dhx4.absLeft(t)+(typeof(e.offsetX)=="undefined"?e.layerX:e.offsetX);
-			var cy = window.dhx4.absTop(t)+(typeof(e.offsetY)=="undefined"?e.layerY:e.offsetY);
+			var cx = dhx4.absLeft(t)+(typeof(e.offsetX)=="undefined"?e.layerX:e.offsetX);
+			var cy = dhx4.absTop(t)+(typeof(e.offsetY)=="undefined"?e.layerY:e.offsetY);
 
 			if (id != null && that._callPublicEvent("onContextMenu", [id, cx, cy, e]) !== true) {
 				if (e.preventDefault) e.preventDefault();
@@ -1450,7 +1450,7 @@ class dhtmlXTreeView {
 		this.attachEvent("_onItemInited", function(id, data){
 
 			// true/false to send extra request to server
-			this.items[id].kids_request = window.dhx4.s2b(data.kids);
+			this.items[id].kids_request = dhx4.s2b(data.kids);
 
 			// kids dyn load if any
 			if (this.items[id].kids_request == true) {
@@ -1607,7 +1607,7 @@ XCellObject.prototype.attachTreeView = function(conf) {
 	this.dataObj = new dhtmlXTreeView(treeConf);
 
 	// draw border if attached to window
-	if (typeof(window.dhtmlXWindowsCell) == "function" && this instanceof window.dhtmlXWindowsCell) {
+	if (typeof(dhtmlXWindowsCell) == "function" && this instanceof dhtmlXWindowsCell) {
 		obj.className += " dhxtreeview_with_border";
 		this.dataObj.conf.adjust_base = true;
 		this.dataObj.setSizes();

@@ -27,7 +27,7 @@
 				json: "../common/sidebar.json",
 				onload: function() {
 					if (typeof(window.scheduler) == "undefined") {
-						if (window.dhtmlx != null && window.dhtmlx.message != null) {
+						if (dhtmlx != null && dhtmlx.message != null) {
 							window.setTimeout(function(){
 								dhtmlx.message({type: "error", text: "dhtmlxScheduler required for this demo"});
 							},1);

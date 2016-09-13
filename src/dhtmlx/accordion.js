@@ -2,9 +2,9 @@ class dhtmlXAccordion extends XCellTop {
     constructor(base, skin) {
         super()
         var that = this;
-        var transData = window.dhx4.transDetect();
+        var transData = dhx4.transDetect();
         this.conf = {
-            skin: (skin || window.dhx4.skin || (typeof(dhtmlx) != "undefined" ? dhtmlx.skin : null) || window.dhx4.skinDetect("dhxacc") || "material"),
+            skin: (skin || dhx4.skin || (typeof(dhtmlx) != "undefined" ? dhtmlx.skin : null) || dhx4.skinDetect("dhxacc") || "material"),
             css: "dhxacc", // css prefix for topcell mtb
             icons_path: "",
             icons_css: false,
@@ -138,10 +138,10 @@ class dhtmlXAccordion extends XCellTop {
             // open/close
             // depending on mode - calculate width/height
             if (id == null) {
-                id = "a" + window.dhx4.newId();
+                id = "a" + dhx4.newId();
             }
             while (this.t[id] != null) {
-                id = "a" + window.dhx4.newId();
+                id = "a" + dhx4.newId();
             }
             var cell = new dhtmlXAccordionCell(id, this);
             cell.conf.skin = this.conf.skin;
@@ -213,7 +213,7 @@ class dhtmlXAccordion extends XCellTop {
             } else {
 
                 // closed by default or force if first node
-                open = (this.conf.last_opened == null ? true : window.dhx4.s2b(open));
+                open = (this.conf.last_opened == null ? true : dhx4.s2b(open));
                 var h = this._updateCellsHeight();
                 // close prev already opened cell if any or reduce height
                 if (this.conf.last_opened != null) {
@@ -542,8 +542,8 @@ class dhtmlXAccordion extends XCellTop {
                 this.dhxWins = null;
             }
             this._unloadTop();
-            window.dhx4._enableDataLoading(this, null, null, null, "clear");
-            window.dhx4._eventable(this, "clear");
+            dhx4._enableDataLoading(this, null, null, null, "clear");
+            dhx4._eventable(this, "clear");
             this.ofs = this.conf = null;
             for (var a in this) {
                 this[a] = null;
@@ -560,7 +560,7 @@ class dhtmlXAccordion extends XCellTop {
             if (data.skin != null) {
                 this.setSkin(data.skin);
             }
-            if (window.dhx4.s2b(data.multi_mode)) {
+            if (dhx4.s2b(data.multi_mode)) {
                 this.enableMultiMode();
             }
             if (data.icons_path != null) {
@@ -577,7 +577,7 @@ class dhtmlXAccordion extends XCellTop {
                     this.addItem(data.items[q].id, data.items[q].text, data.items[q].open, data.items[q].height, data.items[q].icon || data.items[q].img);
                 }
             }
-            if (window.dhx4.s2b(data.dnd) == true && typeof(this.enableDND) == "function") {
+            if (dhx4.s2b(data.dnd) == true && typeof(this.enableDND) == "function") {
                 this.enableDND();
             }
         }
@@ -591,7 +591,7 @@ class dhtmlXAccordion extends XCellTop {
                 t.multi_mode = true;
             }
             if (root.getAttribute("multiMode") != null) {
-                t.multi_mode = window.dhx4.s2b(root.getAttribute("multiMode"));
+                t.multi_mode = dhx4.s2b(root.getAttribute("multiMode"));
             }
             if (root.getAttribute("iconsPath") != null) {
                 t.icons_path = root.getAttribute("iconsPath");
@@ -610,7 +610,7 @@ class dhtmlXAccordion extends XCellTop {
                         k.height = p.getAttribute("height");
                     }
                     if (p.getAttribute("open") != null) {
-                        k.open = window.dhx4.s2b(p.getAttribute("open"));
+                        k.open = dhx4.s2b(p.getAttribute("open"));
                     }
                     k.text = p.firstChild.nodeValue;
                     t.items.push(k);
@@ -619,8 +619,8 @@ class dhtmlXAccordion extends XCellTop {
             }
             return t;
         }
-        window.dhx4._enableDataLoading(this, "_initObj", "_xmlToObj", "accordion", {struct: true});
-        window.dhx4._eventable(this);
+        dhx4._enableDataLoading(this, "_initObj", "_xmlToObj", "accordion", {struct: true});
+        dhx4._eventable(this);
         this._callMainEvent = function (name, args) {
             return this.callEvent(name, args);
         }
@@ -1074,13 +1074,13 @@ class dhtmlXAccordionCell extends XCellObject {
         }
         // open/close
         this.open = function (callEvent) {
-            if (window.dhx4.s2b(callEvent) == true) {
+            if (dhx4.s2b(callEvent) == true) {
                 this.acc.conf.on_active_click = true
             }
             this.acc._openItem(this._idd);
         }
         this.close = function (callEvent) {
-            if (window.dhx4.s2b(callEvent) == true) {
+            if (dhx4.s2b(callEvent) == true) {
                 this.acc.conf.on_active_click = true
             }
             this.acc._closeItem(this._idd);
@@ -1487,7 +1487,7 @@ XCellObject.prototype.attachAccordion = function (conf) {
         conf.skin = this.conf.skin;
     }
     conf.parent = obj;
-    if (typeof(window.dhtmlXAccordionCell) == "function" && this instanceof window.dhtmlXAccordionCell) {
+    if (typeof(dhtmlXAccordionCell) == "function" && this instanceof dhtmlXAccordionCell) {
         if (this.conf.skin == "material") {
             obj._ofs = {
                 t: -1,
@@ -1502,7 +1502,7 @@ XCellObject.prototype.attachAccordion = function (conf) {
             }
         }
     }
-    if (typeof(window.dhtmlXTabBarCell) == "function" && this instanceof window.dhtmlXTabBarCell) {
+    if (typeof(dhtmlXTabBarCell) == "function" && this instanceof dhtmlXTabBarCell) {
         if (this.conf.skin == "dhx_skyblue" || this.conf.skin == "material") {
             obj._ofs = {
                 t: -1,
@@ -1512,7 +1512,7 @@ XCellObject.prototype.attachAccordion = function (conf) {
             };
         }
     }
-    if (typeof(window.dhtmlXSideBarCell) == "function" && this instanceof window.dhtmlXSideBarCell) {
+    if (typeof(dhtmlXSideBarCell) == "function" && this instanceof dhtmlXSideBarCell) {
         if (this.conf.skin == "dhx_web") {
             obj._ofs = {};
             if (this.sidebar.conf.autohide != true) {
@@ -1533,7 +1533,7 @@ XCellObject.prototype.attachAccordion = function (conf) {
             }
         }
     }
-    if (typeof(window.dhtmlXCarouselCell) == "function" && this instanceof window.dhtmlXCarouselCell) {
+    if (typeof(dhtmlXCarouselCell) == "function" && this instanceof dhtmlXCarouselCell) {
         this._hideBorders();
     }
     this.dataType = "acc";

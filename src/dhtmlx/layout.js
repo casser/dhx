@@ -2088,7 +2088,7 @@ class XLayoutObject extends XCellTop {
         }
         this.cdata = {};
         this.conf = {
-            skin: (skin || window.dhx4.skin || (typeof(dhtmlx) != "undefined" ? dhtmlx.skin : null) || window.dhx4.skinDetect("dhxlayout") || "material"),
+            skin: (skin || dhx4.skin || (typeof(dhtmlx) != "undefined" ? dhtmlx.skin : null) || dhx4.skinDetect("dhxlayout") || "material"),
             css: "dhxlayout", // css prefix for topcell mtb
             hh: 20, // header height collapsed, add auto-detect?
             autosize: "b", // cell which will sized when parent size changed
@@ -2103,7 +2103,7 @@ class XLayoutObject extends XCellTop {
             } // base size for onResize
         };
         if (this.conf.skin == "material") {
-            this.conf.hh = window.dhx4.readFromCss("dhxlayout_base_material dhxlayout_collapsed_height");
+            this.conf.hh = dhx4.readFromCss("dhxlayout_base_material dhxlayout_collapsed_height");
         }
         // attach layout
         if (typeof(base) == "object" && base._isCell == true) {
@@ -2375,7 +2375,7 @@ class XLayoutObject extends XCellTop {
             }
             this._unloadTop();
             // clear events
-            window.dhx4._eventable(this, "clear");
+            dhx4._eventable(this, "clear");
             for (var a in this) {
                 this[a] = null;
             }
@@ -2392,7 +2392,7 @@ class XLayoutObject extends XCellTop {
             win = null;
             return t;
         };
-        window.dhx4._eventable(this);
+        dhx4._eventable(this);
         this._callMainEvent = function (name, args) {
             return this.callEvent(name, args);
         };
@@ -2402,7 +2402,7 @@ class XLayoutObject extends XCellTop {
             this.conf.pattern = pattern;
             this.setAutoSize(a.h[a.h.length - 1], a.v[a.v.length - 1]);
         }
-        if (typeof(window.dhtmlXWindows) == "function" && this.mainInst == null) {
+        if (typeof(dhtmlXWindows) == "function" && this.mainInst == null) {
             var params = {
                 vp_overflow: (this.conf.fs_mode == true ? false : "auto") // set viewport "auto" for body to keep scroll visible
             };
@@ -2446,7 +2446,7 @@ class XLayoutObject extends XCellTop {
                     if (data.fix_size) {
                         cell.fixSize(data.fix_size[0], data.fix_size[1]);
                     }
-                    if (typeof(data.header) != "undefined" && window.dhx4.s2b(data.header) == false) {
+                    if (typeof(data.header) != "undefined" && dhx4.s2b(data.header) == false) {
                         cell.hideHeader();
                     }
                 }
@@ -2588,7 +2588,7 @@ class XLayoutObject extends XCellTop {
             XLayoutObject._confGlob.sw = {};
         }
         if (XLayoutObject._confGlob.sw[this.conf.skin] == null) {
-            XLayoutObject._confGlob.sw[this.conf.skin] = window.dhx4.readFromCss("dhxlayout_sep_sw_" + this.conf.skin);
+            XLayoutObject._confGlob.sw[this.conf.skin] = dhx4.readFromCss("dhxlayout_sep_sw_" + this.conf.skin);
         }
         return XLayoutObject._confGlob.sw[this.conf.skin];
     }
@@ -2620,12 +2620,12 @@ class dhtmlXLayoutSepObject {
             locked: false, // by fix cell size
             btn_left: 0
         };
-        if (window.dhx4.isIE && navigator.userAgent.indexOf("MSIE 7.0") >= 0 && navigator.userAgent.indexOf("Trident") >= 0) {
+        if (dhx4.isIE && navigator.userAgent.indexOf("MSIE 7.0") >= 0 && navigator.userAgent.indexOf("Trident") >= 0) {
             this.conf.btn_left = 1;
         }
         this.sep = document.createElement("DIV");
         this.sep.className = "dhxlayout_sep";
-        if (window.dhx4.isIE == true) {
+        if (dhx4.isIE == true) {
             this.sep.onselectstart = function () {
                 return false;
             };
@@ -2744,7 +2744,7 @@ class dhtmlXLayoutSepObject {
             k.cdata.a._setSize(k.cdata.a.conf.size.x, k.cdata.a.conf.size.y, k.cdata.a.conf.size.w + ofs_x, k.cdata.a.conf.size.h + ofs_y, "a");
             k.cdata.b._setSize(k.cdata.b.conf.size.x + ofs_x, k.cdata.b.conf.size.y + ofs_y, k.cdata.b.conf.size.w - ofs_x, k.cdata.b.conf.size.h - ofs_y, "b");
             this._setSize(parseInt(this.r_sep.style.left), parseInt(this.r_sep.style.top), parseInt(this.r_sep.style.width), parseInt(this.r_sep.style.height));
-            if (window.dhx4.isIE) {
+            if (dhx4.isIE) {
                 // w/o timeout cursor not changed to normal state in IE
                 var p0 = this;
                 window.setTimeout(function () {
@@ -2779,7 +2779,7 @@ class dhtmlXLayoutSepObject {
                 this.r_sep.style.width = this.sep.style.width;
                 this.r_sep.style.height = this.sep.style.height;
                 this.sep.parentNode.appendChild(this.r_sep);
-                if (window.dhx4.isIE) {
+                if (dhx4.isIE) {
                     this.r_sep.onselectstart = function () {
                         return false;
                     };
@@ -2789,7 +2789,7 @@ class dhtmlXLayoutSepObject {
                 this.r_area = document.createElement("DIV");
                 this.r_area.className = "dhxlayout_resize_area";
                 this.sep.parentNode.appendChild(this.r_area);
-                if (window.dhx4.isIE) {
+                if (dhx4.isIE) {
                     this.r_area.onselectstart = function () {
                         return false;
                     };
@@ -2874,7 +2874,7 @@ class dhtmlXLayoutSepObject {
             this.sep.removeEventListener("mousedown", this._doOnMouseDown, false);
             document.body.removeEventListener("mousedown", this._doOnBodyMouseDown, false);
             document.body.removeEventListener("contextmenu", this._doOnBodyMouseDown, false);
-            if (window.dhx4.isIE == true) {
+            if (dhx4.isIE == true) {
                 this.sep.onselectstart = null;
             }
             this.sep.parentNode.removeChild(this.sep);
@@ -3034,7 +3034,7 @@ class dhtmlXLayoutCell extends XCellObject {
     }
     _hdrInit() {
         var cssExt = "";
-        if (window.dhx4.isChrome || window.dhx4.isSafari) {
+        if (dhx4.isChrome || dhx4.isSafari) {
             cssExt = " dhx_cell_hdr_text_chrome";
         }
         var t = document.createElement("DIV");
@@ -3437,8 +3437,8 @@ class dhtmlXLayoutCell extends XCellObject {
         return this.conf.size.h;
     }
     fixSize(w, h) {
-        this.conf.fixed.w = window.dhx4.s2b(w);
-        this.conf.fixed.h = window.dhx4.s2b(h);
+        this.conf.fixed.w = dhx4.s2b(w);
+        this.conf.fixed.h = dhx4.s2b(h);
         var mainInst = this.layout._getMainInst();
         var s = {};
         mainInst.forEachItem(function (cell) {

@@ -52,7 +52,7 @@
 					myCombo.closeAll();
 					myCombo.clearAll();
 				} else {
-					window.dhx4.ajax.post("../common/complete.php", "mask="+encodeURIComponent(text), function(r){
+					dhx4.ajax.post("../common/complete.php", "mask="+encodeURIComponent(text), function(r){
 						myCombo.clearAll();
 						myCombo.load(r.xmlDoc.responseXML);
 						myCombo.openSelect();

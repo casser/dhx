@@ -32,7 +32,7 @@ function dataProcessor(serverProcessorURL){
 	};
 	
 	this.enableUTFencoding(true);
-	window.dhx4._eventable(this);
+	dhx4._eventable(this);
 	
 	return this;
 }
@@ -60,7 +60,7 @@ dataProcessor.prototype={
 	*	@type: public
 	*/	
 	enableUTFencoding:function(mode){
-		this._utf=window.dhx4.s2b(mode);
+		this._utf=dhx4.s2b(mode);
 	},
 	/**
 	* 	@desc: allows to define, which column may trigger update
@@ -84,7 +84,7 @@ dataProcessor.prototype={
 	*	@type: public
 	*/
 	enableDataNames:function(mode){
-		this._endnm=window.dhx4.s2b(mode);
+		this._endnm=dhx4.s2b(mode);
 	},
 	/**
 	* 	@desc: enable/disable mode , when only changed fields and row id send to the server side, instead of all fields in default mode
@@ -92,7 +92,7 @@ dataProcessor.prototype={
 	*	@type: public
 	*/
 	enablePartialDataSend:function(mode){
-		this._changed=window.dhx4.s2b(mode);
+		this._changed=dhx4.s2b(mode);
 	},
 	/**
 	* 	@desc: set if rows should be send to server automaticaly
@@ -244,12 +244,12 @@ dataProcessor.prototype={
 		
 		var that = this;
 		if (this._tMode != "POST") {
-			window.dhx4.ajax.get(url+((a3.indexOf("?")!=-1)?"&":"?")+this.serialize(a1,rowId), function(r){
+			dhx4.ajax.get(url+((a3.indexOf("?")!=-1)?"&":"?")+this.serialize(a1,rowId), function(r){
 				that.afterUpdate(r);
 				that = r = null;
 			});
 		} else {
-			window.dhx4.ajax.post(url, this.serialize(a1,rowId), function(r){
+			dhx4.ajax.post(url, this.serialize(a1,rowId), function(r){
 				that.afterUpdate(r);
 				that = r = null;
 			});

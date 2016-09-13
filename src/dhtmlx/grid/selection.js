@@ -28,7 +28,7 @@ dhtmlXGridObject.prototype.enableBlockSelection = function(mode)
 		return this._HideSelection();
 	} else this._bs_mode=true;
 
-	if (!window.dhx4.isIPad){
+	if (!dhx4.isIPad){
 		var area = this._clip_area = document.createElement("textarea");
 		area.style.cssText = "position:absolute; width:1px; height:1px; overflow:hidden; color:transparent; background-color:transparent; bottom:1px; right:1px; border:none;";
 

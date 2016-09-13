@@ -169,7 +169,7 @@ eXcell_dhxCalendarA.prototype.edit = function() {
 	this.obj.value = this.getValue();
 	this.cell.innerHTML = "";
 	this.cell.appendChild(this.obj);
-	if (window.dhx4.isIE) {
+	if (dhx4.isIE) {
 		this.obj.style.overflow = "visible";
 		if ((this.grid.multiLine)&&(this.obj.offsetHeight>=18)&&(this.obj.offsetHeight<40)) {
 			this.obj.style.height = "36px";

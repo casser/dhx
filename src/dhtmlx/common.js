@@ -1105,7 +1105,7 @@ dhx4._eventable(dhx4);
 dhx4.validation = new dhtmlxXValidation();
 
 
-window.dhtmlx = {
+dhtmlx = {
     extend: function (a, b) {
         for (var key in b) {
             if (!a[key]) {
@@ -1250,8 +1250,8 @@ dhtmlDragAndDropObject.prototype.callDrag = function (e) {
         //if (!document.all) dragger.calculateFramePosition();
         grd.parentNode.removeChild(grd);
         var oldBody = dragger.dragNode.pWindow;
-        if (grd.pWindow && grd.pWindow.dhtmlDragAndDropObject.dhtmlDragAndDrop.lastLanding) {
-            grd.pWindow.dhtmlDragAndDropObject.dhtmlDragAndDrop.lastLanding.dragLanding._dragOut(grd.pWindow.dhtmlDragAndDropObject.dhtmlDragAndDrop.lastLanding);
+        if (grd.pWindow && grd.pdhtmlDragAndDropObject.dhtmlDragAndDrop.lastLanding) {
+            grd.pdhtmlDragAndDropObject.dhtmlDragAndDrop.lastLanding.dragLanding._dragOut(grd.pdhtmlDragAndDropObject.dhtmlDragAndDrop.lastLanding);
         }
         if (dhx4.isIE) {
             var div = document.createElement("Div");

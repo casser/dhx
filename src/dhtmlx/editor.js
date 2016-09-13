@@ -29,23 +29,23 @@ class dhtmlXEditor {
 			if (base.contentHTML != null) this.conf.contentHTML = base.contentHTML;
 			if (base.iconsPath != null) this.conf.iconsPath = base.iconsPath;
 			if (base.extraCss != null) this.conf.extra_css = base.extraCss;
-			if (base.toolbar != null) this.conf.toolbar = window.dhx4.s2b(base.toolbar);
+			if (base.toolbar != null) this.conf.toolbar = dhx4.s2b(base.toolbar);
 			if (base.onFocusChanged != null) this._doOnFocusChanged = base.onFocusChanged;
 			if (base.onAccess != null) this._doOnAccess = base.onAccess;
 			base = base.parent;
 		}
 		// skin config
-		this.conf.skin = (skin || window.dhx4.skin || (typeof(dhtmlx) != "undefined" ? dhtmlx.skin : null) || window.dhx4.skinDetect("dhxeditor") || "material");
+		this.conf.skin = (skin || dhx4.skin || (typeof(dhtmlx) != "undefined" ? dhtmlx.skin : null) || dhx4.skinDetect("dhxeditor") || "material");
 		// configure base
 		if (typeof(base) == "string") base = document.getElementById(base);
 		this.base = base;
 		this.base.className += " dhxeditor_" + this.conf.skin;
 		while (this.base.childNodes.length > 0) this.base.removeChild(this.base.childNodes[0]);
 		// configure base for dhxcont
-		var pos = (window.dhx4.isIE ? this.base.currentStyle["position"] : (window.getComputedStyle != null ? window.getComputedStyle(this.base, null).getPropertyValue("position") : "" ));
+		var pos = (dhx4.isIE ? this.base.currentStyle["position"] : (window.getComputedStyle != null ? window.getComputedStyle(this.base, null).getPropertyValue("position") : "" ));
 		if (!(pos == "relative" || pos == "absolute")) this.base.style.position = "relative";
 		// init dhxcont
-		this.cell = new dhtmlXEditorCell(window.dhx4.newId(), this);
+		this.cell = new dhtmlXEditorCell(dhx4.newId(), this);
 		this.base.appendChild(this.cell.cell);
 		this.cBlock = document.createElement("DIV");
 		this.cBlock.className = "dhxcont_content_blocker";
@@ -55,7 +55,7 @@ class dhtmlXEditor {
 		this.editor = document.createElement("IFRAME");
 		this.editor.className = "dhxeditor_mainiframe";
 		this.editor.frameBorder = 0;
-		if (window.dhx4.isOpera) this.editor.scrolling = "yes";
+		if (dhx4.isOpera) this.editor.scrolling = "yes";
 		// adjust self
 		this.setSizes();
 		// onAccess event - focus/blue as param
@@ -94,7 +94,7 @@ class dhtmlXEditor {
 			}
 		}
 		this._focus = function () {
-			if (window.dhx4.isIE) {
+			if (dhx4.isIE) {
 				this.editor.contentWindow.document.body.focus();
 			} else {
 				this.editor.contentWindow.focus();
@@ -108,13 +108,13 @@ class dhtmlXEditor {
 			if (saveContent === true && this.getContent != null) storedContent = this.getContent();
 			var edDoc = this.editor.contentWindow.document;
 			edDoc.open("text/html", "replace");
-			if (window.dhx4.isOpera) {
+			if (dhx4.isOpera) {
 				edDoc.write("<html><head>" + this.conf.extra_css + "<style> html, body { overflow:auto;-webkit-overflow-scrolling: touch; padding:0px; height:100%; margin:0px; background-color:#ffffff; " + this._fontConf() + "} </style>" + "</head><body " + (roMode !== true ? "contenteditable='true'" : "") + " tabindex='0'></body></html>");
 			} else {
-				if (window.dhx4.isSafari) {
+				if (dhx4.isSafari) {
 					edDoc.write("<html><head>" + this.conf.extra_css + "<style> html {overflow-x: auto;-webkit-overflow-scrolling: touch; overflow-y: auto;} body { overflow: auto; overflow-y: scroll;} " + "html,body { padding:0px; height:100%; margin:0px; background-color:#ffffff; " + this._fontConf() + "} </style>" + "</head><body " + (roMode !== true ? "contenteditable='true'" : "") + " tabindex='0'></body></html>");
 				} else {
-					if (window.dhx4.isIE) {
+					if (dhx4.isIE) {
 						// && navigator.appVersion.indexOf("MSIE 9.0")!= -1
 						edDoc.write("<html><head>" + this.conf.extra_css + "<style> html {overflow-y: auto;} body {overflow-y: scroll;-webkit-overflow-scrolling: touch;} " + "html,body { overflow-x: auto; padding:0px; height:100%; margin:0px; background-color: #ffffff; outline: none; " + this._fontConf() + "} </style>" + "</head><body " + (roMode !== true ? "contenteditable='true'" : "") + " tabindex='0'></body></html>");
 					} else {
@@ -123,8 +123,8 @@ class dhtmlXEditor {
 				}
 			}
 			edDoc.close();
-			if (window.dhx4.isIE) edDoc.contentEditable = (roMode !== true); else edDoc.designMode = (roMode !== true ? "On" : "Off");
-			if (window.dhx4.isFirefox) try {
+			if (dhx4.isIE) edDoc.contentEditable = (roMode !== true); else edDoc.designMode = (roMode !== true ? "On" : "Off");
+			if (dhx4.isFirefox) try {
 				edDoc.execCommand("useCSS", false, true);
 			} catch (e) {
 			}
@@ -143,13 +143,13 @@ class dhtmlXEditor {
 		this._runCommand = function (name, param) {
 			if (this.conf.roMode === true) return;
 			if (arguments.length < 2) param = null;
-			if (window.dhx4.isIE) this.edWin.focus();
+			if (dhx4.isIE) this.edWin.focus();
 			try {
 				var edDoc = this.editor.contentWindow.document
 				edDoc.execCommand(name, false, param);
 			} catch (e) {
 			}
-			if (window.dhx4.isIE) {
+			if (dhx4.isIE) {
 				this.edWin.focus();
 				var self = this;
 				window.setTimeout(function () {
@@ -233,7 +233,7 @@ class dhtmlXEditor {
 						fontFamily: st.getPropertyValue("font-family"),
 						textAlign: st.getPropertyValue("text-align")
 					};
-					if (window.dhx4.isSafari) { // safari
+					if (dhx4.isSafari) { // safari
 						this.style.fontStyle = st.getPropertyValue("font-style");
 						this.style.vAlign = st.getPropertyValue("vertical-align");
 						this.style.del = this._isStyleProperty(el, "span", "textDecoration", "line-through");
@@ -254,7 +254,7 @@ class dhtmlXEditor {
 				this._setStyleProperty(el, "h2");
 				this._setStyleProperty(el, "h3");
 				this._setStyleProperty(el, "h4");
-				if (!window.dhx4.isSafari) {
+				if (!dhx4.isSafari) {
 					this._setStyleProperty(el, "del");
 					this._setStyleProperty(el, "sub");
 					this._setStyleProperty(el, "sup");
@@ -269,7 +269,7 @@ class dhtmlXEditor {
 			var range, root, start, end;
 			if (this.edWin.getSelection) {
 				var selection = this.edWin.getSelection();
-				if (window.dhx4.isEdge && selection.rangeCount == 0) return {
+				if (dhx4.isEdge && selection.rangeCount == 0) return {
 					root: null,
 					start: null,
 					end: null
@@ -320,8 +320,8 @@ class dhtmlXEditor {
 			if (!this.edDoc.body) {
 				return "";
 			} else {
-				if (window.dhx4.isFirefox || window.dhx4.isChrome) return this.editor.contentWindow.document.body.innerHTML.replace(/<\/{0,}br\/{0,}>\s{0,}$/gi, "");
-				if (window.dhx4.isIE && this.edDoc.body.innerText.length == 0) return "";
+				if (dhx4.isFirefox || dhx4.isChrome) return this.editor.contentWindow.document.body.innerHTML.replace(/<\/{0,}br\/{0,}>\s{0,}$/gi, "");
+				if (dhx4.isIE && this.edDoc.body.innerText.length == 0) return "";
 				return this.edDoc.body.innerHTML;
 			}
 		}
@@ -329,7 +329,7 @@ class dhtmlXEditor {
 			str = str || "";
 			if (this.edDoc.body) {
 				var ffTest = false;
-				if (window.dhx4.isFirefox) {
+				if (dhx4.isFirefox) {
 					var k = navigator.userAgent.match(/Firefox\/(\d*)/);
 					ffTest = (k != null && k[1] < 28);
 				}
@@ -376,12 +376,12 @@ class dhtmlXEditor {
 			}
 		}
 		this.setContentHTML = function (url) {
-			window.dhx4.ajax.get(url, function (r) {
+			dhx4.ajax.get(url, function (r) {
 				if (r.xmlDoc.responseText != null) that.setContent(r.xmlDoc.responseText);
 			});
 		}
 		// events
-		window.dhx4._eventable(this);
+		dhx4._eventable(this);
 		this.attachEvent("onFocusChanged", function (state) {
 			if (typeof(this._doOnFocusChanged) == "function") {
 				this._doOnFocusChanged(state);
@@ -393,7 +393,7 @@ class dhtmlXEditor {
 			window.addEventListener("resize", this._doOnResize, false);
 			this.edDoc.addEventListener("click", this._doOnClick, false);
 			this.edDoc.addEventListener("keyup", this._doOnKeyUp, false);
-			if (window.dhx4.isOpera) this.edDoc.addEventListener("mousedown", this._doOnMouseDown, false);
+			if (dhx4.isOpera) this.edDoc.addEventListener("mousedown", this._doOnMouseDown, false);
 		} else {
 			window.attachEvent("onresize", this._doOnResize);
 			this.edDoc.attachEvent("onclick", this._doOnClick);
@@ -406,7 +406,7 @@ class dhtmlXEditor {
 				window.removeEventListener("resize", this._doOnResize, false);
 				this.edDoc.removeEventListener("click", this._doOnClick, false);
 				this.edDoc.removeEventListener("keyup", this._doOnKeyUp, false);
-				if (window.dhx4.isOpera) this.edDoc.removeEventListener("mousedown", this._doOnMouseDown, false);
+				if (dhx4.isOpera) this.edDoc.removeEventListener("mousedown", this._doOnMouseDown, false);
 				// editor's
 				for (var q = 0; q < that.conf.evs.length; q++) {
 					fr.contentWindow.removeEventListener(that.conf.evs[q], that._ev, false);
@@ -442,7 +442,7 @@ class dhtmlXEditor {
 			this.cell = null;
 			// extended toolbar
 			this.tb = null;
-			window.dhx4._eventable(this, "clear");
+			dhx4._eventable(this, "clear");
 			this.cBlock.parentNode.removeChild(this.cBlock);
 			this.cBlock = null;
 			// clear container features
@@ -475,7 +475,7 @@ class dhtmlXEditor {
 			that = fr = null;
 		}
 		// load extended toolbar if any
-		if (this.conf.toolbar == true && typeof(this.attachToolbar) == "function" && typeof(window.dhtmlXToolbarObject) == "function") {
+		if (this.conf.toolbar == true && typeof(this.attachToolbar) == "function" && typeof(dhtmlXToolbarObject) == "function") {
 			this.attachToolbar(this.conf.iconsPath);
 			if (this.conf.iOSfix == true) {
 				this._doOnIOSFix = function () {
@@ -536,7 +536,7 @@ class dhtmlXEditor {
 				color: "#404040"
 			};
 		}
-		return window.dhx4.template("font-size: #size#; font-family: #family#; color: #color#;", data);
+		return dhx4.template("font-size: #size#; font-family: #family#; color: #color#;", data);
 	}
 	attachToolbar(iconsPath) {
 
@@ -890,7 +890,7 @@ class dhtmlXEditorCell extends XCellObject {
 	_getStbHeight () {
 		if (this.conf.stb_visible == true && this.conf.skin == "material") {
 			if (this.conf.stb_height == null) {
-				this.conf.stb_height = window.dhx4.readFromCss("dhxeditor_material stb_height_detect", "scrollHeight", "<div class='dhx_cell_editor'><div class='dhx_cell_stb'></div></div>");
+				this.conf.stb_height = dhx4.readFromCss("dhxeditor_material stb_height_detect", "scrollHeight", "<div class='dhx_cell_editor'><div class='dhx_cell_stb'></div></div>");
 			}
 			return this.conf.stb_height;
 		}
@@ -920,7 +920,7 @@ XCellObject.prototype.attachEditor = function(conf) {
 	conf = null;
 	
 	// attach to portal extended logic
-	if (typeof(window.dhtmlXPortalCell) == "function" && this instanceof window.dhtmlXPortalCell) {
+	if (typeof(dhtmlXPortalCell) == "function" && this instanceof dhtmlXPortalCell) {
 		
 		if (this.portal.conf.editor_ev == null) {
 			
@@ -947,7 +947,7 @@ XCellObject.prototype.attachEditor = function(conf) {
 			this.detachEvent(this.conf.editor_ev);
 			this.conf.editor_ev = null;
 			
-			if (this instanceof window.dhtmlXPortalCell) {
+			if (this instanceof dhtmlXPortalCell) {
 				
 				var ed = false;
 				for (var a in this.portal.cdata) {
