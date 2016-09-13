@@ -8,7 +8,7 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 
 // validation
 
-dhtmlxXValidation.prototype.trackInput = function(el,rule,callback_error,callback_correct) {
+XValidation.prototype.trackInput = function(el, rule, callback_error, callback_correct) {
 	let _timer;
 	dhtmlxEvent(el, "keyup", function(e){
 		if (_timer) {
@@ -28,10 +28,10 @@ dhtmlxXValidation.prototype.trackInput = function(el,rule,callback_error,callbac
 		});
 	});
 };
-dhtmlxXValidation.prototype.checkInput = function(input,rule) {
+XValidation.prototype.checkInput = function(input, rule) {
 	return this.checkValue(input.value,rule);
 };
-dhtmlxXValidation.prototype.checkValue = function(value,rule) {
+XValidation.prototype.checkValue = function(value, rule) {
 	if (typeof rule=="string"){
 		rule = rule.split(",");
 	}

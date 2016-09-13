@@ -1,4 +1,4 @@
-class dhtmlxXValidation {
+class XValidation {
     isEmpty(value) {
         return value == '';
     }
@@ -1102,7 +1102,7 @@ dhx4._eventable = function (obj, mode) {
 };
 dhx4._eventable(dhx4);
 
-dhx4.validation = new dhtmlxXValidation();
+dhx4.validation = new XValidation();
 
 
 dhtmlx = {
