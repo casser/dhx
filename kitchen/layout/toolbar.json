@@ -1,0 +1,48 @@
+[
+  {
+    "id": "back",
+    "type": "button",
+    "text": "Back",
+    "img": "arrow_back"
+  },
+  {
+    "id": "fwd",
+    "type": "button",
+    "img": "arrow_forward"
+  },
+  {
+    "id": "levelup",
+    "type": "button",
+    "img": "arrow_upward"
+  },
+  {
+    "id": "search",
+    "type": "button",
+    "text":"Search",
+    "img": "search"
+  },
+  {
+    "id": "view",
+    "type": "buttonSelect",
+    "img": "view_module",
+    "openAll":true,
+    "renderSelect":false,
+    "options":[
+      {
+        "id": "view_dlist",
+        "type": "button",
+        "text":"Details"
+      },{
+        "id": "view_icons",
+        "type": "button",
+        "text":"Icons",
+        "img": "search"
+      },{
+        "id": "view_tiles",
+        "type": "button",
+        "text":"Tiles",
+        "img": "search"
+      }
+    ]
+  }
+]

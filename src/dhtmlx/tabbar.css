@@ -135,9 +135,6 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 	right: 14px;
 	width: 14px;
 	height: 14px;
-	background-image: url("../imgs/dhxtabbar_material/dhxtabbar_button_close.png");
-	background-position: 0px 0px;
-	background-repeat: no-repeat;
 	z-index: 1;
 }
 .dhxtabbar_base_material div.dhxtabbar_tabs div.dhxtabbar_tabs_base div.dhxtabbar_tab.dhxtabbar_tab_actv_dis div.dhxtabbar_tab_close,
@@ -178,9 +175,6 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 	line-height: 16px;
 	left: 10px;
 	top: 13px;
-	background-image: url("../imgs/dhxtabbar_material/dhxtabbar_arrows.png");
-	background-position: 0px 0px;
-	background-repeat: no-repeat;
 }
 .dhxtabbar_base_material div.dhxtabbar_tabs div.dhxtabbar_tabs_ar_left {
 	left: 0px;
@@ -251,9 +245,6 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 	width: 100%;
 	height: 100%;
 	border: 1px solid #e4e4e4;
-	background-image: url('../imgs/dhxtabbar_material/dhxtabbar_cell_progress.gif');
-	background-position: center center;
-	background-repeat: no-repeat;
 	z-index: 2;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
@@ -414,9 +405,6 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 	top: 0px;
 	width: 100%;
 	height: 100%;
-	background-image: url('../imgs/dhxtabbar_material/dhxtabbar_cell_progress.gif');
-	background-position: center center;
-	background-repeat: no-repeat;
 	z-index: 4;
 	-webkit-user-select: none;
 	-khtml-user-select: none;

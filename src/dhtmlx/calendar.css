@@ -109,12 +109,10 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 .dhtmlxcalendar_material div.dhtmlxcalendar_month_cont ul.dhtmlxcalendar_line li.dhtmlxcalendar_cell.dhtmlxcalendar_month_hdr div.dhtmlxcalendar_month_arrow.dhtmlxcalendar_month_arrow_left,
 .dhtmlxcalendar_material div.dhtmlxcalendar_month_cont ul.dhtmlxcalendar_line li.dhtmlxcalendar_cell.dhtmlxcalendar_month_hdr div.dhtmlxcalendar_month_arrow.dhtmlxcalendar_month_arrow_left_hover {
 	left: 4px;
-	background-image: url("../imgs/dhxcalendar_material/dhxcalendar_arrow_left.png");
 }
 .dhtmlxcalendar_material div.dhtmlxcalendar_month_cont ul.dhtmlxcalendar_line li.dhtmlxcalendar_cell.dhtmlxcalendar_month_hdr div.dhtmlxcalendar_month_arrow.dhtmlxcalendar_month_arrow_right,
 .dhtmlxcalendar_material div.dhtmlxcalendar_month_cont ul.dhtmlxcalendar_line li.dhtmlxcalendar_cell.dhtmlxcalendar_month_hdr div.dhtmlxcalendar_month_arrow.dhtmlxcalendar_month_arrow_right_hover {
 	right: 4px;
-	background-image: url("../imgs/dhxcalendar_material/dhxcalendar_arrow_right.png");
 }
 .dhtmlxcalendar_material div.dhtmlxcalendar_month_cont ul.dhtmlxcalendar_line li.dhtmlxcalendar_cell.dhtmlxcalendar_month_hdr span.dhtmlxcalendar_month_label_month,
 .dhtmlxcalendar_material div.dhtmlxcalendar_month_cont ul.dhtmlxcalendar_line li.dhtmlxcalendar_cell.dhtmlxcalendar_month_hdr span.dhtmlxcalendar_month_label_year {
@@ -196,7 +194,6 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 	text-align: center;
 }
 .dhtmlxcalendar_material div.dhtmlxcalendar_dates_cont ul.dhtmlxcalendar_line li div.dhtmlxcalendar_label.dhtmlxcalendar_label_title {
-	background-image: url("../imgs/dhxcalendar_material/dhxcalendar_marker.gif");
 	background-position: top right;
 	background-repeat: no-repeat;
 }
@@ -373,9 +370,6 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 	top: 7px;
 	width: 18px;
 	height: 18px;
-	background-image: url("../imgs/dhxcalendar_material/dhxcalendar_clock.png");
-	background-position: center center;
-	background-repeat: no-repeat;
 }
 .dhtmlxcalendar_material div.dhtmlxcalendar_time_cont.dhtmlxcalendar_mode_time ul.dhtmlxcalendar_line li div.dhtmlxcalendar_time_img {
 	left: 75px;
@@ -428,7 +422,7 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 	display: block;
 	width: 27px;
 	color: #3da0e3;
-	background-color:  - #060606;
+	background-color:  #060606;
 }
 .dhtmlxcalendar_material div.dhtmlxcalendar_wn div.dhtmlxcalendar_dates_cont ul.dhtmlxcalendar_line li.dhtmlxcalendar_cell {
 	width: 27px;
@@ -443,7 +437,7 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 	display: block;
 	width: 27px;
 	color: #3da0e3;
-	background-color:  - #060606;
+	background-color:#060606;
 }
 .dhtmlxcalendar_material div.dhtmlxcalendar_selector_cover {
 	position: absolute;
@@ -463,9 +457,6 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 	width: 100%;
 	height: 9px;
 	overflow: hidden;
-	background-image: url("../imgs/dhxcalendar_material/dhxcalendar_selector_top.gif");
-	background-position: top center;
-	background-repeat: no-repeat;
 }
 .dhtmlxcalendar_material div.dhtmlxcalendar_selector_obj table.dhtmlxcalendar_selector_table {
 	border-bottom: 1px solid #dfdfdf;
@@ -489,14 +480,12 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 }
 .dhtmlxcalendar_material div.dhtmlxcalendar_selector_obj table.dhtmlxcalendar_selector_table td.dhtmlxcalendar_selector_cell_left {
 	border-width: 1px 0px 0px 1px;
-	background-image: url("../imgs/dhxcalendar_material/dhxcalendar_arrow_left.png");
 }
 .dhtmlxcalendar_material div.dhtmlxcalendar_selector_obj table.dhtmlxcalendar_selector_table td.dhtmlxcalendar_selector_cell_left.dhtmlxcalendar_selector_cell_left_hover {
 	background-color: #ebebeb;
 }
 .dhtmlxcalendar_material div.dhtmlxcalendar_selector_obj table.dhtmlxcalendar_selector_table td.dhtmlxcalendar_selector_cell_right {
 	border-width: 1px 1px 0px 0px;
-	background-image: url("../imgs/dhxcalendar_material/dhxcalendar_arrow_right.png");
 }
 .dhtmlxcalendar_material div.dhtmlxcalendar_selector_obj table.dhtmlxcalendar_selector_table td.dhtmlxcalendar_selector_cell_right.dhtmlxcalendar_selector_cell_right_hover {
 	background-color: #ebebeb;
@@ -565,7 +554,6 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 .dhtmlxcalendar_material div.dhtmlxcalendar_selector_obj.dhtmlxcalendar_selector_minutes div.dhtmlxcalendar_selector_obj_arrow {
 	top: auto;
 	bottom: 1px;
-	background-image: url("../imgs/dhxcalendar_material/dhxcalendar_selector_bottom.gif");
 }
 .dhtmlxcalendar_material div.dhtmlxcalendar_selector_obj.dhtmlxcalendar_selector_hours div.dhtmlxcalendar_selector_obj_arrow ul.dhtmlxcalendar_selector_line,
 .dhtmlxcalendar_material div.dhtmlxcalendar_selector_obj.dhtmlxcalendar_selector_hours2 div.dhtmlxcalendar_selector_obj_arrow ul.dhtmlxcalendar_selector_line,

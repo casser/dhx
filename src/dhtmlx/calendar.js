@@ -463,7 +463,7 @@ class dhtmlXCalendarObject {
                 dhx4.temp_calendar = null;
             }
             if (this.conf.tz == null) {
-                this.conf.tz = dhx4.date2str(d, "%P");
+                this.conf.tz = XDateUtils.toString(d, "%P");
             }
             var time = d.getTime();
             // out of range
@@ -2371,10 +2371,10 @@ class dhtmlXCalendarObject {
         };
     };
     _strToDate(val, format) {
-        return dhx4.str2date(val, format || this._dateFormat, this._dateStrings());
+        return XDateUtils.toDate(val, format || this._dateFormat, this._dateStrings());
     };
     _dateToStr(val, format) {
-        return dhx4.date2str(val, format || this._dateFormat, this._dateStrings());
+        return XDateUtils.toString(val, format || this._dateFormat, this._dateStrings());
     };
 }
 

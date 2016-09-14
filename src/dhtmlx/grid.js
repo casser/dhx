@@ -4540,15 +4540,9 @@ dhtmlXGridObject.prototype = {
         return dhx4.ajax.get(url, this.xmlLoader);
     }, //#__pro_feature:21092006{
     loadXMLString: function (str, afterCall) {
-        if (window.console && window.console.info) {
-            window.console.info("loadXMLString was deprecated", "http://docs.dhtmlx.com/migration__index.html#migrationfrom43to44");
-        }
         this.parse({responseXML: dhx4.ajax.parse(str)}, afterCall, "xml")
     }, //#}
     loadXML: function (url, afterCall) {
-        if (window.console && window.console.info) {
-            window.console.info("loadXML was deprecated", "http://docs.dhtmlx.com/migration__index.html#migrationfrom43to44");
-        }
         this.load(url, afterCall, "xml")
     },
     parse: function (data, call, type) {

@@ -448,7 +448,6 @@ class dhtmlXPopup {
 				return;
 			}
 			if (that.conf.form != null) {
-				console.info("HHHHH");
 				var id;
 				var t = (e.target || e.srcElement);
 				if ((t.tagName || "").toLowerCase() == "option") {

@@ -87,9 +87,6 @@ div.dhxcombo_material div.dhxcombo_select_button div.dhxcombo_select_img {
 	position: relative;
 	width: 100%;
 	height: 100%;
-	background-image: url("../imgs/dhxcombo_material/dhxcombo_arrow_down.gif");
-	background-repeat: no-repeat;
-	background-position: center center;
 }
 div.dhxcombo_material div.dhxcombo_top_image {
 	position: absolute;
@@ -127,7 +124,7 @@ div.dhxcombolist_material {
 	position: absolute;
 	border: 1px solid #dfdfdf;
 	background-color: #fafafa;
-	overflow-x: none;
+	overflow-x: hidden;
 	overflow-y: auto;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	-webkit-user-select: none;
@@ -196,8 +193,6 @@ div.dhxcombolist_material div.dhxcombo_option div.dhxcombo_checkbox {
 	margin: 0px 5px;
 	height: 32px;
 	line-height: 32px;
-	background-image: url("../imgs/dhxcombo_material/dhxcombo_chbx.gif");
-	background-repeat: no-repeat;
 	overflow: hidden;
 	cursor: default;
 	-webkit-user-select: none;
@@ -225,7 +220,6 @@ div.dhxcombo_material.dhxcombo_disabled input.dhxcombo_input {
 	color: #a6a6a6;
 }
 div.dhxcombo_material.dhxcombo_disabled div.dhxcombo_select_button div.dhxcombo_select_img {
-	background-image: url("../imgs/dhxcombo_material/dhxcombo_arrow_down_dis.gif");
 	cursor: default;
 }
 .dhxgrid_combo_icon {

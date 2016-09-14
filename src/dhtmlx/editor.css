@@ -85,9 +85,6 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 	line-height: 32px;
 	font-size: 1px;
 	cursor: pointer;
-	background-image: url("../imgs/dhxeditor_material/buttons.png");
-	background-position: 0px 7px;
-	background-repeat: no-repeat;
 }
 .dhxeditor_material div.dhx_cell_editor div.dhx_cell_stb a div.dhx_cell_stb_button.btn_italic {
 	background-position: -18px 7px;
@@ -108,7 +105,7 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 	padding: 7px;
 }
 .dhxeditor_material div.dhx_cell_editor div.dhx_cell_toolbar_def div.dhx_toolbar_material {
-	box-shadow: ;
+	box-shadow: none;
 }
 .dhxeditor_material.stb_height_detect {
 	position: absolute;

@@ -80,7 +80,7 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 .dhx_dataview_default_item,
 .dhx_dataview_default_item_selected {
 	cursor: pointer;
-	background-color: ;
+	background-color:transparent;
 }
 .dhx_dataview .dhx_dataview_default_item,
 .dhx_dataview .dhx_dataview_default_item_selected {
@@ -98,7 +98,7 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 .dhx_dataview_item {
 	font-family: Roboto, Arial, Helvetica;
 	font-size: 14px;
-	color: ;
+	color:transparent ;
 }
 .dhx_dataview_item .dhx_strong {
 	font-weight: bold;
@@ -120,7 +120,6 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 	float: left;
 	text-align: center;
 	height: 16px;
-	font-family: ;
 	font-size: 10pt;
 	border: 1px solid gray;
 	padding: 2px 4px;

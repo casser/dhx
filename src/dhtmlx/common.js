@@ -59,6 +59,761 @@ class XValidation {
         return value.toString().match(/^\d{9}$/) && true || false;
     }
 }
+class XIndexManager {
+    constructor() {
+        this.data = {};
+        this.step = 5;
+    }
+    first() {
+        return 100;
+    }
+    last() {
+        var t = this.first();
+        for (var a in this.data) {
+            t = Math.max(t, this.data[a]);
+        }
+        return t;
+    }
+    reserve(id) {
+        this.data[id] = this.last() + this.step;
+        return this.data[id];
+    }
+    clear(id) {
+        if (this.data[id] != null) {
+            this.data[id] = null;
+            delete this.data[id];
+        }
+    }
+}
+class XUtils {
+    static get ID(){
+        return XUtils.cached(this,'ID',0,{
+            writable:true
+        });
+    }
+    static get NEXT(){
+        return XUtils['ID']=XUtils['ID']+1;
+    }
+    static cached(target,key,value,desc){
+        desc = desc||{};
+        desc.value = value;
+        Object.defineProperty(target,key,desc);
+        return value;
+    }
+    static toBoolean(r){
+        if (typeof(r) == "string") {
+            r = r.toLowerCase();
+        }
+        return (r == true || r == 1 || r == "true" || r == "1" || r == "yes" || r == "y" || r == "on");
+    }
+    static toValue(s){
+        return eval(`(function(){return ${s}})()`)
+    }
+}
+class XDateUtils {
+    static get config(){
+        return XUtils.cached(this,'config',{
+            format          : "%Y-%m-%d",
+            monthFullName   : ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+            monthShortName  : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            dayFullName     : ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            dayShortName    : ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
+        })
+    }
+    static toString(val, format, strings) {
+
+        if (val instanceof Date) {
+            if (format == null || typeof(format) == "undefined") {
+                format = this.config.format;
+            }
+            if (strings == null || typeof(strings) == "undefined") {
+                strings = this.config;
+            }
+            var z = function (t) {
+                return (String(t).length == 1 ? "0" + String(t) : t);
+            };
+            var k = function (t) {
+                switch (t) {
+                    case "%d":
+                        return z(val.getDate());
+                    case "%j":
+                        return val.getDate();
+                    case "%D":
+                        return strings.dayShortName[val.getDay()];
+                    case "%l":
+                        return strings.dayFullName[val.getDay()];
+                    case "%m":
+                        return z(val.getMonth() + 1);
+                    case "%n":
+                        return val.getMonth() + 1;
+                    case "%M":
+                        return strings.monthShortName[val.getMonth()];
+                    case "%F":
+                        return strings.monthFullName[val.getMonth()];
+                    case "%y":
+                        return z(val.getYear() % 100);
+                    case "%Y":
+                        return val.getFullYear();
+                    case "%g":
+                        return (val.getHours() + 11) % 12 + 1;
+                    case "%h":
+                        return z((val.getHours() + 11) % 12 + 1);
+                    case "%G":
+                        return val.getHours();
+                    case "%H":
+                        return z(val.getHours());
+                    case "%i":
+                        return z(val.getMinutes());
+                    case "%s":
+                        return z(val.getSeconds());
+                    case "%a":
+                        return (val.getHours() > 11 ? "pm" : "am");
+                    case "%A":
+                        return (val.getHours() > 11 ? "PM" : "AM");
+                    case "%%":
+                        return "%";
+                    case "%u":
+                        return val.getMilliseconds();
+                    case "%P":
+                        if (dhx4.temp_calendar != null && dhx4.temp_calendar.tz != null) {
+                            return dhx4.temp_calendar.tz;
+                        }
+                        var ofs = val.getTimezoneOffset();
+                        var h = Math.abs(Math.floor(ofs / 60));
+                        var m = Math.abs(ofs) - h * 60;
+                        return (ofs > 0 ? "-" : "+") + z(h) + ":" + z(m);
+                    default:
+                        return t;
+                }
+            };
+            return String(format).replace(/%[a-zA-Z]/g, k);
+        }
+        return String(val);
+    }
+    static toDate(val, format, strings) {
+        if (format == null || typeof(format) == "undefined") {
+            format = this.config.format;
+        }
+        if (strings == null || typeof(strings) == "undefined") {
+            strings = this.config;
+        }
+        // escape custom chars
+        format = format.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\\:|]/g, "\\$&");
+        var v = [];
+        var f = [];
+        // escape required chars
+        format = format.replace(/%[a-z]/gi, function (t) {
+            switch (t) {
+                case "%d":
+                case "%m":
+                case "%y":
+                case "%h":
+                case "%H":
+                case "%i":
+                case "%s":
+                    f.push(t);
+                    return "(\\d{2})"; // 2 digits
+                case "%D":
+                case "%l":
+                case "%M":
+                case "%F":
+                    f.push(t);
+                    return "([a-zéûä\u0430-\u044F\u0451]{1,})"; // chars
+                case "%j":
+                case "%n":
+                case "%g":
+                case "%G":
+                    f.push(t);
+                    return "(\\d{1,2})"; // 1-2 digits
+                case "%Y":
+                    f.push(t);
+                    return "(\\d{4})"; // 4 digits
+                case "%a":
+                    f.push(t);
+                    return "([a|p]m)"; // am/pm
+                case "%A":
+                    f.push(t);
+                    return "([A|P]M)"; // AM/PM
+                case "%u":
+                    f.push(t);
+                    return "(\\d{1,6})"; // 1-6 digits, micro/milliseconds
+                case "%P":
+                    f.push(t);
+                    return "([+-]\\d{1,2}:\\d{1,2})"; // zone offset
+            }
+            return t;
+        });
+        var re = new RegExp(format, "i");
+        var e = val.match(re);
+        if (e == null || e.length - 1 != f.length) {
+            return "Invalid Date";
+        }
+        for (var q = 1; q < e.length; q++) {
+            v.push(e[q]);
+        }
+        var p = {
+            "%y": 1,
+            "%Y": 1,
+            "%n": 2,
+            "%m": 2,
+            "%M": 2,
+            "%F": 2,
+            "%d": 3,
+            "%j": 3,
+            "%a": 4,
+            "%A": 4,
+            "%H": 5,
+            "%G": 5,
+            "%h": 5,
+            "%g": 5,
+            "%i": 6,
+            "%s": 7,
+            "%u": 7,
+            "%P": 7
+        };
+        var v2 = {};
+        var f2 = {};
+        for (var q = 0; q < f.length; q++) {
+            if (typeof(p[f[q]]) != "undefined") {
+                var ind = p[f[q]];
+                if (!v2[ind]) {
+                    v2[ind] = [];
+                    f2[ind] = [];
+                }
+                v2[ind].push(v[q]);
+                f2[ind].push(f[q]);
+            }
+        }
+        v = [];
+        f = [];
+        for (var q = 1; q <= 7; q++) {
+            if (v2[q] != null) {
+                for (var w = 0; w < v2[q].length; w++) {
+                    v.push(v2[q][w]);
+                    f.push(f2[q][w]);
+                }
+            }
+        }
+        // parsing date
+        var r = new Date();
+        r.setDate(1); // fix for 31th
+        r.setHours(0);
+        r.setMinutes(0);
+        r.setSeconds(0);
+        r.setMilliseconds(0);
+        // get index by value
+        var getInd = function (val, ar) {
+            for (var q = 0; q < ar.length; q++) {
+                if (ar[q].toLowerCase() == val) {
+                    return q;
+                }
+            }
+            return -1;
+        };
+        for (var q = 0; q < v.length; q++) {
+            switch (f[q]) {
+                case "%d":
+                case "%j":
+                case "%n":
+                case "%m":
+                case "%Y":
+                case "%H":
+                case "%G":
+                case "%i":
+                case "%s":
+                case "%u":
+                    if (!isNaN(v[q])) {
+                        r[{
+                            "%d": "setDate",
+                            "%j": "setDate",
+                            "%n": "setMonth",
+                            "%m": "setMonth",
+                            "%Y": "setFullYear",
+                            "%H": "setHours",
+                            "%G": "setHours",
+                            "%i": "setMinutes",
+                            "%s": "setSeconds",
+                            "%u": "setMilliseconds"
+                        }[f[q]]](Number(v[q]) + (f[q] == "%m" || f[q] == "%n" ? -1 : 0));
+                    }
+                    break;
+                //
+                case "%M":
+                case "%F":
+                    var k = getInd(v[q].toLowerCase(), strings[{
+                        "%M": "monthShortName",
+                        "%F": "monthFullName"
+                    }[f[q]]]);
+                    if (k >= 0) {
+                        r.setMonth(k);
+                    }
+                    break;
+                //
+                case "%y":
+                    if (!isNaN(v[q])) {
+                        var v0 = Number(v[q]);
+                        r.setFullYear(v0 + (v0 > 50 ? 1900 : 2000));
+                    }
+                    break;
+                //
+                case "%g":
+                case "%h":
+                    if (!isNaN(v[q])) {
+                        var v0 = Number(v[q]);
+                        if (v0 <= 12 && v0 >= 0) {
+                            r.setHours(v0 + (getInd("pm", v) >= 0 ? (v0 == 12 ? 0 : 12) : (v0 == 12 ? -12 : 0)));
+                        } // 12:00 AM -> midnight, 12:00 PM -> noon
+                    }
+                    break;
+                //
+                case "%P":
+                    if (dhx4.temp_calendar != null) {
+                        dhx4.temp_calendar.tz = v[q];
+                    }
+                    break;
+            }
+        }
+        return r;
+    }
+}
+class XTemplate {
+    static get functions() {
+        return Object.defineProperty(this, 'functions', {
+            value: new XTemplate()
+        }).functions
+    }
+
+    static parse(format, group_sep, dec_sep) {
+        var t = format.match(/^([^\.\,0-9]*)([0\.\,]*)([^\.\,0-9]*)/);
+        if (t == null || t.length != 4) {
+            return false;
+        } // invalid format
+        var fmt = {
+            // int group
+            i_len: false,
+            i_sep: (typeof(group_sep) == "string" ? group_sep : ","), // decimal
+            d_len: false,
+            d_sep: (typeof(dec_sep) == "string" ? dec_sep : "."), // chars before and after
+            s_bef: (typeof(t[1]) == "string" ? t[1] : ""),
+            s_aft: (typeof(t[3]) == "string" ? t[3] : "")
+        };
+        var f = t[2].split(".");
+        if (f[1] != null) {
+            fmt.d_len = f[1].length;
+        }
+        var r = f[0].split(",");
+        if (r.length > 1) {
+            fmt.i_len = r[r.length - 1].length;
+        }
+        return fmt;
+    }
+
+    static format(value, fmt) {
+        var r = String(value).match(/^(-)?([0-9]{1,})(\.([0-9]{1,}))?$/); // r = [complete value, minus sign, integer, full decimal, decimal]
+        if (r != null && r.length == 5) {
+            var v0 = "";
+            // minus sign
+            if (r[1] != null) {
+                v0 += r[1];
+            }
+            // chars before
+            v0 += fmt.s_bef;
+            // int part
+            if (fmt.i_len !== false) {
+                var i = 0;
+                var v1 = "";
+                for (var q = r[2].length - 1; q >= 0; q--) {
+                    v1 = "" + r[2].charAt(q) + v1;
+                    if (++i == fmt.i_len && q > 0) {
+                        v1 = fmt.i_sep + v1;
+                        i = 0;
+                    }
+                }
+                v0 += v1;
+            } else {
+                v0 += r[2];
+            }
+            // dec part
+            if (fmt.d_len !== false) {
+                if (r[4] == null) {
+                    r[4] = "";
+                }
+                while (r[4].length < fmt.d_len) {
+                    r[4] += "0";
+                }
+                eval("dhx4.temp = new RegExp(/\\d{" + fmt.d_len + "}/);");
+                var t1 = (r[4]).match(dhx4.temp);
+                if (t1 != null) {
+                    v0 += fmt.d_sep + t1;
+                }
+                dhx4.temp = t1 = null;
+            }
+            // chars after
+            v0 += fmt.s_aft;
+            return v0;
+        }
+        return value;
+    }
+
+    static render(tpl, data, trim) {
+        return tpl.replace(/#([a-z0-9_-]{1,})(\|([^#]*))?#/gi, function () {
+            var key = arguments[1];
+            var t = dhx4.trim(arguments[3]);
+            var func = null;
+            var args = [data[key]];
+            if (t.length > 0) {
+                t = t.split(":");
+                var k = [];
+                // check escaped colon
+                for (var q = 0; q < t.length; q++) {
+                    if (q > 0 && k[k.length - 1].match(/\\$/) != null) {
+                        k[k.length - 1] = k[k.length - 1].replace(/\\$/, "") + ":" + t[q];
+                    } else {
+                        k.push(t[q]);
+                    }
+                }
+                func = k[0];
+                for (var q = 1; q < k.length; q++) {
+                    args.push(k[q]);
+                }
+            }
+            // via inner function
+            if (typeof(func) == "string" && typeof(XTemplate.functions[func]) == "function") {
+                return XTemplate.functions[func].apply(XTemplate.functions[func], args);
+            }
+            // value only
+            if (key.length > 0 && typeof(data[key]) != "undefined") {
+                if (trim == true) {
+                    return dhx4.trim(data[key]);
+                }
+                return String(data[key]);
+            }
+            // key not found
+            return "";
+        });
+    }
+
+    date(value, format) {
+        // Date obj + format	=> convert to string
+        // timestamp + format	=> convert to string
+        // string		=> no convert
+        // any other value	=> empty string
+        if (value != null) {
+            if (value instanceof Date) {
+                return XDateUtils.toString(value, format);
+            } else {
+                value = value.toString();
+                if (value.match(/^\d*$/) != null) {
+                    return XDateUtils.toString(new Date(parseInt(value)), format);
+                }
+                return value;
+            }
+        }
+        return "";
+    }
+
+    maxlength(value, limit) {
+        return String(value).substr(0, limit);
+    }
+
+    number_format(value, format, group_sep, dec_sep) {
+        var fmt = XTemplate.parse(format, group_sep, dec_sep);
+        if (fmt == false) {
+            return value;
+        }
+        return XTemplate.format(value, fmt);
+    }
+
+    lowercase(value) {
+        if (typeof(value) == "undefined" || value == null) {
+            value = "";
+        }
+        return String(value).toLowerCase();
+    }
+
+    uppercase(value) {
+        if (typeof(value) == "undefined" || value == null) {
+            value = "";
+        }
+        return String(value).toUpperCase();
+    }
+}
+class XAjax {
+    constructor() {
+        this.cache = false;
+        this.method = "get";
+    }
+
+    parse(data) {
+        if (typeof data !== "string") {
+            return data;
+        }
+        data = data.replace(/^[\s]+/, "");
+        if (window.DOMParser && !dhx4.isIE) { // ff,ie9
+            var obj = (new window.DOMParser()).parseFromString(data, "text/xml");
+        } else if (window.ActiveXObject !== window.undefined) {
+            var obj = new window.ActiveXObject("Microsoft.XMLDOM");
+            obj.async = "false";
+            obj.loadXML(data);
+        }
+        return obj;
+    }
+
+    xmltop(tagname, xhr, obj) {
+        if (typeof xhr.status == "undefined" || xhr.status < 400) {
+            var xml = (!xhr.responseXML) ? dhx4.ajax.parse(xhr.responseText || xhr) : (xhr.responseXML || xhr);
+            if (xml && xml.documentElement !== null) {
+                try {
+                    if (!xml.getElementsByTagName("parsererror").length) {
+                        return xml.getElementsByTagName(tagname)[0];
+                    }
+                } catch (e) {
+                }
+            }
+        }
+        if (obj !== -1) {
+            dhx4.callEvent("onLoadXMLError", ["Incorrect XML", arguments[1], obj]);
+        }
+        return document.createElement("DIV");
+    }
+
+    xpath(xpathExp, docObj) {
+        if (!docObj.nodeName) {
+            docObj = docObj.responseXML || docObj;
+        }
+        if (dhx4.isIE) {
+            try {
+                return docObj.selectNodes(xpathExp) || [];
+            } catch (e) {
+                return [];
+            }
+        } else {
+            var rows = [];
+            var first;
+            var col = (docObj.ownerDocument || docObj).evaluate(xpathExp, docObj, null, XPathResult.ANY_TYPE, null);
+            while (first = col.iterateNext()) {
+                rows.push(first);
+            }
+            return rows;
+        }
+    }
+
+    query(config) {
+        this._call((config.method || "GET"), config.url, config.data || "", (config.async || true), config.callback, null, config.headers);
+    }
+
+    get(url, onLoad) {
+        return this._call("GET", url, null, true, onLoad);
+    }
+
+    getSync(url) {
+        return this._call("GET", url, null, false);
+    }
+
+    put(url, postData, onLoad) {
+        return this._call("PUT", url, postData, true, onLoad);
+    }
+
+    del(url, postData, onLoad) {
+        return this._call("DELETE", url, postData, true, onLoad);
+    }
+
+    post(url, postData, onLoad) {
+        if (arguments.length == 1) {
+            postData = "";
+        } else if (arguments.length == 2 && (typeof(postData) == "function" || typeof(window[postData]) == "function")) {
+            onLoad = postData;
+            postData = "";
+        } else {
+            postData = String(postData);
+        }
+        return this._call("POST", url, postData, true, onLoad);
+    }
+
+    postSync(url, postData) {
+        postData = (postData == null ? "" : String(postData));
+        return this._call("POST", url, postData, false);
+    }
+
+    getLong(url, onLoad) {
+        this._call("GET", url, null, true, onLoad, {url: url});
+    }
+
+    postLong(url, postData, onLoad) {
+        if (arguments.length == 2 && (typeof(postData) == "function" || typeof(window[postData]))) {
+            onLoad = postData;
+            postData = "";
+        }
+        this._call("POST", url, postData, true, onLoad, {
+            url: url,
+            postData: postData
+        });
+    }
+
+    _call(method, url, postData, async, onLoad, longParams, headers) {
+        var t = (window.XMLHttpRequest && !dhx4.isIE ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP"));
+        var isQt = (navigator.userAgent.match(/AppleWebKit/) != null && navigator.userAgent.match(/Qt/) != null && navigator.userAgent.match(/Safari/) != null);
+        if (async == true) {
+            t.onreadystatechange = function () {
+                if ((t.readyState == 4) || (isQt == true && t.readyState == 3)) { // what for long response and status 404?
+                    if (t.status != 200 || t.responseText == "") {
+                        if (!dhx4.callEvent("onAjaxError", [{
+                                xmlDoc: t,
+                                filePath: url,
+                                async: async
+                            }])) {
+                            return;
+                        }
+                    }
+                    window.setTimeout(function () {
+                        if (typeof(onLoad) == "function") {
+                            onLoad.apply(window, [{
+                                xmlDoc: t,
+                                filePath: url,
+                                async: async
+                            }]); // dhtmlx-compat, response.xmlDoc.responseXML/responseText
+                        }
+                        if (longParams != null) {
+                            if (typeof(longParams.postData) != "undefined") {
+                                dhx4.ajax.postLong(longParams.url, longParams.postData, onLoad);
+                            } else {
+                                dhx4.ajax.getLong(longParams.url, onLoad);
+                            }
+                        }
+                        onLoad = null;
+                        t = null;
+                    }, 1);
+                }
+            }
+        }
+        if (method == "GET") {
+            url += this._dhxr(url);
+        }
+        t.open(method, url, async);
+        if (headers != null) {
+            for (var key in headers) {
+                t.setRequestHeader(key, headers[key]);
+            }
+        } else if (method == "POST" || method == "PUT" || method == "DELETE") {
+            t.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        } else if (method == "GET") {
+            postData = null;
+        }
+        t.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        t.send(postData);
+        if (async != true) {
+            if ((t.readyState == 4) || (isQt == true && t.readyState == 3)) {
+                if (t.status != 200 || t.responseText == "") {
+                    dhx4.callEvent("onAjaxError", [{
+                        xmlDoc: t,
+                        filePath: url,
+                        async: async
+                    }]);
+                }
+            }
+        }
+        return {
+            xmlDoc: t,
+            filePath: url,
+            async: async
+        }; // dhtmlx-compat, response.xmlDoc.responseXML/responseText
+    }
+
+    _dhxr(sign, value) {
+        if (this.cache != true) {
+            if (sign.match(/^[\?\&]$/) == null) {
+                sign = (sign.indexOf("?") >= 0 ? "&" : "?");
+            }
+            if (typeof(value) == "undefined") {
+                value = true;
+            }
+            return sign + "dhxr" + new Date().getTime() + (value == true ? "=1" : "");
+        }
+        return "";
+    }
+}
+class XEventable {
+
+    static cleanup(obj){
+        obj.detachAllEvents();
+        delete obj.dhxevs;
+        delete obj.attachEvent;
+        delete obj.detachEvent;
+        delete obj.checkEvent;
+        delete obj.callEvent;
+        delete obj.detachAllEvents;
+    }
+    static inject(obj){
+        obj.dhxevs = XEventable.prototype.dhxevs;
+        obj.attachEvent = XEventable.prototype.attachEvent;
+        obj.detachEvent = XEventable.prototype.detachEvent;
+        obj.checkEvent = XEventable.prototype.checkEvent;
+        obj.callEvent = XEventable.prototype.callEvent;
+        obj.detachAllEvents = XEventable.prototype.detachAllEvents;
+    }
+
+    get dhxevs(){
+        return XUtils.cached(this,'events',{data:{}},{
+            configurable:true
+        })
+    }
+    attachEvent(name, func) {
+        name = String(name).toLowerCase();
+        if (!this.dhxevs.data[name]) {
+            this.dhxevs.data[name] = {};
+        }
+        var eventId = dhx4.newId();
+        this.dhxevs.data[name][eventId] = func;
+        return eventId;
+    }
+
+    detachEvent(eventId) {
+        for (var a in this.dhxevs.data) {
+            var k = 0;
+            for (var b in this.dhxevs.data[a]) {
+                if (b == eventId) {
+                    this.dhxevs.data[a][b] = null;
+                    delete this.dhxevs.data[a][b];
+                } else {
+                    k++;
+                }
+            }
+            if (k == 0) {
+                this.dhxevs.data[a] = null;
+                delete this.dhxevs.data[a];
+            }
+        }
+    }
+
+    checkEvent(name) {
+        name = String(name).toLowerCase();
+        return (this.dhxevs.data[name] != null);
+    }
+
+    callEvent(name, params) {
+        name = String(name).toLowerCase();
+        if (this.dhxevs.data[name] == null) {
+            return true;
+        }
+        var r = true;
+        for (var a in this.dhxevs.data[name]) {
+            r = this.dhxevs.data[name][a].apply(this, params) && r;
+        }
+        return r;
+    }
+
+    detachAllEvents() {
+        for (var a in this.dhxevs.data) {
+            for (var b in this.dhxevs.data[a]) {
+                this.dhxevs.data[a][b] = null;
+                delete this.dhxevs.data[a][b];
+            }
+            this.dhxevs.data[a] = null;
+            delete this.dhxevs.data[a];
+        }
+    }
+}
+
 var dhx4 = {
     version: "5.0",
     skin: null,
@@ -94,18 +849,10 @@ var dhx4 = {
     get isMacOS() {
         return !!this.ua.match(/Macintosh/gi);
     },
-    dateLang: "en",
-    dateStrings: {
-        en: {
-            monthFullName: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-            monthShortName: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-            dayFullName: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            dayShortName: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
-        }
-    },
-    dateFormat: {
-        en: "%Y-%m-%d"
-    },
+
+    zim         : new XIndexManager(),
+    ajax        : new XAjax(),
+    validation  : new XValidation(),
     trim(t) {
         return String(t).replace(/^\s{1,}/, "").replace(/\s{1,}$/, "");
     },
@@ -134,49 +881,13 @@ var dhx4 = {
         return w;
     },
     newId() {
-        return this.lastId++;
-    },
-    zim: {
-        data: {},
-        step: 5,
-        first: function () {
-            return 100;
-        },
-        last: function () {
-            var t = this.first();
-            for (var a in this.data) {
-                t = Math.max(t, this.data[a]);
-            }
-            return t;
-        },
-        reserve: function (id) {
-            this.data[id] = this.last() + this.step;
-            return this.data[id];
-        },
-        clear: function (id) {
-            if (this.data[id] != null) {
-                this.data[id] = null;
-                delete this.data[id];
-            }
-        }
+        return XUtils.NEXT;
     },
     s2b(r) {
-        if (typeof(r) == "string") {
-            r = r.toLowerCase();
-        }
-        return (r == true || r == 1 || r == "true" || r == "1" || r == "yes" || r == "y" || r == "on");
+        return XUtils.toBoolean(r);
     },
     s2j(s) {
-        var obj = null;
-        dhx4.temp = null;
-        try {
-            eval("dhx4.temp=" + s);
-        } catch (e) {
-            dhx4.temp = null;
-        }
-        obj = dhx4.temp;
-        dhx4.temp = null;
-        return obj;
+        return XUtils.toValue(s);
     },
     absLeft(obj) {
         if (typeof(obj) == "string") {
@@ -308,604 +1019,15 @@ var dhx4 = {
             value += (node.childNodes[q].nodeValue != null ? node.childNodes[q].nodeValue.toString().replace(/^[\n\r\s]{0,}/, "").replace(/[\n\r\s]{0,}$/, "") : "");
         }
         return value;
-    }
-};
-dhx4.template = function (tpl, data, trim) {
-    return tpl.replace(/#([a-z0-9_-]{1,})(\|([^#]*))?#/gi, function () {
-        var key = arguments[1];
-        var t = dhx4.trim(arguments[3]);
-        var func = null;
-        var args = [data[key]];
-        if (t.length > 0) {
-            t = t.split(":");
-            var k = [];
-            // check escaped colon
-            for (var q = 0; q < t.length; q++) {
-                if (q > 0 && k[k.length - 1].match(/\\$/) != null) {
-                    k[k.length - 1] = k[k.length - 1].replace(/\\$/, "") + ":" + t[q];
-                } else {
-                    k.push(t[q]);
-                }
-            }
-            func = k[0];
-            for (var q = 1; q < k.length; q++) {
-                args.push(k[q]);
-            }
-        }
-        // via inner function
-        if (typeof(func) == "string" && typeof(dhx4.template[func]) == "function") {
-            return dhx4.template[func].apply(dhx4.template, args);
-        }
-        // value only
-        if (key.length > 0 && typeof(data[key]) != "undefined") {
-            if (trim == true) {
-                return dhx4.trim(data[key]);
-            }
-            return String(data[key]);
-        }
-        // key not found
-        return "";
-    });
-};
-dhx4.template.date = function (value, format) {
-    // Date obj + format	=> convert to string
-    // timestamp + format	=> convert to string
-    // string		=> no convert
-    // any other value	=> empty string
-    if (value != null) {
-        if (value instanceof Date) {
-            return dhx4.date2str(value, format);
-        } else {
-            value = value.toString();
-            if (value.match(/^\d*$/) != null) {
-                return dhx4.date2str(new Date(parseInt(value)), format);
-            }
-            return value;
-        }
-    }
-    return "";
-};
-dhx4.template.maxlength = function (value, limit) {
-    return String(value).substr(0, limit);
-};
-dhx4.template.number_format = function (value, format, group_sep, dec_sep) {
-    var fmt = dhx4.template._parseFmt(format, group_sep, dec_sep);
-    if (fmt == false) {
-        return value;
-    }
-    return dhx4.template._getFmtValue(value, fmt);
-};
-dhx4.template.lowercase = function (value) {
-    if (typeof(value) == "undefined" || value == null) {
-        value = "";
-    }
-    return String(value).toLowerCase();
-};
-dhx4.template.uppercase = function (value) {
-    if (typeof(value) == "undefined" || value == null) {
-        value = "";
-    }
-    return String(value).toUpperCase();
-};
-dhx4.template._parseFmt = function (format, group_sep, dec_sep) {
-    var t = format.match(/^([^\.\,0-9]*)([0\.\,]*)([^\.\,0-9]*)/);
-    if (t == null || t.length != 4) {
-        return false;
-    } // invalid format
-    var fmt = {
-        // int group
-        i_len: false,
-        i_sep: (typeof(group_sep) == "string" ? group_sep : ","), // decimal
-        d_len: false,
-        d_sep: (typeof(dec_sep) == "string" ? dec_sep : "."), // chars before and after
-        s_bef: (typeof(t[1]) == "string" ? t[1] : ""),
-        s_aft: (typeof(t[3]) == "string" ? t[3] : "")
-    };
-    var f = t[2].split(".");
-    if (f[1] != null) {
-        fmt.d_len = f[1].length;
-    }
-    var r = f[0].split(",");
-    if (r.length > 1) {
-        fmt.i_len = r[r.length - 1].length;
-    }
-    return fmt;
-};
-dhx4.template._getFmtValue = function (value, fmt) {
-    var r = String(value).match(/^(-)?([0-9]{1,})(\.([0-9]{1,}))?$/); // r = [complete value, minus sign, integer, full decimal, decimal]
-    if (r != null && r.length == 5) {
-        var v0 = "";
-        // minus sign
-        if (r[1] != null) {
-            v0 += r[1];
-        }
-        // chars before
-        v0 += fmt.s_bef;
-        // int part
-        if (fmt.i_len !== false) {
-            var i = 0;
-            var v1 = "";
-            for (var q = r[2].length - 1; q >= 0; q--) {
-                v1 = "" + r[2].charAt(q) + v1;
-                if (++i == fmt.i_len && q > 0) {
-                    v1 = fmt.i_sep + v1;
-                    i = 0;
-                }
-            }
-            v0 += v1;
-        } else {
-            v0 += r[2];
-        }
-        // dec part
-        if (fmt.d_len !== false) {
-            if (r[4] == null) {
-                r[4] = "";
-            }
-            while (r[4].length < fmt.d_len) {
-                r[4] += "0";
-            }
-            eval("dhx4.temp = new RegExp(/\\d{" + fmt.d_len + "}/);");
-            var t1 = (r[4]).match(dhx4.temp);
-            if (t1 != null) {
-                v0 += fmt.d_sep + t1;
-            }
-            dhx4.temp = t1 = null;
-        }
-        // chars after
-        v0 += fmt.s_aft;
-        return v0;
-    }
-    return value;
-};
-
-dhx4.date2str = function (val, format, strings) {
-    if (format == null || typeof(format) == "undefined") {
-        format = dhx4.dateFormat[dhx4.dateLang];
-    }
-    if (strings == null || typeof(strings) == "undefined") {
-        strings = dhx4.dateStrings[dhx4.dateLang];
-    }
-    if (val instanceof Date) {
-        var z = function (t) {
-            return (String(t).length == 1 ? "0" + String(t) : t);
-        };
-        var k = function (t) {
-            switch (t) {
-                case "%d":
-                    return z(val.getDate());
-                case "%j":
-                    return val.getDate();
-                case "%D":
-                    return strings.dayShortName[val.getDay()];
-                case "%l":
-                    return strings.dayFullName[val.getDay()];
-                case "%m":
-                    return z(val.getMonth() + 1);
-                case "%n":
-                    return val.getMonth() + 1;
-                case "%M":
-                    return strings.monthShortName[val.getMonth()];
-                case "%F":
-                    return strings.monthFullName[val.getMonth()];
-                case "%y":
-                    return z(val.getYear() % 100);
-                case "%Y":
-                    return val.getFullYear();
-                case "%g":
-                    return (val.getHours() + 11) % 12 + 1;
-                case "%h":
-                    return z((val.getHours() + 11) % 12 + 1);
-                case "%G":
-                    return val.getHours();
-                case "%H":
-                    return z(val.getHours());
-                case "%i":
-                    return z(val.getMinutes());
-                case "%s":
-                    return z(val.getSeconds());
-                case "%a":
-                    return (val.getHours() > 11 ? "pm" : "am");
-                case "%A":
-                    return (val.getHours() > 11 ? "PM" : "AM");
-                case "%%":
-                    return "%";
-                case "%u":
-                    return val.getMilliseconds();
-                case "%P":
-                    if (dhx4.temp_calendar != null && dhx4.temp_calendar.tz != null) {
-                        return dhx4.temp_calendar.tz;
-                    }
-                    var ofs = val.getTimezoneOffset();
-                    var h = Math.abs(Math.floor(ofs / 60));
-                    var m = Math.abs(ofs) - h * 60;
-                    return (ofs > 0 ? "-" : "+") + z(h) + ":" + z(m);
-                default:
-                    return t;
-            }
-        };
-        var t = String(format || dhx4.dateFormat).replace(/%[a-zA-Z]/g, k);
-    }
-    return (t || String(val));
-};
-dhx4.str2date = function (val, format, strings) {
-    if (format == null || typeof(format) == "undefined") {
-        format = dhx4.dateFormat[dhx4.dateLang];
-    }
-    if (strings == null || typeof(strings) == "undefined") {
-        strings = dhx4.dateStrings[dhx4.dateLang];
-    }
-    // escape custom chars
-    format = format.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\\:|]/g, "\\$&");
-    var v = [];
-    var f = [];
-    // escape required chars
-    format = format.replace(/%[a-z]/gi, function (t) {
-        switch (t) {
-            case "%d":
-            case "%m":
-            case "%y":
-            case "%h":
-            case "%H":
-            case "%i":
-            case "%s":
-                f.push(t);
-                return "(\\d{2})"; // 2 digits
-            case "%D":
-            case "%l":
-            case "%M":
-            case "%F":
-                f.push(t);
-                return "([a-zéûä\u0430-\u044F\u0451]{1,})"; // chars
-            case "%j":
-            case "%n":
-            case "%g":
-            case "%G":
-                f.push(t);
-                return "(\\d{1,2})"; // 1-2 digits
-            case "%Y":
-                f.push(t);
-                return "(\\d{4})"; // 4 digits
-            case "%a":
-                f.push(t);
-                return "([a|p]m)"; // am/pm
-            case "%A":
-                f.push(t);
-                return "([A|P]M)"; // AM/PM
-            case "%u":
-                f.push(t);
-                return "(\\d{1,6})"; // 1-6 digits, micro/milliseconds
-            case "%P":
-                f.push(t);
-                return "([+-]\\d{1,2}:\\d{1,2})"; // zone offset
-        }
-        return t;
-    });
-    var re = new RegExp(format, "i");
-    var e = val.match(re);
-    if (e == null || e.length - 1 != f.length) {
-        return "Invalid Date";
-    }
-    // sorting
-    /*
-     Year	y,Y	1
-     Month	n,m,M,F	2
-     Day	d,j	3
-     AM/PM	a,A	4
-     Hours	H,G,h,g	5
-     Minutes	i	6
-     Seconds	s	7
-     MSec	u	7
-     Zone 	P	7
-     */
-    for (var q = 1; q < e.length; q++) {
-        v.push(e[q]);
-    }
-    var p = {
-        "%y": 1,
-        "%Y": 1,
-        "%n": 2,
-        "%m": 2,
-        "%M": 2,
-        "%F": 2,
-        "%d": 3,
-        "%j": 3,
-        "%a": 4,
-        "%A": 4,
-        "%H": 5,
-        "%G": 5,
-        "%h": 5,
-        "%g": 5,
-        "%i": 6,
-        "%s": 7,
-        "%u": 7,
-        "%P": 7
-    };
-    var v2 = {};
-    var f2 = {};
-    for (var q = 0; q < f.length; q++) {
-        if (typeof(p[f[q]]) != "undefined") {
-            var ind = p[f[q]];
-            if (!v2[ind]) {
-                v2[ind] = [];
-                f2[ind] = [];
-            }
-            v2[ind].push(v[q]);
-            f2[ind].push(f[q]);
-        }
-    }
-    v = [];
-    f = [];
-    for (var q = 1; q <= 7; q++) {
-        if (v2[q] != null) {
-            for (var w = 0; w < v2[q].length; w++) {
-                v.push(v2[q][w]);
-                f.push(f2[q][w]);
-            }
-        }
-    }
-    // parsing date
-    var r = new Date();
-    r.setDate(1); // fix for 31th
-    r.setHours(0);
-    r.setMinutes(0);
-    r.setSeconds(0);
-    r.setMilliseconds(0);
-    // get index by value
-    var getInd = function (val, ar) {
-        for (var q = 0; q < ar.length; q++) {
-            if (ar[q].toLowerCase() == val) {
-                return q;
-            }
-        }
-        return -1;
-    };
-    for (var q = 0; q < v.length; q++) {
-        switch (f[q]) {
-            case "%d":
-            case "%j":
-            case "%n":
-            case "%m":
-            case "%Y":
-            case "%H":
-            case "%G":
-            case "%i":
-            case "%s":
-            case "%u":
-                if (!isNaN(v[q])) {
-                    r[{
-                        "%d": "setDate",
-                        "%j": "setDate",
-                        "%n": "setMonth",
-                        "%m": "setMonth",
-                        "%Y": "setFullYear",
-                        "%H": "setHours",
-                        "%G": "setHours",
-                        "%i": "setMinutes",
-                        "%s": "setSeconds",
-                        "%u": "setMilliseconds"
-                    }[f[q]]](Number(v[q]) + (f[q] == "%m" || f[q] == "%n" ? -1 : 0));
-                }
-                break;
-            //
-            case "%M":
-            case "%F":
-                var k = getInd(v[q].toLowerCase(), strings[{
-                    "%M": "monthShortName",
-                    "%F": "monthFullName"
-                }[f[q]]]);
-                if (k >= 0) {
-                    r.setMonth(k);
-                }
-                break;
-            //
-            case "%y":
-                if (!isNaN(v[q])) {
-                    var v0 = Number(v[q]);
-                    r.setFullYear(v0 + (v0 > 50 ? 1900 : 2000));
-                }
-                break;
-            //
-            case "%g":
-            case "%h":
-                if (!isNaN(v[q])) {
-                    var v0 = Number(v[q]);
-                    if (v0 <= 12 && v0 >= 0) {
-                        r.setHours(v0 + (getInd("pm", v) >= 0 ? (v0 == 12 ? 0 : 12) : (v0 == 12 ? -12 : 0)));
-                    } // 12:00 AM -> midnight, 12:00 PM -> noon
-                }
-                break;
-            //
-            case "%P":
-                if (dhx4.temp_calendar != null) {
-                    dhx4.temp_calendar.tz = v[q];
-                }
-                break;
-        }
-    }
-    return r;
-};
-dhx4.ajax = {
-    // if false - dhxr param will added to prevent caching on client side (default),
-    // if true - do not add extra params
-    cache: false, // default method for load/loadStruct, post/get allowed
-    // get - since 4.1.1, this should fix 412 error for macos safari
-    method: "get",
-    parse: function (data) {
-        if (typeof data !== "string") {
-            return data;
-        }
-        data = data.replace(/^[\s]+/, "");
-        if (window.DOMParser && !dhx4.isIE) { // ff,ie9
-            var obj = (new window.DOMParser()).parseFromString(data, "text/xml");
-        } else if (window.ActiveXObject !== window.undefined) {
-            var obj = new window.ActiveXObject("Microsoft.XMLDOM");
-            obj.async = "false";
-            obj.loadXML(data);
-        }
-        return obj;
     },
-    xmltop: function (tagname, xhr, obj) {
-        if (typeof xhr.status == "undefined" || xhr.status < 400) {
-            xml = (!xhr.responseXML) ? dhx4.ajax.parse(xhr.responseText || xhr) : (xhr.responseXML || xhr);
-            if (xml && xml.documentElement !== null) {
-                try {
-                    if (!xml.getElementsByTagName("parsererror").length) {
-                        return xml.getElementsByTagName(tagname)[0];
-                    }
-                } catch (e) {
-                }
-            }
-        }
-        if (obj !== -1) {
-            dhx4.callEvent("onLoadXMLError", ["Incorrect XML", arguments[1], obj]);
-        }
-        return document.createElement("DIV");
-    },
-    xpath: function (xpathExp, docObj) {
-        if (!docObj.nodeName) {
-            docObj = docObj.responseXML || docObj;
-        }
-        if (dhx4.isIE) {
-            try {
-                return docObj.selectNodes(xpathExp) || [];
-            } catch (e) {
-                return [];
-            }
-        } else {
-            var rows = [];
-            var first;
-            var col = (docObj.ownerDocument || docObj).evaluate(xpathExp, docObj, null, XPathResult.ANY_TYPE, null);
-            while (first = col.iterateNext()) {
-                rows.push(first);
-            }
-            return rows;
+    _eventable (obj, mode) {
+        if (mode == "clear") {
+            XEventable.cleanup(obj)
+        }else{
+            XEventable.inject(obj)
         }
     },
-    query: function (config) {
-        dhx4.ajax._call((config.method || "GET"), config.url, config.data || "", (config.async || true), config.callback, null, config.headers);
-    },
-    get: function (url, onLoad) {
-        return this._call("GET", url, null, true, onLoad);
-    },
-    getSync: function (url) {
-        return this._call("GET", url, null, false);
-    },
-    put: function (url, postData, onLoad) {
-        return this._call("PUT", url, postData, true, onLoad);
-    },
-    del: function (url, postData, onLoad) {
-        return this._call("DELETE", url, postData, true, onLoad);
-    },
-    post: function (url, postData, onLoad) {
-        if (arguments.length == 1) {
-            postData = "";
-        } else if (arguments.length == 2 && (typeof(postData) == "function" || typeof(window[postData]) == "function")) {
-            onLoad = postData;
-            postData = "";
-        } else {
-            postData = String(postData);
-        }
-        return this._call("POST", url, postData, true, onLoad);
-    },
-    postSync: function (url, postData) {
-        postData = (postData == null ? "" : String(postData));
-        return this._call("POST", url, postData, false);
-    },
-    getLong: function (url, onLoad) {
-        this._call("GET", url, null, true, onLoad, {url: url});
-    },
-    postLong: function (url, postData, onLoad) {
-        if (arguments.length == 2 && (typeof(postData) == "function" || typeof(window[postData]))) {
-            onLoad = postData;
-            postData = "";
-        }
-        this._call("POST", url, postData, true, onLoad, {
-            url: url,
-            postData: postData
-        });
-    },
-    _call: function (method, url, postData, async, onLoad, longParams, headers) {
-        var t = (window.XMLHttpRequest && !dhx4.isIE ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP"));
-        var isQt = (navigator.userAgent.match(/AppleWebKit/) != null && navigator.userAgent.match(/Qt/) != null && navigator.userAgent.match(/Safari/) != null);
-        if (async == true) {
-            t.onreadystatechange = function () {
-                if ((t.readyState == 4) || (isQt == true && t.readyState == 3)) { // what for long response and status 404?
-                    if (t.status != 200 || t.responseText == "") {
-                        if (!dhx4.callEvent("onAjaxError", [{
-                                xmlDoc: t,
-                                filePath: url,
-                                async: async
-                            }])) {
-                            return;
-                        }
-                    }
-                    window.setTimeout(function () {
-                        if (typeof(onLoad) == "function") {
-                            onLoad.apply(window, [{
-                                xmlDoc: t,
-                                filePath: url,
-                                async: async
-                            }]); // dhtmlx-compat, response.xmlDoc.responseXML/responseText
-                        }
-                        if (longParams != null) {
-                            if (typeof(longParams.postData) != "undefined") {
-                                dhx4.ajax.postLong(longParams.url, longParams.postData, onLoad);
-                            } else {
-                                dhx4.ajax.getLong(longParams.url, onLoad);
-                            }
-                        }
-                        onLoad = null;
-                        t = null;
-                    }, 1);
-                }
-            }
-        }
-        if (method == "GET") {
-            url += this._dhxr(url);
-        }
-        t.open(method, url, async);
-        if (headers != null) {
-            for (var key in headers) {
-                t.setRequestHeader(key, headers[key]);
-            }
-        } else if (method == "POST" || method == "PUT" || method == "DELETE") {
-            t.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        } else if (method == "GET") {
-            postData = null;
-        }
-        t.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-        t.send(postData);
-        if (async != true) {
-            if ((t.readyState == 4) || (isQt == true && t.readyState == 3)) {
-                if (t.status != 200 || t.responseText == "") {
-                    dhx4.callEvent("onAjaxError", [{
-                        xmlDoc: t,
-                        filePath: url,
-                        async: async
-                    }]);
-                }
-            }
-        }
-        return {
-            xmlDoc: t,
-            filePath: url,
-            async: async
-        }; // dhtmlx-compat, response.xmlDoc.responseXML/responseText
-    },
-    _dhxr: function (sign, value) {
-        if (this.cache != true) {
-            if (sign.match(/^[\?\&]$/) == null) {
-                sign = (sign.indexOf("?") >= 0 ? "&" : "?");
-            }
-            if (typeof(value) == "undefined") {
-                value = true;
-            }
-            return sign + "dhxr" + new Date().getTime() + (value == true ? "=1" : "");
-        }
-        return "";
-    }
-};
-dhx4._enableDataLoading = function (obj, initObj, xmlToJson, xmlRootTag, mode) {
+    _enableDataLoading (obj, initObj, xmlToJson, xmlRootTag, mode) {
     if (mode == "clear") {
 
         // clear attached functionality
@@ -1033,77 +1155,11 @@ dhx4._enableDataLoading = function (obj, initObj, xmlToJson, xmlRootTag, mode) {
         }
     }
     obj = null;
+}
 };
-dhx4._eventable = function (obj, mode) {
-    if (mode == "clear") {
-        obj.detachAllEvents();
-        obj.dhxevs = null;
-        obj.attachEvent = null;
-        obj.detachEvent = null;
-        obj.checkEvent = null;
-        obj.callEvent = null;
-        obj.detachAllEvents = null;
-        obj = null;
-        return;
-    }
-    obj.dhxevs = {data: {}};
-    obj.attachEvent = function (name, func) {
-        name = String(name).toLowerCase();
-        if (!this.dhxevs.data[name]) {
-            this.dhxevs.data[name] = {};
-        }
-        var eventId = dhx4.newId();
-        this.dhxevs.data[name][eventId] = func;
-        return eventId;
-    };
-    obj.detachEvent = function (eventId) {
-        for (var a in this.dhxevs.data) {
-            var k = 0;
-            for (var b in this.dhxevs.data[a]) {
-                if (b == eventId) {
-                    this.dhxevs.data[a][b] = null;
-                    delete this.dhxevs.data[a][b];
-                } else {
-                    k++;
-                }
-            }
-            if (k == 0) {
-                this.dhxevs.data[a] = null;
-                delete this.dhxevs.data[a];
-            }
-        }
-    };
-    obj.checkEvent = function (name) {
-        name = String(name).toLowerCase();
-        return (this.dhxevs.data[name] != null);
-    };
-    obj.callEvent = function (name, params) {
-        name = String(name).toLowerCase();
-        if (this.dhxevs.data[name] == null) {
-            return true;
-        }
-        var r = true;
-        for (var a in this.dhxevs.data[name]) {
-            r = this.dhxevs.data[name][a].apply(this, params) && r;
-        }
-        return r;
-    };
-    obj.detachAllEvents = function () {
-        for (var a in this.dhxevs.data) {
-            for (var b in this.dhxevs.data[a]) {
-                this.dhxevs.data[a][b] = null;
-                delete this.dhxevs.data[a][b];
-            }
-            this.dhxevs.data[a] = null;
-            delete this.dhxevs.data[a];
-        }
-    };
-    obj = null;
-};
-dhx4._eventable(dhx4);
 
-dhx4.validation = new XValidation();
 
+XEventable.inject(dhx4);
 
 dhtmlx = {
     extend: function (a, b) {
@@ -1115,7 +1171,6 @@ dhtmlx = {
         return a;
     },
     extend_api: function (name, map, ext) {
-        console.info(name,map,ext);
         var t = window[name];
         if (!t) {
             return;
@@ -1158,7 +1213,6 @@ dhtmlx = {
         }
     }
 };
-
 function dhtmlDragAndDropObject() {
     if (dhtmlDragAndDropObject.dhtmlDragAndDrop) {
         return dhtmlDragAndDropObject.dhtmlDragAndDrop;

@@ -3733,10 +3733,10 @@ class dhtmlXFormInput {
         var form = item.getForm();
         var in_focus = (form._ccActive == true && form._formLS != null && form._formLS[item._idd] != null);
         form = null;
-        if (!in_focus && item._df != null && value == dhx4.template._getFmtValue(item._value, item._df)) {
+        if (!in_focus && item._df != null && value == XTemplate.format(item._value, item._df)) {
             return;
         } // if item not in focus
-        if (!foc && item._df != null && item._value == value && value == dhx4.template._getFmtValue(value, item._df)) {
+        if (!foc && item._df != null && item._value == value && value == XTemplate.format(value, item._df)) {
             return;
         }
         var t = this;
@@ -3774,7 +3774,7 @@ class dhtmlXFormInput {
         var k = item.childNodes[item._ll ? 1 : 0].childNodes[0];
         // check if formatting available
         if (item._df != null) {
-            v = dhx4.template._getFmtValue(v, item._df);
+            v = XTemplate.format(v, item._df);
         }
         if (k.value != v) {
             k.value = v;
@@ -3828,7 +3828,7 @@ class dhtmlXFormInput {
         if (typeof(format) != "string") {
             return;
         }
-        var fmt = dhx4.template._parseFmt(format, g_sep, d_sep);
+        var fmt = XTemplate.parse(format, g_sep, d_sep);
         if (fmt == false) {
             return false;
         } else {

@@ -185,9 +185,6 @@ div.dhtmlxMenu_material_SubLevelArea_Polygon td.sub_item_icon div.sub_icon {
 	width: 18px;
 	height: 30px;
 	line-height: 30px;
-	background-position: 0px 5px;
-	background-repeat: no-repeat;
-	background-image: url("../imgs/dhxmenu_material/dhxmenu_chrd.png");
 }
 div.dhtmlxMenu_material_SubLevelArea_Polygon td.sub_item_icon div.sub_icon.chbx_0 {
 	background-position: 0px 5px;
@@ -222,9 +219,6 @@ div.dhtmlxMenu_material_SubLevelArea_Polygon td div.complex_arrow {
 	margin: 0px 1px 0px 11px;
 	height: 30px;
 	line-height: 30px;
-	background-image: url("../imgs/dhxmenu_material/dhxmenu_subar.png");
-	background-repeat: no-repeat;
-	background-position: 0px 10px;
 	overflow: hidden;
 	font-size: 1px;
 }
@@ -232,9 +226,6 @@ div.dhtmlxMenu_material_SubLevelArea_Polygon td div.complex_arrow_loading {
 	width: 16px;
 	height: 30px;
 	line-height: 30px;
-	background-position: center center;
-	background-repeat: no-repeat;
-	background-image: url("../imgs/dhxmenu_material/dhxmenu_loader.gif");
 	float: right;
 }
 div.dhtmlxMenu_material_SubLevelArea_Polygon tr.sub_item_selected td {
@@ -285,14 +276,11 @@ div.dhtmlxMenu_material_SubLevelArea_Polygon div.dhtmlxMenu_material_SubLevelAre
 	position: relative;
 	font-size: 1px;
 	border-bottom: 1px solid #dfdfdf;
-	background-image: url("../imgs/dhxmenu_material/dhxmenu_arrow_up.png");
-	background-repeat: no-repeat;
-	background-position: center 2px;
 	padding: 8px 0px;
 	margin-bottom: 3px;
 }
 div.dhtmlxMenu_material_SubLevelArea_Polygon div.dhtmlxMenu_material_SubLevelArea_ArrowUp_Disabled {
-	background-image: url("../imgs/dhxmenu_material/dhxmenu_arrow_up_dis.png");
+
 }
 div.dhtmlxMenu_material_SubLevelArea_Polygon div.dhtmlxMenu_material_SubLevelArea_ArrowDown,
 div.dhtmlxMenu_material_SubLevelArea_Polygon div.dhtmlxMenu_material_SubLevelArea_ArrowDown_Over,
@@ -300,14 +288,11 @@ div.dhtmlxMenu_material_SubLevelArea_Polygon div.dhtmlxMenu_material_SubLevelAre
 	position: relative;
 	font-size: 1px;
 	border-top: 1px solid #dfdfdf;
-	background-image: url("../imgs/dhxmenu_material/dhxmenu_arrow_down.png");
-	background-repeat: no-repeat;
-	background-position: center 6px;
 	padding: 8px 0px;
 	margin-top: 3px;
 }
 div.dhtmlxMenu_material_SubLevelArea_Polygon div.dhtmlxMenu_material_SubLevelArea_ArrowDown_Disabled {
-	background-image: url("../imgs/dhxmenu_material/dhxmenu_arrow_down_dis.png");
+
 }
 iframe.dhtmlxMenu_IE6CoverFix_material {
 	position: absolute;

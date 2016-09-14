@@ -18,17 +18,18 @@ class App {
         this.wins = this.main.dhxWins = new dhtmlXWindows();
         this.menu = this.main.attachMenu({
             iconset: "awesome",
-            xml: "./kitchen/layout/menu.xml"
+            json: "./kitchen/layout/menu.json"
         });
         this.toolbar = this.main.attachToolbar({
             iconset: "awesome",
             icons_size: 24,
-            xml: "./kitchen/layout/toolbar.xml"
+            json: "./kitchen/layout/toolbar.json"
         });
+
         this.sidebar = this.main.cells("a").attachTreeView({
             root_id: "",
             iconset: "font_awesome",
-            items: "./kitchen/layout/sidebar.xml"
+            items: "./kitchen/layout/sidebar.json"
         });
         this.sidebar.attachEvent("onSelect",(id)=>{
             switch (id) {
@@ -274,7 +275,6 @@ class App {
         });
         myRibbon.attachEvent('onClick',(id)=>{
             alert(id);
-            console.info(this);
         });
         let myList = this.main.cells("b").attachList({
             type:{

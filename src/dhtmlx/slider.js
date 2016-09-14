@@ -1,6 +1,5 @@
 class dhtmlXSlider {
     constructor(data) {
-        console.info("AAAAAA")
         var that = this;
         this.conf = {
             size: null,

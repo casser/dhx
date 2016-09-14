@@ -588,7 +588,7 @@ class dhtmlXTreeView {
 	};
 	_chbxGenIcon(id) {
 		var icon = this.conf.icons["chbx_"+(this.items[id].chbx_enabled?"":"dis_")+(this.items[id].checked?"1":"0")];
-		return '<i class="'+this.conf.icons.prefix+' '+icon+'"></i>';
+		return `<i class="material-icons">${icon}</i>`;
 	};
 	_chbxUpdIndex() {
 		if (this.conf.enable_chbx == true) {
@@ -622,7 +622,8 @@ class dhtmlXTreeView {
 		var t = this.items[id];
 		var img = t.item.childNodes[0].childNodes[this.conf.idx.sign];
 		if (t.kids == true || t.kids_request == true) {
-			img.innerHTML = '<i class="'+this.conf.icons.prefix+" "+this.conf.icons[(t.opened||t.half_opened?"minus":"plus")]+'"></i>';
+			var icon = this.conf.icons[(t.opened||t.half_opened?"minus":"plus")];
+			img.innerHTML = `<i class="material-icons">${icon}</i>`//'<i class="'+this.conf.icons.prefix+" "++'"></i>';
 		} else {
 			img.innerHTML = "";
 		}
@@ -781,9 +782,7 @@ class dhtmlXTreeView {
 		return icons;
 	};
 	_iconHtml(id, css) { // generate <i> for icon
-		var attrs = ['class="'+this.conf.icons.prefix+" "+css+'"'];
-		if (this.items[id].icon_color != null) attrs.push('style="color:'+this.items[id].icon_color+';"');
-		return "<i "+attrs.join(" ")+"></i>";
+		return `<i class="material-icons">${css}</i>`;
 	};
 	_itemHtml_icon(id, nodeIndex) { // item html renderer
 		return {
@@ -1558,12 +1557,12 @@ dhtmlXTreeView.prototype.icons = {
 	},
 	font_awesome: {
 		r: true,
-		prefix: "fa",
-		plus: "fa-caret-right",
-		minus: "fa-caret-down",
-		file: "fa-file-o",
-		folder_opened: "fa-folder-open-o",
-		folder_closed: "fa-folder-o",
+		prefix: "material-icons",
+		plus: "keyboard_arrow_right",
+		minus: "keyboard_arrow_down",
+		file: "insert_drive_file",
+		folder_opened: "folder",
+		folder_closed: "folder_open",
 		loading: "fa-refresh fa-spin",
 		chbx_0: "fa-square-o",
 		chbx_1: "fa-check-square-o",

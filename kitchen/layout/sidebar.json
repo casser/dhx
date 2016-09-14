@@ -1,0 +1,43 @@
+[
+    {
+        "id": "components",
+        "text": "Components",
+        "kids": 0,
+        "icons":{"file":"view_headline"},
+        "items":[
+            {
+                "id": "accordion-view",
+                "text": "Accordion",
+                "kids": 0
+            },{
+                "id": "carousel-view",
+                "text": "Carousel",
+                "kids": 0
+            },{
+                "id": "charts-view",
+                "text": "Charts",
+                "kids": 0
+            },{
+                "id": "lists-view",
+                "text": "List",
+                "kids": 0
+            },{
+                "id": "file-grid",
+                "text": "Grid",
+                "kids": 0
+            },{
+                "id": "file-icon-view",
+                "text": "Icons",
+                "kids": 0
+            },{
+                "id": "file-tile-view",
+                "text": "Tiles",
+                "kids": 0
+            },{
+                "id": "tab-bar-view",
+                "text": "Tabs",
+                "kids": 0
+            }
+        ]
+    }
+]

@@ -391,7 +391,7 @@ div.gridbox_material.gridbox table.obj tr td.cellselected {
 }
 div.gridbox_material.gridbox .odd_material {
 	background-color: #ffffff;
-	color: ;
+	color:transparent ;
 }
 .dhx_combo_select,
 .gridbox_material.gridbox .dhx_combo_edit,

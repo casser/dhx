@@ -267,16 +267,16 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 	color: #404040;
 }
 .dhxcarousel_base_material div.dhxcarousel_cont div.dhx_carousel_controls div.dhx_carousel_btn.dhx_carousel_btn_prev {
-	background-image: url(../imgs/dhxcarousel_material/dhxcarousel_arrow_left.png);
+
 }
 .dhxcarousel_base_material div.dhxcarousel_cont div.dhx_carousel_controls div.dhx_carousel_btn.dhx_carousel_btn_prev_dis {
-	background-image: url(../imgs/dhxcarousel_material/dhxcarousel_arrow_left_dis.png);
+
 }
 .dhxcarousel_base_material div.dhxcarousel_cont div.dhx_carousel_controls div.dhx_carousel_btn.dhx_carousel_btn_next {
-	background-image: url(../imgs/dhxcarousel_material/dhxcarousel_arrow_right.png);
+
 }
 .dhxcarousel_base_material div.dhxcarousel_cont div.dhx_carousel_controls div.dhx_carousel_btn.dhx_carousel_btn_next_dis {
-	background-image: url(../imgs/dhxcarousel_material/dhxcarousel_arrow_right_dis.png);
+
 }
 .dhxcarousel_base_material div.dhxcarousel_cont div.dhx_carousel_controls div.dhx_carousel_btn.dhx_carousel_btn_prev:hover,
 .dhxcarousel_base_material div.dhxcarousel_cont div.dhx_carousel_controls div.dhx_carousel_btn.dhx_carousel_btn_next:hover {

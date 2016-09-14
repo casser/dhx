@@ -962,38 +962,17 @@ class dhtmlXMenuObject {
 
 		if (imgSrc.length > 0) {
 			if (imgObj != null) {
-				if (this.conf.icons_css == true) {
-					imgObj.className = this.conf.icons_path+imgSrc;
-				} else {
-					imgObj.src = this.conf.icons_path+imgSrc;
-				}
+                imgObj.className = 'material-icons'
+                imgObj.innerText = imgSrc;
 			} else {
 				if (isTopLevel) {
-					if (this.conf.icons_css == true) {
-						var imgObj = document.createElement("i");
-						imgObj.className = this.conf.icons_path+imgSrc;
-					} else {
-						var imgObj = document.createElement("IMG");
-						imgObj.className = "dhtmlxMenu_TopLevel_Item_Icon";
-						imgObj.src = this.conf.icons_path+imgSrc;
-						imgObj.border = "0";
-						imgObj.id = "image_"+id;
-					}
+                    var imgObj = document.createElement("i");
+                    imgObj.className = 'material-icons';
+                    imgObj.innerText = imgSrc;
 					if (!this.conf.rtl && this.idPull[id].childNodes.length > 0) this.idPull[id].insertBefore(imgObj,this.idPull[id].childNodes[0]); else this.idPull[id].appendChild(imgObj);
 				} else {
-					if (this.conf.icons_css == true) {
-						var item = this.idPull[id].childNodes[this.conf.rtl?2:0];
-						item.innerHTML = "<i class='"+this.conf.icons_path+imgSrc+"'></i>";
-					} else {
-						var imgObj = document.createElement("IMG");
-						imgObj.className = "sub_icon";
-						imgObj.src = this.conf.icons_path+imgSrc;
-						imgObj.border = "0";
-						imgObj.id = "image_"+id;
-						var item = this.idPull[id].childNodes[this.conf.rtl?2:0];
-						while (item.childNodes.length > 0) item.removeChild(item.childNodes[0]);
-						item.appendChild(imgObj);
-					}
+                    var item = this.idPull[id].childNodes[this.conf.rtl?2:0];
+                    item.innerHTML = `<i class="material-icons">${imgSrc}</i>`;
 				}
 			}
 		} else {
@@ -1332,7 +1311,7 @@ class dhtmlXMenuObject {
 			}
 			if (!(tp=="checkbox"||tp=="radio")) {
 				if (this.conf.icons_css == true) {
-					t1.innerHTML = "<i class='"+this.conf.icons_path+icon+"'></i>";
+					t1.innerHTML = `<i class="material-icons">${icon}</i>`;
 				} else {
 					var img = document.createElement("IMG");
 					img.id = "image_"+this.itemPull[id]["id"];
@@ -1410,8 +1389,8 @@ class dhtmlXMenuObject {
 			//
 			e = e || event; e.cancelBubble = true;
 			if (e.preventDefault) e.preventDefault(); else e.returnValue = false;
-			tc = (that.itemPull[this.id]["complex"]?"c":"-");
-			td = (that.itemPull[this.id]["state"]=="enabled"?"-":"d");
+			var tc = (that.itemPull[this.id]["complex"]?"c":"-");
+			var td = (that.itemPull[this.id]["state"]=="enabled"?"-":"d");
 			var cas = {"ctrl": e.ctrlKey, "alt": e.altKey, "shift": e.shiftKey};
 			switch (that.itemPull[this.id]["type"]) {
 				case "checkbox":

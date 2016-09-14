@@ -42,9 +42,6 @@ class dhtmlXCombo {
 
     constructor(parentId, formName, width, optionType, tabIndex) {
 
-        // console.info("allow html in options?");
-        // console.info("add placeholder?");
-        // console.info("iframe for IE6");
         var that = this;
         var apiObj = null;
         var skin = null;
@@ -1992,15 +1989,15 @@ class XComboOption {
     }
     setText(item, text) {
         item._conf.text = text;
-        var t = (typeof(text) == "object" ? dhx4.template(item._tpl.option, this.replaceHtml(item._conf.text), true) : dhx4.trim(this.replaceHtml(item._conf.text) || ""));
+        var t = (typeof(text) == "object" ? XTemplate.render(item._tpl.option, this.replaceHtml(item._conf.text), true) : dhx4.trim(this.replaceHtml(item._conf.text) || ""));
         item.lastChild.innerHTML = (t.length == 0 ? "&nbsp;" : t);
     }
     getText(item, asStringInput, asStringOption) {
 		if (dhx4.s2b(asStringInput) && typeof(item._conf.text) == "object") {
-			return dhx4.template(item._tpl.input, item._conf.text, true);
+			return XTemplate.render(item._tpl.input, item._conf.text, true);
 		}
 		if (dhx4.s2b(asStringOption) && typeof(item._conf.text) == "object") {
-			return dhx4.template(item._tpl.option, item._conf.text, true);
+			return XTemplate.render(item._tpl.option, item._conf.text, true);
 		}
         return item._conf.text;
     }

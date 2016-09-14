@@ -58,7 +58,7 @@ Copyright UAB Dinamenta http://www.dhtmlx.com
 .dhx_list_item {
 	font-family: Roboto, Arial, Helvetica;
 	font-size: 14px;
-	color: ;
+	color:transparent;
 	box-sizing: border-box;
 	line-height: normal;
 }

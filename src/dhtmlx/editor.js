@@ -536,7 +536,7 @@ class dhtmlXEditor {
 				color: "#404040"
 			};
 		}
-		return dhx4.template("font-size: #size#; font-family: #family#; color: #color#;", data);
+		return XTemplate.render("font-size: #size#; font-family: #family#; color: #color#;", data);
 	}
 	attachToolbar(iconsPath) {
 
@@ -553,7 +553,7 @@ class dhtmlXEditor {
 
 		var ext = (this.conf.skin=="material"?"png":"gif");
 
-		this._availFonts = new Array("Arial", "Arial Narrow", "Comic Sans MS", "Courier", "Georgia", "Impact", "Tahoma", "Times New Roman", "Verdana");
+		this._availFonts = ["Arial", "Arial Narrow", "Comic Sans MS", "Courier", "Georgia", "Impact", "Tahoma", "Times New Roman", "Verdana"];
 		this._initFont = this._availFonts[0];
 		this._xmlFonts = "";
 		for (var q=0; q<this._availFonts.length; q++) {
